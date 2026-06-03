@@ -3,6 +3,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+
+#lock-screen{position:fixed;inset:0;background:#f5f5f3;display:flex;align-items:center;justify-content:center;z-index:9999}
+#lock-box{background:#fff;border:1px solid #e5e3db;border-radius:16px;padding:2.5rem 2rem;width:320px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+#lock-box h2{font-size:16px;font-weight:600;margin-bottom:6px;color:#1a1a1a}
+#lock-box p{font-size:12px;color:#888;margin-bottom:1.5rem}
+#lock-input{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:18px;text-align:center;letter-spacing:6px;outline:none;margin-bottom:12px}
+#lock-input:focus{border-color:#0369a1}
+#lock-btn{width:100%;padding:10px;background:#0369a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
+#lock-btn:hover{background:#0284c7}
+#lock-error{font-size:11px;color:#dc2626;margin-top:8px;min-height:16px}
+
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:#1a1a1a;background:#f5f5f3;padding:16px}
 .card{background:#fff;border:1px solid #e5e3db;border-radius:12px;padding:1rem 1.25rem;margin-bottom:12px}
 .stitle{font-size:13px;font-weight:500;margin-bottom:12px;color:#1a1a1a}
@@ -61,6 +72,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .top4-item:last-child{border-bottom:none}
 </style>
 </head><body>
+
+<div id="lock-screen">
+  <div id="lock-box">
+    <h2>Portafolio Consolidado</h2>
+    <p>Ingresa la contraseña para continuar</p>
+    <input id="lock-input" type="password" placeholder="••••••••" autocomplete="off" />
+    <button id="lock-btn">Ingresar</button>
+    <div id="lock-error"></div>
+  </div>
+</div>
+
 <div style="max-width:1100px;margin:0 auto">
 
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
@@ -1048,4 +1070,32 @@ updateAllocation('all');
 updateConsolidatedRows('all');
 updateDraftea();
 </script>
+
+<script>
+(function(){
+  // sha256-lite: we just store the raw hash comparison
+  var PWD = '13221322';
+  function check(val){ return val === PWD; }
+  window.addEventListener('DOMContentLoaded', function(){
+    if(sessionStorage.getItem('unlocked')==='1'){
+      document.getElementById('lock-screen').style.display='none';
+      return;
+    }
+    function tryUnlock(){
+      var val = document.getElementById('lock-input').value;
+      if(check(val)){
+        sessionStorage.setItem('unlocked','1');
+        document.getElementById('lock-screen').style.display='none';
+      } else {
+        document.getElementById('lock-error').textContent = 'Contraseña incorrecta';
+        document.getElementById('lock-input').value = '';
+        document.getElementById('lock-input').focus();
+      }
+    }
+    document.getElementById('lock-input').addEventListener('keydown', function(e){ if(e.key==='Enter') tryUnlock(); });
+    document.getElementById('lock-btn').addEventListener('click', tryUnlock);
+  });
+})();
+</script>
+
 </body></html>
