@@ -6,13 +6,16 @@
 
 #lock-screen{position:fixed;inset:0;background:#f5f5f3;display:flex;align-items:center;justify-content:center;z-index:9999}
 #lock-box{background:#fff;border:1px solid #e5e3db;border-radius:16px;padding:2.5rem 2rem;width:320px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
-#lock-box h2{font-size:16px;font-weight:600;margin-bottom:6px;color:#1a1a1a}
+#lock-box h2{font-size:16px;font-weight:600;margin-bottom:6px}
 #lock-box p{font-size:12px;color:#888;margin-bottom:1.5rem}
 #lock-input{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:18px;text-align:center;letter-spacing:6px;outline:none;margin-bottom:12px}
 #lock-input:focus{border-color:#0369a1}
 #lock-btn{width:100%;padding:10px;background:#0369a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
 #lock-btn:hover{background:#0284c7}
 #lock-error{font-size:11px;color:#dc2626;margin-top:8px;min-height:16px}
+
+
+
 
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:#1a1a1a;background:#f5f5f3;padding:16px}
 .card{background:#fff;border:1px solid #e5e3db;border-radius:12px;padding:1rem 1.25rem;margin-bottom:12px}
@@ -72,7 +75,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .top4-item:last-child{border-bottom:none}
 </style>
 </head><body>
-
 <div id="lock-screen">
   <div id="lock-box">
     <h2>Portafolio Consolidado</h2>
@@ -81,6 +83,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
     <button id="lock-btn">Ingresar</button>
     <div id="lock-error"></div>
   </div>
+</div>
+
 </div>
 
 <div style="max-width:1100px;margin:0 auto">
@@ -1071,21 +1075,24 @@ updateConsolidatedRows('all');
 updateDraftea();
 </script>
 
+
+
 <script>
 (function(){
-  // sha256-lite: we just store the raw hash comparison
-  var PWD = '13221322';
-  function check(val){ return val === PWD; }
+  var H = 'cdc3425d4a6529495f4181137e3a5490cdfdbe5b509dddfe6e098d626b846dbf';
+  async function sha256(s){
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function show(){ document.getElementById('lock-screen').style.display='none'; }
   window.addEventListener('DOMContentLoaded', function(){
-    if(sessionStorage.getItem('unlocked')==='1'){
-      document.getElementById('lock-screen').style.display='none';
-      return;
-    }
-    function tryUnlock(){
+    if(sessionStorage.getItem('auth')==='1'){ show(); return; }
+    async function tryUnlock(){
       var val = document.getElementById('lock-input').value;
-      if(check(val)){
-        sessionStorage.setItem('unlocked','1');
-        document.getElementById('lock-screen').style.display='none';
+      var h = await sha256(val);
+      if(h === H){
+        sessionStorage.setItem('auth','1');
+        show();
       } else {
         document.getElementById('lock-error').textContent = 'Contraseña incorrecta';
         document.getElementById('lock-input').value = '';
@@ -1097,5 +1104,4 @@ updateDraftea();
   });
 })();
 </script>
-
 </body></html>
