@@ -811,6 +811,64 @@ var TOP4 = {
   }
 };
 
+// ─── PERFORMANCE DATA PER ACCOUNT (IRR Masttro, may-26) ──────────────────────
+var PERF_DATA = {
+  'cent-ml':    {mv:7143160,  mtd:5.25,  ytd:5.23},
+  'cent-jpm':   {mv:7547457,  mtd:1.71,  ytd:3.97},
+  'bosq-jpm':   {mv:5897085,  mtd:5.27,  ytd:5.48},
+  'bosq-ml':    {mv:3746267,  mtd:7.37,  ytd:7.69},
+  'bosq-ubs':   {mv:1005914,  mtd:null,  ytd:null},
+  'bosq-alt':   {mv:2090176,  mtd:null,  ytd:null},
+  'mish-jpm':   {mv:3419256,  mtd:3.26,  ytd:3.21},
+  'nm-beaumont':{mv:659395,   mtd:null,  ytd:null},
+  'nm-nidalbe': {mv:2869376,  mtd:null,  ytd:null},
+  'nm-acc':     {mv:1541015,  mtd:null,  ytd:null}
+};
+// Consolidated Masttro total (all accounts incl NM)
+var PERF_CONSOLIDATED = {mtd:1.76, ytd:5.59};
+
+function updatePerf(sel){
+  var accts = getAccounts(sel);
+  // If all accounts selected, use Masttro consolidated figure
+  if(!sel || sel==='all'){
+    document.getElementById('kpi-mtd').textContent = '+1.76%';
+    document.getElementById('kpi-mtd').style.color = '#1a7a4a';
+    document.getElementById('kpi-ytd').textContent = '+5.59%';
+    document.getElementById('kpi-ytd').style.color = '#1a7a4a';
+    document.getElementById('kpi-mtd').parentElement.querySelector('div:last-child').textContent = 'IRR Masttro consolidado';
+    document.getElementById('kpi-ytd').parentElement.querySelector('div:last-child').textContent = 'IRR Masttro consolidado';
+    return;
+  }
+  // Otherwise compute weighted average of accounts with data
+  var sumMV_mtd=0, sumMV_ytd=0, wMTD=0, wYTD=0;
+  accts.forEach(function(a){
+    var p=PERF_DATA[a]; if(!p) return;
+    if(p.mtd!==null){wMTD+=p.mv*(p.mtd/100); sumMV_mtd+=p.mv;}
+    if(p.ytd!==null){wYTD+=p.mv*(p.ytd/100); sumMV_ytd+=p.mv;}
+  });
+  var mtdLabel = sumMV_mtd>0 ? (wMTD/sumMV_mtd*100).toFixed(2) : null;
+  var ytdLabel = sumMV_ytd>0 ? (wYTD/sumMV_ytd*100).toFixed(2) : null;
+  var mtdEl = document.getElementById('kpi-mtd');
+  var ytdEl = document.getElementById('kpi-ytd');
+  if(mtdLabel!==null){
+    var v=parseFloat(mtdLabel);
+    mtdEl.textContent=(v>=0?'+':'')+mtdLabel+'%';
+    mtdEl.style.color=v>=0?'#1a7a4a':'#dc2626';
+  } else {
+    mtdEl.textContent='—'; mtdEl.style.color='#888';
+  }
+  if(ytdLabel!==null){
+    var v=parseFloat(ytdLabel);
+    ytdEl.textContent=(v>=0?'+':'')+ytdLabel+'%';
+    ytdEl.style.color=v>=0?'#1a7a4a':'#dc2626';
+  } else {
+    ytdEl.textContent='—'; ytdEl.style.color='#888';
+  }
+  var note = sumMV_mtd>0 ? 'IRR pond. cuentas selec.' : 'Sin datos disponibles';
+  mtdEl.parentElement.querySelector('div:last-child').textContent = note;
+  ytdEl.parentElement.querySelector('div:last-child').textContent = 'IRR pond. cuentas selec.';
+}
+
 // ─── PIE CHART ───────────────────────────────────────────────────────────────
 var pieChart = new Chart(document.getElementById('pieChart'),{
   type:'pie',
@@ -961,6 +1019,8 @@ function updateAllocation(sel){
 
   // Refresh top4 if open
   if(currentSlice>=0) showTop4(currentSlice);
+  // Update MTD/YTD KPIs
+  updatePerf(sel);
 }
 
 
