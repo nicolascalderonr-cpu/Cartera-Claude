@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Portafolio Consolidado</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:#1a1a1a;background:#f5f5f3;padding:16px}
+.card{background:#fff;border:1px solid #e5e3db;border-radius:12px;padding:1rem 1.25rem;margin-bottom:12px}
+.stitle{font-size:13px;font-weight:500;margin-bottom:12px;color:#1a1a1a}
+.badge{font-size:10px;padding:1px 6px;border-radius:20px;font-weight:500;display:inline-block;white-space:nowrap}
+.b-ml{background:#E6F1FB;color:#0C447C}.b-jpm{background:#FAEEDA;color:#633806}.b-ubs{background:#EAF3DE;color:#3B6D11}.b-jb{background:#F3E8FF;color:#5B21B6}.b-nm{background:#FEF3C7;color:#92400E}.b-clp{background:#FCE8E8;color:#A32D2D}.b-multi{background:#f0eeea;color:#5f5e5a}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{font-size:11px;font-weight:500;color:#888;text-align:left;padding:5px 8px;border-bottom:1px solid #eee;white-space:nowrap}
+.tbl td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.grp-hdr td{font-weight:500;background:#f8f8f6;font-size:11px;padding:4px 8px;color:#666}
+.bkt-tot td{font-weight:500;font-size:12px;border-top:2px solid #ddd;background:#f8f8f6}
+.bar-wrap{background:#e8e8e5;border-radius:3px;height:5px;min-width:30px}
+.bar-fill{height:5px;border-radius:3px}
+.pill{font-size:10px;padding:1px 5px;border-radius:10px;white-space:nowrap;display:inline-block;background:#f0eeea;color:#666}
+.tabs{display:flex;border-bottom:1px solid #e5e3db;margin-bottom:14px;flex-wrap:wrap;background:#fff;border-radius:12px 12px 0 0;padding:0 8px}
+.tb{padding:10px 14px;font-size:12px;cursor:pointer;color:#888;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;font-family:inherit;white-space:nowrap}
+.tb.act{color:#1a1a1a;border-bottom-color:#1a1a1a;font-weight:500}
+.subtabs{display:flex;gap:4px;margin-bottom:12px}
+.stb{padding:5px 11px;font-size:11px;cursor:pointer;color:#888;border:1px solid #ddd;border-radius:8px;background:#fff;font-family:inherit}
+.stb.act{color:#1a1a1a;background:#f0eeea;font-weight:500;border-color:#ccc}
+.rc{font-size:11px;padding:2px 6px;border-radius:6px;font-weight:500;white-space:nowrap;display:inline-block}
+.rp{background:#e8f5ee;color:#1a7a4a}.rn{background:#fce8e8;color:#a32d2d}.ra{background:#f0eeea;color:#888}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;vertical-align:middle}
+.dg{background:#22C55E}.dgy{background:#9CA3AF}
+.pi{font-size:10px;color:#aaa;white-space:nowrap;margin-left:3px}
+.cons-row{cursor:pointer;background:#f8f8f6}
+.cons-row:hover{background:#f0eeea}
+.ei{font-size:10px;color:#aaa;margin-right:3px;display:inline-block;transition:transform .15s}
+.cons-row.open .ei{transform:rotate(90deg)}
+.child{display:none}.child.show{display:table-row}
+.child td{background:#fff}
+.metric{background:#f8f8f6;border-radius:8px;padding:.875rem 1rem}
+.nm-row td{opacity:.82}
+.nm-b{font-size:9px;padding:1px 5px;border-radius:10px;background:#FEF3C7;color:#92400E;margin-left:4px;font-weight:500}
+.new-b{font-size:9px;padding:1px 5px;border-radius:10px;background:#dcfce7;color:#166534;margin-left:4px;font-weight:500}
+.pend-b{font-size:9px;padding:1px 5px;border-radius:10px;background:#FCE8E8;color:#A32D2D;margin-left:4px;font-weight:500}
+.eq-b{font-size:9px;padding:1px 5px;border-radius:10px;background:#dcfce7;color:#166534;margin-left:4px;font-weight:500}
+.twr-b{font-size:9px;padding:1px 5px;border-radius:10px;background:#e0f2fe;color:#0369a1;margin-left:4px;font-weight:500}
+.leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0}
+.fbar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fff;border:1px solid #e5e3db;border-radius:12px;margin-bottom:12px;flex-wrap:wrap}
+.fbar label{font-size:12px;color:#888;white-space:nowrap;font-weight:500}
+.fbar select{font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f8f6;color:#1a1a1a;font-family:inherit;cursor:pointer;min-width:220px}
+.fchip{font-size:11px;padding:3px 8px;border-radius:10px;background:#e6f1fb;color:#0c447c;display:none;align-items:center;gap:5px;cursor:pointer;font-weight:500}
+.hidden-row{display:none!important}
+.alloc-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.al{font-size:11px;color:#555;width:130px;flex-shrink:0}
+.abw{flex:1;background:#e8e8e5;border-radius:3px;height:6px}
+.abf{height:6px;border-radius:3px}
+.av{font-size:11px;color:#888;width:55px;text-align:right;white-space:nowrap}
+.ap{font-size:12px;font-weight:500;width:40px;text-align:right;white-space:nowrap}
+.warn-banner{background:#fffbeb;border:1px solid #f59e0b33;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:12px}
+.top4-panel{background:#f8f8f6;border-radius:8px;padding:10px 12px;margin-top:10px;min-height:60px}
+.top4-title{font-size:11px;font-weight:500;color:#555;margin-bottom:8px}
+.top4-item{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #eee;font-size:11px}
+.top4-item:last-child{border-bottom:none}
+</style>
+</head><body>
+<div style="max-width:1100px;margin:0 auto">
+
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+  <div>
+    <div style="font-size:20px;font-weight:600;color:#1a1a1a">Portafolio consolidado</div>
+    <div style="font-size:12px;color:#888;margin-top:2px">3 sociedades + NM 25% · <strong>03 jun 2026</strong> · 10 cuentas activas · <span style="color:#0369a1">TWR aplicado donde hay flujos</span></div>
+  </div>
+  <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+    <span class="badge b-ml">ML</span><span class="badge b-jpm">JPM</span><span class="badge b-ubs">UBS</span><span class="badge b-jb">Julius Baer</span><span class="badge b-nm">NM 25%</span><span class="badge b-clp">BTG/Banchile ⏳</span>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="fbar">
+  <label>🔍 Filtrar por cuenta:</label>
+  <select id="acct-sel" onchange="applyFilter()">
+    <option value="all">Todas las cuentas</option>
+    <optgroup label="Grupos">
+      <option value="g-centella">Centella (ML + JPM)</option>
+      <option value="g-bosques">Bosques (JPM + ML + UBS + Alt)</option>
+      <option value="g-mishpajot">Mishpajot (JPM)</option>
+      <option value="g-nm">Carteras No Manejadas (25%)</option>
+      <option value="g-propias">Solo cuentas propias</option>
+    </optgroup>
+    <optgroup label="Cuentas individuales">
+      <option value="cent-ml">Centella / ML</option>
+      <option value="cent-jpm">Centella / JPM</option>
+      <option value="bosq-jpm">Bosques / JPM</option>
+      <option value="bosq-ml">Bosques / ML</option>
+      <option value="bosq-ubs">Bosques / UBS</option>
+      <option value="bosq-alt">Bosques / Alt. Directos</option>
+      <option value="mish-jpm">Mishpajot / JPM</option>
+      <option value="nm-beaumont">Beaumont / ML (25%)</option>
+      <option value="nm-nidalbe">Nidalbe / JB (25%)</option>
+      <option value="nm-acc">ACC / JB (25%)</option>
+    </optgroup>
+    <optgroup label="Pendientes CLP">
+      <option value="btg">BTG ACV ⏳</option>
+      <option value="banchile">Banchile ACV ⏳</option>
+    </optgroup>
+  </select>
+  <span class="fchip" id="fchip" onclick="clearFilter()">✕ <span id="fchip-txt"></span></span>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tb act" onclick="showPane('landing',this)">Resumen</button>
+  <button class="tb" onclick="showPane('equity',this)">Equity</button>
+  <button class="tb" onclick="showPane('rf',this)">Renta fija</button>
+  <button class="tb" onclick="showPane('cash',this)">Cash</button>
+  <button class="tb" onclick="showPane('alt',this)">Alternativos</button>
+  <button class="tb" onclick="showPane('tx',this)">Transacciones</button>
+  <button class="tb" onclick="showPane('cuentas',this)">Cuentas</button>
+</div>
+
+<!-- ══ LANDING ══ -->
+<div id="pane-landing">
+  <!-- KPI metrics row - dynamic -->
+  <div id="kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-bottom:1.25rem">
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">$32.9M</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Último mes cerrado (may-26)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#1a7a4a">+1.76%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD ene–may 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.59%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Cash</div><div id="kpi-cash" style="font-size:22px;font-weight:600;color:#64748B">$4.2M</div><div id="kpi-cash-pct" style="font-size:11px;color:#888">12.5% del total</div></div>
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Alternativos</div><div id="kpi-alt" style="font-size:22px;font-weight:600;color:#EF9F27">$2.9M</div><div id="kpi-alt-pct" style="font-size:11px;color:#888">8.6% del total</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+    <div class="card">
+      <div class="stitle">Asignación por clase <span style="font-size:11px;color:#aaa;font-weight:400">— clic en slice para ver top 4 posiciones</span></div>
+      <div style="display:flex;align-items:flex-start;gap:16px">
+        <div style="position:relative;width:160px;height:160px;flex-shrink:0">
+          <canvas id="pieChart" role="img" aria-label="Pie chart portafolio"></canvas>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:0">
+          <div id="legend-eq" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(0)"><span class="leg-dot" style="background:#378ADD"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Equity</div><div id="leg-eq-val" style="font-size:11px;color:#888">$19.4M</div></div><span id="leg-eq-pct" style="font-size:13px;font-weight:600;color:#378ADD">57.8%</span></div>
+          <div id="legend-rf" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(1)"><span class="leg-dot" style="background:#1D9E75"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Renta fija</div><div id="leg-rf-val" style="font-size:11px;color:#888">$7.1M</div></div><span id="leg-rf-pct" style="font-size:13px;font-weight:600;color:#1D9E75">21.2%</span></div>
+          <div id="legend-cash" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(2)"><span class="leg-dot" style="background:#64748B"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Cash</div><div id="leg-cash-val" style="font-size:11px;color:#888">$4.2M</div></div><span id="leg-cash-pct" style="font-size:13px;font-weight:600;color:#64748B">12.5%</span></div>
+          <div id="legend-alt" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(3)"><span class="leg-dot" style="background:#EF9F27"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Alternativos</div><div id="leg-alt-val" style="font-size:11px;color:#888">$2.9M</div></div><span id="leg-alt-pct" style="font-size:13px;font-weight:600;color:#EF9F27">8.6%</span></div>
+        </div>
+      </div>
+      <!-- Top 4 panel -->
+      <div id="top4-panel" class="top4-panel" style="display:none">
+        <div id="top4-title" class="top4-title">Top 4 posiciones</div>
+        <div id="top4-items"></div>
+      </div>
+      <!-- Dynamic alloc breakdown -->
+      <div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px">
+        <div style="font-size:11px;color:#aaa;margin-bottom:7px">Desglose equity</div>
+        <div class="alloc-row"><div class="al">S&P 500 (SPY+CSPX)</div><div class="abw"><div id="ab-sp500" class="abf" style="width:24.2%;background:#85B7EB"></div></div><div id="av-sp500" class="av">$4.7M</div><div id="ap-sp500" class="ap" style="color:#85B7EB">24%</div></div>
+        <div class="alloc-row"><div class="al">Nasdaq (QQQ+XGHGF)</div><div class="abw"><div id="ab-ndx" class="abf" style="width:8.2%;background:#B5D4F4"></div></div><div id="av-ndx" class="av">$1.6M</div><div id="ap-ndx" class="ap" style="color:#B5D4F4">8%</div></div>
+        <div class="alloc-row"><div class="al">Notas estructuradas</div><div class="abw"><div id="ab-notas" class="abf" style="width:14.9%;background:#BFDBFE"></div></div><div id="av-notas" class="av">$2.9M</div><div id="ap-notas" class="ap" style="color:#BFDBFE">15%</div></div>
+        <div class="alloc-row"><div class="al">Otros ETFs / fondos</div><div class="abw"><div id="ab-otros" class="abf" style="width:52.7%;background:#378ADD"></div></div><div id="av-otros" class="av">$10.2M</div><div id="ap-otros" class="ap" style="color:#378ADD">53%</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="stitle">Valor por cuenta <span style="font-size:11px;color:#aaa;font-weight:400">— MTD = último mes cerrado (may-26)</span></div>
+      <table class="tbl">
+        <thead><tr><th>Cuenta</th><th class="num">Valor</th><th class="num">MTD may-26</th><th class="num">YTD ene–may</th></tr></thead>
+        <tbody>
+          <tr data-accts="cent-ml g-centella g-propias all"><td>Centella <span class="badge b-ml">ML</span> <span class="twr-b">TWR oficial</span></td><td class="num">$7.14M</td><td class="num"><span class="rc rp">+5.25%</span></td><td class="num"><span class="rc rp">+5.23%</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td>Centella <span class="badge b-jpm">JPM</span> <span class="twr-b">TWR</span></td><td class="num">$7.55M</td><td class="num"><span class="rc rp">+1.71%</span></td><td class="num"><span class="rc rp">+3.97%</span></td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td>Bosques <span class="badge b-jpm">JPM</span> <span class="twr-b">TWR</span></td><td class="num">$5.90M</td><td class="num"><span class="rc rp">+5.27%</span></td><td class="num"><span class="rc rp">+5.48%</span></td></tr>
+          <tr data-accts="bosq-ml g-bosques g-propias all"><td>Bosques <span class="badge b-ml">ML</span> <span class="twr-b">TWR</span></td><td class="num">$3.75M</td><td class="num"><span class="rc rp">+7.37%</span></td><td class="num"><span class="rc rp">+7.69%</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td>Bosques <span class="badge b-ubs">UBS</span> <span class="new-b">jun-26</span></td><td class="num">$1.01M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="bosq-alt g-bosques g-propias all"><td>Bosques <span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span> <span class="new-b">Directos</span></td><td class="num" id="bosq-alt-total">$2.09M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="mish-jpm g-mishpajot g-propias all"><td>Mishpajot <span class="badge b-jpm">JPM</span> <span class="new-b">✓ hoy</span></td><td class="num">$3.42M</td><td class="num"><span class="rc rp">+3.26%</span></td><td class="num"><span class="rc rp">+3.21%</span></td></tr>
+          <tr data-accts="nm-beaumont g-nm all" class="nm-row"><td>Beaumont <span class="nm-b">NM 25%</span></td><td class="num">$0.66M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="nm-nidalbe g-nm all" class="nm-row"><td>Nidalbe <span class="nm-b">NM 25%</span></td><td class="num">$2.87M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="nm-acc g-nm all" class="nm-row"><td>ACC <span class="nm-b">NM 25%</span></td><td class="num">$1.54M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="btg all" style="color:#aaa"><td>BTG ACV <span class="pend-b">⏳ CLP</span></td><td class="num">—</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="banchile all" style="color:#aaa"><td>Banchile ACV <span class="pend-b">⏳ CLP</span></td><td class="num">—</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>$32.9M</strong></td><td class="num"><strong>+1.76%</strong></td><td class="num"><strong>+5.59%</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:10px;color:#aaa;margin-top:8px;line-height:1.5">
+        <strong>TWR</strong> = Time-Weighted Return, ajustado por aportes y retiros. Centella ML usa TWR oficial Merrill Lynch. Bosques ML, Bosques JPM y Centella JPM calculados con flujos conocidos. Bosques UBS sin historia previa.
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-banner">⏳ <strong>Pendientes CLP:</strong> BTG ACV y Banchile ACV — al recibir las cartolas se convierten a USD y se integran. &nbsp;|&nbsp; <strong>Estelio Partners:</strong> $35,714 llamado (compromiso $500K) incluido en Alternativos a costo.</div>
+
+  <div class="card">
+    <div class="stitle">Breakdown por clase — MTD (may-26) y YTD (ene–may 2026)</div>
+    <table class="tbl">
+      <thead><tr><th>Clase</th><th>Subclase</th><th class="num">Valor</th><th class="num">% total</th><th class="num">MTD may</th><th class="num">YTD ene–may</th><th>Peso</th></tr></thead>
+      <tbody>
+        <tr class="grp-hdr"><td colspan="7">Equity — $19.4M · 57.8%</td></tr>
+        <tr><td style="padding-left:12px">Equity</td><td><span class="pill">ETFs / fondos</span></td><td class="num">$16.5M</td><td class="num">49.1%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:49%;background:#378ADD"></div></div></td></tr>
+        <tr><td style="padding-left:12px">Equity</td><td><span class="pill">Notas estructuradas</span></td><td class="num">$2.9M</td><td class="num">8.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#85B7EB"></div></div></td></tr>
+        <tr class="grp-hdr"><td colspan="7">Renta fija — $7.1M · 21.2%</td></tr>
+        <tr><td style="padding-left:12px">RF</td><td><span class="pill">Fondos crédito</span></td><td class="num">$2.9M</td><td class="num">8.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#1D9E75"></div></div></td></tr>
+        <tr><td style="padding-left:12px">RF</td><td><span class="pill">Bonos corp. IG</span></td><td class="num">$2.8M</td><td class="num">8.3%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:8%;background:#5DCAA5"></div></div></td></tr>
+        <tr><td style="padding-left:12px">RF</td><td><span class="pill">Bonos HY/EM</span></td><td class="num">$1.4M</td><td class="num">4.2%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#9FE1CB"></div></div></td></tr>
+        <tr class="grp-hdr"><td colspan="7">Cash — $4.2M · 12.5%</td></tr>
+        <tr><td style="padding-left:12px">Cash</td><td><span class="pill">Autocall / Bank dep.</span></td><td class="num">$3.0M</td><td class="num">9.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#64748B"></div></div></td></tr>
+        <tr><td style="padding-left:12px">Cash</td><td><span class="pill">MM / Fiduciary</span></td><td class="num">$1.2M</td><td class="num">3.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#94A3B8"></div></div></td></tr>
+        <tr class="grp-hdr"><td colspan="7">Alternativos — $2.9M · 8.6%</td></tr>
+        <tr><td style="padding-left:12px">Alt</td><td><span class="pill">PE / Infra</span></td><td class="num">$1.9M</td><td class="num">5.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:6%;background:#EF9F27"></div></div></td></tr>
+        <tr><td style="padding-left:12px">Alt</td><td><span class="pill">Hedge / Oro</span></td><td class="num">$0.7M</td><td class="num">2.1%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#D4AF37"></div></div></td></tr>
+        <tr><td style="padding-left:12px">Alt</td><td><span class="pill">Balanceado</span></td><td class="num">$0.3M</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:1%;background:#BA7517"></div></div></td></tr>
+        <tr class="bkt-tot"><td colspan="2">Total portafolio</td><td class="num">$33.5M</td><td class="num">100%</td><td class="num">—</td><td class="num">—</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ EQUITY ══ -->
+<div id="pane-equity" style="display:none">
+  <div class="subtabs">
+    <button class="stb act" onclick="showSub('eq-etfs','eq-notas',this)">ETFs y fondos</button>
+    <button class="stb" onclick="showSub('eq-notas','eq-etfs',this)">Notas estructuradas</button>
+  </div>
+  <div id="eq-etfs">
+    <div class="card">
+      <div class="stitle">ETFs y fondos &nbsp;<span style="font-size:11px;color:#aaa;font-weight:400">▶ clic en filas consolidadas para expandir</span></div>
+      <div style="overflow-x:auto"><table class="tbl">
+        <thead><tr><th></th><th style="width:26%">Instrumento</th><th style="width:11%">Cuenta</th><th style="width:11%">Subclase</th><th class="num" style="width:11%">Valor USD</th><th class="num" style="width:6%">% tot.</th><th class="num" style="width:7%">MTD may-26</th><th class="num" style="width:7%">YTD</th><th style="width:10%">Precio</th></tr></thead>
+        <tbody>
+          <tr class="cons-row" id="cr-sp500" onclick="tog('sp500')" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$4,741,350","cent-ml":"$2,733,715","bosq-ml":"$1,838,750","bosq-ubs":"$204,750","g-centella":"$2,733,715","g-bosques":"$2,043,500","g-propias":"$4,777,215"}'>
+            <td><span class="ei" id="ei-sp500">▶</span><span class="dot dg"></span></td>
+            <td><strong>S&P 500 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span></td>
+            <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US large</span></td>
+            <td class="num"><strong>$4,741,350</strong></td><td class="num">14.1%</td>
+            <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
+            <td><span class="dot dg"></span><span class="pi">$759/$816</span></td>
+          </tr>
+          <tr class="child" id="ch-sp500-0" data-accts="cent-ml bosq-ml g-centella g-bosques g-propias all">
+            <td style="padding-left:10px"><span class="dot dg"></span></td>
+            <td style="padding-left:22px;font-size:11.5px;color:#555">SPDR S&P 500 ETF (SPY) — 4,334u total</td>
+            <td><span class="badge b-ml">ML ×2</span></td><td><span class="pill">ETF US large</span></td>
+            <td class="num" style="color:#777">$3,190,963</td><td class="num" style="color:#777">9.5%</td>
+            <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
+            <td><span class="dot dg"></span><span class="pi">$756.48</span></td>
+          </tr>
+          <tr class="child" id="ch-sp500-1" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all">
+            <td style="padding-left:10px"><span class="dot dg"></span></td>
+            <td style="padding-left:22px;font-size:11.5px;color:#555">iShares Core S&P 500 UCITS (CSPX) — 1,972u <span class="new-b">+125u UBS</span></td>
+            <td><span class="badge b-ml">ML ×2</span> <span class="badge b-ubs">UBS</span></td><td><span class="pill">ETF US large</span></td>
+            <td class="num" style="color:#777">$1,550,387</td><td class="num" style="color:#777">4.6%</td>
+            <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
+            <td><span class="dot dg"></span><span class="pi">~$816</span></td>
+          </tr>
+          <tr class="cons-row" id="cr-ndx" onclick="tog('ndx')" data-accts="cent-jpm bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$1,588,530","cent-jpm":"$977,780","bosq-ml":"$558,450","bosq-ubs":"$101,500","g-centella":"$977,780","g-bosques":"$659,950","g-propias":"$1,638,030"}'>
+            <td><span class="ei" id="ei-ndx">▶</span><span class="dot dg"></span></td>
+            <td><strong>Nasdaq 100 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span></td>
+            <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US growth</span></td>
+            <td class="num"><strong>$1,588,530</strong></td><td class="num">4.7%</td>
+            <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
+            <td><span class="dot dg"></span><span class="pi">$743/$1,750</span></td>
+          </tr>
+          <tr class="child" id="ch-ndx-0" data-accts="cent-jpm bosq-ml g-centella g-bosques g-propias all">
+            <td style="padding-left:10px"><span class="dot dg"></span></td>
+            <td style="padding-left:22px;font-size:11.5px;color:#555">Invesco QQQ Trust — 1,322u total</td>
+            <td><span class="badge b-jpm">JPM</span> <span class="badge b-ml">ML</span></td><td><span class="pill">ETF US growth</span></td>
+            <td class="num" style="color:#777">$977,780</td><td class="num" style="color:#777">2.9%</td>
+            <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
+            <td><span class="dot dg"></span><span class="pi">$742.74</span></td>
+          </tr>
+          <tr class="child" id="ch-ndx-1" data-accts="bosq-ml bosq-ubs g-bosques g-propias all">
+            <td style="padding-left:10px"><span class="dot dgy"></span></td>
+            <td style="padding-left:22px;font-size:11.5px;color:#555">iShares Nasdaq 100 UCITS (XGHGF) — 349u <span class="new-b">+30u UBS</span></td>
+            <td><span class="badge b-ml">ML</span> <span class="badge b-ubs">UBS</span></td><td><span class="pill">ETF US growth</span></td>
+            <td class="num" style="color:#777">$610,750</td><td class="num" style="color:#777">1.8%</td>
+            <td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td>
+            <td><span class="dot dgy"></span><span class="pi">$1,750</span></td>
+          </tr>
+          <tr data-accts="bosq-jpm cent-jpm mish-jpm g-centella g-bosques g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>JPM Global Core Fd</td><td><span class="badge b-jpm">JPM ×3</span></td><td><span class="pill">Fondo global</span></td><td class="num" id="val-jpmcore">$2,970,381</td><td class="num">8.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">NAV</span></td></tr>
+          <tr data-accts="bosq-jpm mish-jpm g-bosques g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>JPM Access Growth Fd <span class="eq-b">→ equity</span></td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Fondo balanceado</span></td><td class="num" id="val-jpmaccess">$1,021,715</td><td class="num">3.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">NAV</span></td></tr>
+          <tr data-accts="mish-jpm g-mishpajot g-propias all"><td><span class="dot dg"></span></td><td>iShares MSCI ACWI (ISAC) <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$290,351</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dg"></span><span class="pi">$122.77</span></td></tr>
+          <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Xtrackers MSCI World Ex USA</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF global</span></td><td class="num">$494,714</td><td class="num">1.5%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$43.78</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dg"></span></td><td>iShares Core MSCI EAFE (IEFA) <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF global</span></td><td class="num">$76,086</td><td class="num">0.2%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dg"></span><span class="pi">$98.18</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>JPM China A Sh Op</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Fondo China</span></td><td class="num">$277,769</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">NAV</span></td></tr>
+          <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>iShares MSCI Chile (ECH)</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF EM</span></td><td class="num">$256,908</td><td class="num">0.8%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">$41.76</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>iShares MSCI EM UCITS <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF EM</span></td><td class="num">$26,083</td><td class="num">0.1%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">$66.88</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>SPDR Russell 2000 Small Cap UCITS <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF US small</span></td><td class="num">$25,383</td><td class="num">0.1%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">$84.61</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>SPDR S&P 400 Mid Cap UCITS <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF US mid</span></td><td class="num">$25,417</td><td class="num">0.1%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">$115.53</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Amundi US Pioneer Fund <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">Fondo global</span></td><td class="num">$50,568</td><td class="num">0.2%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">$208.39</span></td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Amplify AI Powered Equity (AIEQ)</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">ETF US mid</span></td><td class="num">$191,100</td><td class="num">0.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">est.</span></td></tr>
+          <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Wellington Global Healthcare</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo mutual</span></td><td class="num">$177,852</td><td class="num">0.5%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">NAV</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Global X Def Tech UCITS (ARMR)</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$159,981</td><td class="num">0.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">est.</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Procaps Group SA (PROCF)</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Acción</span></td><td class="num">$17,701</td><td class="num">0.1%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$1.51</span></td></tr>
+          <tr class="grp-hdr" data-accts="nm-nidalbe nm-acc g-nm all"><td colspan="9">Carteras No Manejadas — equity al 25%</td></tr>
+          <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>Polar Capital Global Technology <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondo tech</span></td><td class="num">$476,483</td><td class="num">1.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$303</span></td></tr>
+          <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>JB Glb Excellence Equity <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondo global</span></td><td class="num">$237,749</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$377</span></td></tr>
+          <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>Wellington Glb Healthcare Eq <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondo mutual</span></td><td class="num">$175,194</td><td class="num">0.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$52.77</span></td></tr>
+          <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>JB EQ Special Value + Artemis + otros <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Varios</span></td><td class="num">$346,536</td><td class="num">1.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">varios</span></td></tr>
+          <tr class="nm-row" data-accts="nm-acc g-nm all"><td><span class="dot dgy"></span></td><td>Columbia + BLK Euro + Federated + otros <span class="nm-b">ACC</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Varios</span></td><td class="num">$844,272</td><td class="num">2.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">varios</span></td></tr>
+          <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total equity (incl. notas)</td><td class="num">$19,375,386</td><td class="num">57.8%</td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div id="eq-notas" style="display:none">
+    <div class="card">
+      <div class="stitle">Notas estructuradas — $2.9M · 8.8%</div>
+      <div style="overflow-x:auto"><table class="tbl">
+        <thead><tr><th></th><th style="width:25%">Instrumento</th><th>Cuenta</th><th>Subyac.</th><th>Vcto.</th><th>Barrera</th><th>Cupón</th><th class="num">Valor</th><th class="num">%</th><th class="num">MTD may-26</th><th class="num">YTD</th></tr></thead>
+        <tbody>
+          <tr class="grp-hdr" data-accts="all g-propias cent-jpm bosq-jpm g-centella g-bosques"><td colspan="11">SPX — $1,707,010</td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">JPM AC M+ SPX 80% BAR 11.15%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">11.15%</td><td class="num">$350,350</td><td class="num">1.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">JPM DD CBEN SPX 2/3/28</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">static</td><td style="font-size:11px;color:green">9.45%</td><td class="num">$300,510</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">MS AC Market Plus SPX 04/22/27</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">abr-27</td><td style="font-size:11px">15%</td><td style="font-size:11px;color:green">10.0%</td><td class="num">$270,425</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">BARC Opti Entry SPX 9/1/27</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">sep-27</td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">11.8%</td><td class="num">$266,850</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">JPM AC Market Plus SPX 03/28/28</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">11.65%</td><td class="num">$254,900</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">JPM SPX AC DD Market Plus 8/12/27</td><td><span class="badge b-jpm">C+B</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">ago-27</td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">9.25%</td><td class="num">$263,975</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr class="grp-hdr" data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td colspan="11">Otros subyacentes</td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">GS AC M+ 3/2/28 basket tech</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Tech</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">16.95%</td><td class="num">$255,825</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">JPM AC M+ SX5E 2/24/28</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SX5E</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">25%</td><td style="font-size:11px;color:green">11.95%</td><td class="num">$195,600</td><td class="num">0.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">BNP AC M+ MELI UW 3/2/28</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">MELI</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">30%</td><td style="font-size:11px;color:green">20.33%</td><td class="num">$248,950</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr class="bkt-tot" data-accts="all"><td></td><td colspan="6">Total notas</td><td class="num">$2,907,385</td><td class="num">8.7%</td><td></td><td></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RF ══ -->
+<div id="pane-rf" style="display:none">
+  <div class="card">
+    <div class="stitle">Renta fija — $7.1M · 21.2%</div>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th></th><th style="width:26%">Instrumento</th><th>Cuenta</th><th>Subclase</th><th class="num">Valor</th><th class="num">% tot.</th><th class="num">MTD may-26</th><th class="num">YTD</th><th>Peso</th></tr></thead>
+      <tbody>
+        <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques cent-jpm bosq-jpm mish-jpm all"><td colspan="9">Fondos de crédito</td></tr>
+        <tr data-accts="cent-jpm bosq-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>JPMorgan Income Fund</td><td><span class="badge b-jpm">JPM ×3</span></td><td><span class="pill">Fondo global IG</span></td><td class="num">$1,397,847</td><td class="num">4.2%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:20%;background:#1D9E75"></div></div></td></tr>
+        <tr data-accts="cent-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>AXA Wld US Credit Short Dur IG</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Fondo crédito</span></td><td class="num">$806,551</td><td class="num">2.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:11%;background:#1D9E75"></div></div></td></tr>
+        <tr data-accts="cent-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>BNY Mellon Mult Sec Credit</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Fondo crédito</span></td><td class="num">$349,380</td><td class="num">1.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#1D9E75"></div></div></td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>AB FCP I Mortgage Inc USD</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo hipotec.</span></td><td class="num">$414,066</td><td class="num">1.2%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:6%;background:#1D9E75"></div></div></td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>GAM Star Credit Opps USD</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo crédito</span></td><td class="num">$263,733</td><td class="num">0.8%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#1D9E75"></div></div></td></tr>
+        <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques cent-ml cent-jpm bosq-ml bosq-jpm mish-jpm all"><td colspan="9">Bonos corporativos IG</td></tr>
+        <tr data-accts="cent-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>Deutsche Bank NY 5.37% 2027</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$771,297</td><td class="num">2.3%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:11%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Goldman Sachs MTN Zero 2040</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$517,514</td><td class="num">1.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="cent-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>Cooperatieve Rabobank 2028</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$503,135</td><td class="num">1.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Progressive Corp 6.25% 2032</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$278,524</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Morgan Stanley Sub 4.35% 2026</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$249,935</td><td class="num">0.7%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>VW Group Amer 4.75% 2028</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$255,464</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>GM Financial 4.35% Jan 2027</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$152,337</td><td class="num">0.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>JPMorgan Chase Jr Sub Flt% 2037</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$115,844</td><td class="num">0.3%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#5DCAA5"></div></div></td></tr>
+        <tr data-accts="mish-jpm g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>Goldman Sachs MTN VR 10/28/2027 <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$100,606</td><td class="num">0.3%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:1%;background:#5DCAA5"></div></div></td></tr>
+        <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques g-mishpajot all"><td colspan="9">Bonos HY y emergentes</td></tr>
+        <tr data-accts="mish-jpm bosq-jpm g-propias all"><td><span class="dot dgy"></span></td><td>Gen Motors Financial 3.6% 2030</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono corp. HY</span></td><td class="num">$481,895</td><td class="num">1.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="cent-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>Banco Santander Mexico 2028</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono EM</span></td><td class="num">$526,619</td><td class="num">1.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="cent-jpm mish-jpm g-propias all"><td><span class="dot dgy"></span></td><td>Petrobras Global Fin 5.999% 2028</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$265,965</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="mish-jpm g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>State of Israel 5.375% 2029</td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">Bono soberano</span></td><td class="num">$256,096</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Saavi Energia 8.875% 2035</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$226,454</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:3%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Energy Transfer LP 6.55% 2033</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono corp. HY</span></td><td class="num">$211,155</td><td class="num">0.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:3%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Braskem Neth 4.5% 2028</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$127,925</td><td class="num">0.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#9FE1CB"></div></div></td></tr>
+        <tr class="grp-hdr" data-accts="nm-beaumont nm-nidalbe nm-acc g-nm all"><td colspan="9">Carteras No Manejadas — RF al 25%</td></tr>
+        <tr class="nm-row" data-accts="nm-beaumont g-nm all"><td><span class="dot dgy"></span></td><td>Altria 4.25% 2042 + JPM 5.4% + otros <span class="nm-b">Beaumont</span></td><td><span class="badge b-ml">ML</span></td><td><span class="pill">Bonos IG+EM</span></td><td class="num">$303,973</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#9FE1CB"></div></div></td></tr>
+        <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>JB EM Corp + Muzinich + Brandywine <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondos+bonos</span></td><td class="num">$820,622</td><td class="num">2.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#1D9E75"></div></div></td></tr>
+        <tr class="nm-row" data-accts="nm-acc g-nm all"><td><span class="dot dgy"></span></td><td>JPM EM Corp + Muzinich + PIMCO <span class="nm-b">ACC</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondos+bonos</span></td><td class="num">$308,908</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#1D9E75"></div></div></td></tr>
+        <tr data-accts="bosq-ubs g-bosques g-propias all"><td colspan="9" style="font-size:11px;color:#aaa;padding:8px;font-style:italic">⚠ Bosques UBS no tiene posiciones de renta fija — la cuenta tiene solo Equity (ETFs) + Cash (sweep) + Coatue (Alternativos).</td></tr>
+        <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total renta fija</td><td class="num">$7,076,905</td><td class="num">21.2%</td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ CASH ══ -->
+<div id="pane-cash" style="display:none">
+  <div class="card">
+    <div class="stitle">Cash y equivalentes — $4.2M · 12.5%</div>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th></th><th style="width:30%">Instrumento</th><th>Cuenta</th><th>Tipo</th><th class="num">Valor USD</th><th class="num">% tot.</th><th class="num">% cash</th><th>Peso</th></tr></thead>
+      <tbody>
+        <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques cent-ml bosq-ml bosq-ubs all"><td colspan="8">Cuentas propias — $3,979,516</td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>MLB&TC USD Autocall Deposit</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Autocall dep.</span></td><td class="num">$2,553,000</td><td class="num">7.6%</td><td class="num">64.1%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:64%;background:#64748B"></div></div></td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>ML Bank Dep + MLPDA Preferred</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bank deposit</span></td><td class="num">$486,132</td><td class="num">1.5%</td><td class="num">12.2%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#64748B"></div></div></td></tr>
+        <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dg"></span></td><td>UBS Insured Sweep + Core Savings <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">Bank deposit</span></td><td class="num">$346,855</td><td class="num">1.0%</td><td class="num">8.7%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#64748B"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Cash USD — Centella JPM</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Cash</span></td><td class="num">$245,000</td><td class="num">0.7%</td><td class="num">6.2%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:6%;background:#64748B"></div></div></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Cash USD — Bosques JPM</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Cash</span></td><td class="num">$57,655</td><td class="num">0.2%</td><td class="num">1.5%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#64748B"></div></div></td></tr>
+        <tr data-accts="mish-jpm g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>Cash USD — Mishpajot JPM</td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">Cash</span></td><td class="num">$2,093</td><td class="num">0.0%</td><td class="num">0.1%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:1%;background:#64748B"></div></div></td></tr>
+        <tr class="grp-hdr" data-accts="nm-beaumont nm-nidalbe nm-acc g-nm all"><td colspan="8">Carteras No Manejadas — cash al 25% — $975,702</td></tr>
+        <tr class="nm-row" data-accts="nm-beaumont g-nm all"><td><span class="dot dgy"></span></td><td>MLB&TC Autocall Deposit <span class="nm-b">Beaumont 25%</span></td><td><span class="badge b-ml">ML</span></td><td><span class="pill">Autocall dep.</span></td><td class="num">$348,765</td><td class="num">1.0%</td><td class="num">8.8%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#94A3B8"></div></div></td></tr>
+        <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>Fiduciary Call Dep + Current Nidalbe <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fiduciary+Cash</span></td><td class="num">$347,519</td><td class="num">1.0%</td><td class="num">8.7%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#94A3B8"></div></div></td></tr>
+        <tr class="nm-row" data-accts="nm-acc g-nm all"><td><span class="dot dgy"></span></td><td>BlackRock MM + Fiduciary + Current ACC <span class="nm-b">ACC 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">MM+Cash</span></td><td class="num">$272,766</td><td class="num">0.8%</td><td class="num">6.9%</td><td><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#94A3B8"></div></div></td></tr>
+        <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total Cash</td><td class="num">$4,202,218</td><td class="num">12.5%</td><td class="num">100%</td><td></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ ALTERNATIVOS ══ -->
+<div id="pane-alt" style="display:none">
+  <div class="card">
+    <div class="stitle">Alternativos — $2.9M · 8.6%</div>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th></th><th style="width:27%">Instrumento</th><th>Cuenta</th><th>Subclase</th><th class="num">Valor</th><th class="num">% tot.</th><th class="num">% bucket</th><th class="num">MTD may-26</th><th class="num">YTD</th><th>Peso</th></tr></thead>
+      <tbody>
+        <tr class="grp-hdr" data-accts="cent-ml cent-jpm g-centella g-propias all"><td colspan="10">Private equity e infraestructura</td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Franklin Lexington Pvt Mkt Fd</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Private equity</span></td><td class="num">$623,600</td><td class="num">1.9%</td><td class="num">21.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:22%;background:#EF9F27"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>GTIF Private Investors O/F Fd</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Real estate</span></td><td class="num">$500,000</td><td class="num">1.5%</td><td class="num">17.3%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:17%;background:#EF9F27"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Ardian Access SCA SICAV-RAIF</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Private equity</span></td><td class="num">$280,151</td><td class="num">0.8%</td><td class="num">9.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:10%;background:#EF9F27"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>KKR Infrastructure Fund</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Infraestructura</span></td><td class="num">$276,686</td><td class="num">0.8%</td><td class="num">9.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:10%;background:#EF9F27"></div></div></td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Blackstone Alternatives Sol. VI</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Hedge/PE</span></td><td class="num">$183,892</td><td class="num">0.5%</td><td class="num">6.4%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:6%;background:#EF9F27"></div></div></td></tr>
+        <!-- Estelio moved to bosq-alt section below -->
+        <tr class="grp-hdr" data-accts="bosq-ubs g-bosques g-propias all"><td colspan="10">Bosques UBS</td></tr>
+        <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Coatue Innovation Fund ICAP Offshore <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">Hedge fund</span></td><td class="num">$300,000</td><td class="num">0.9%</td><td class="num">10.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:10%;background:#85B7EB"></div></div></td></tr>
+        <tr class="grp-hdr" data-accts="bosq-alt g-bosques g-propias all"><td colspan="10">Bosques — Alternativos Directos &nbsp;<span style="font-size:10px;color:#888;font-weight:400">NAV / costo actualizado · Draftea ajustable con MOIC</span></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Estelio Partners <span style="font-size:10px;color:#aaa">commit $500K</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Private equity</span></td><td class="num">$35,714</td><td class="num">0.1%</td><td class="num">1.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>D&amp;W Venture Debt Fund <span style="font-size:10px;color:#aaa">XIRR 31.78% · NAV 31-dic-25</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Venture debt</span></td><td class="num">$187,691</td><td class="num">0.6%</td><td class="num">9.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Terreno Woodstock <span style="font-size:10px;color:#aaa">50% write-off aplicado</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Real estate</span></td><td class="num">$500,000</td><td class="num">1.5%</td><td class="num">23.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:24%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Terreno 29Palms <span style="font-size:10px;color:#aaa">50% write-off aplicado</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Real estate</span></td><td class="num">$100,000</td><td class="num">0.3%</td><td class="num">4.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>28&amp;7 Corp <span style="font-size:10px;color:#aaa">inv. $100K nov-2025</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Direct invest.</span></td><td class="num">$100,000</td><td class="num">0.3%</td><td class="num">4.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>SW West Loop <span style="font-size:10px;color:#aaa">$126K llamado dic-25 / commit $200K</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Real estate</span></td><td class="num">$126,000</td><td class="num">0.4%</td><td class="num">6.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:6%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Qanlex <span style="font-size:10px;color:#aaa">inv. $100K · div. $45K recibidos · NAV $102.5K</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Venture</span></td><td class="num">$102,500</td><td class="num">0.3%</td><td class="num">4.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all">
+          <td><span class="dot dgy"></span></td>
+          <td>Draftea <span style="font-size:10px;color:#aaa">inv. may-22 · $166,666</span>
+            &nbsp;<select id="draftea-moic" onchange="updateDraftea()" style="font-size:11px;padding:2px 6px;border-radius:6px;border:1px solid #ddd;background:#f8f8f6;cursor:pointer">
+              <option value="1">Costo</option>
+              <option value="5">MOIC x5</option><option value="6">MOIC x6</option><option value="7">MOIC x7</option>
+              <option value="8">MOIC x8</option><option value="9">MOIC x9</option><option value="10">MOIC x10</option>
+            </select>
+          </td>
+          <td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td>
+          <td><span class="pill">Venture capital</span></td>
+          <td class="num" id="draftea-val">$166,666</td>
+          <td class="num" id="draftea-pct">2.5%</td>
+          <td class="num" id="draftea-bucket">39.8%</td>
+          <td class="num"><span class="rc ra">—</span></td>
+          <td class="num" id="draftea-moic-display"><span class="rc ra">costo</span></td>
+          <td><div class="bar-wrap"><div id="draftea-bar" class="bar-fill" style="width:40%;background:#7C3AED"></div></div></td>
+        </tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Befinan <span style="font-size:10px;color:#aaa">valor actualizado</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Direct invest.</span></td><td class="num">$107,441</td><td class="num">0.3%</td><td class="num">5.1%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td colspan="10" style="font-size:10px;color:#aaa;padding:6px 8px;line-height:1.6">
+          ⚠ <strong>Compromisos no llamados:</strong> Estelio $464,286 · SW West Loop $74,000 · Total sin llamar: $538,286 &nbsp;|&nbsp;
+          <strong>D&amp;W:</strong> llamado $621,144 · distribuido $528,555 · NAV al 31-dic-25 $187,691
+        </td></tr>
+        <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>SPDR Gold Trust <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Oro</span></td><td class="num">$271,128</td><td class="num">0.8%</td><td class="num">9.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#D4AF37"></div></div></td></tr>
+        <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>First Eagle Amundi + JB Dynamic <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondo balanceado</span></td><td class="num">$337,892</td><td class="num">1.0%</td><td class="num">11.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#BA7517"></div></div></td></tr>
+        <tr class="nm-row" data-accts="nm-acc g-nm all"><td><span class="dot dgy"></span></td><td>Schroder GAIA Sirios US Equity <span class="nm-b">ACC 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Hedge fund</span></td><td class="num">$115,070</td><td class="num">0.3%</td><td class="num">4.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#EF9F27"></div></div></td></tr>
+        <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total alternativos</td><td class="num">$2,924,133</td><td class="num">8.7%</td><td class="num">100%</td><td></td><td></td><td></td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td colspan="10" style="font-size:10px;color:#aaa;padding-top:4px">⚠ Estelio Partners: compromiso total $500,000 · llamado hasta hoy $35,714 · valor a costo de inversión</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ TX ══ -->
+<div id="pane-tx" style="display:none">
+  <div class="card">
+    <div class="stitle">Transacciones — YTD 2026 (relevantes para TWR)</div>
+    <div style="overflow-x:auto"><table class="tbl">
+      <thead><tr><th>Fecha</th><th>Tipo</th><th>Cuenta</th><th>Instrumento / Descripción</th><th class="num">Valor</th><th>Nota</th></tr></thead>
+      <tbody>
+        <tr data-accts="mish-jpm g-mishpajot g-propias all"><td style="font-size:11px">02-jun-26</td><td><span style="font-size:11px;font-weight:500;color:#0C447C">ACTUALIZACIÓN</span></td><td style="font-size:11px">Mish/JPM</td><td style="font-size:11.5px">Posiciones al día: ACWI 2,365u · JPM Global 7,059u · AXA Credit · BNY Credit · JPM Income · Access Gth · GM 250k · GS VR 100k</td><td class="num" style="font-size:11px">$3,411,442</td><td style="font-size:10px;color:#aaa">CSV 02-jun-26</td></tr>
+        <tr data-accts="bosq-ubs g-bosques g-propias all"><td style="font-size:11px">02-jun-26</td><td><span style="font-size:11px;font-weight:500;color:green">INTEGRACIÓN</span></td><td style="font-size:11px">Bosq/UBS-1</td><td style="font-size:11.5px">8 posiciones: CSPX, XGHGF, IEFA, EM, R2000, S&P400, Amundi, Cash</td><td class="num" style="font-size:11px">$705,914</td><td style="font-size:10px;color:#aaa">UBS R2 17867 Bosques 1</td></tr>
+        <tr data-accts="bosq-ubs g-bosques g-propias all"><td style="font-size:11px">02-jun-26</td><td><span style="font-size:11px;font-weight:500;color:green">INTEGRACIÓN</span></td><td style="font-size:11px">Bosq/UBS-2</td><td style="font-size:11.5px">Coatue Innovation Fund ICAP Offshore</td><td class="num" style="font-size:11px">$300,000</td><td style="font-size:10px;color:#aaa">UBS R2 17868 Bosques 2</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">may-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO/TRANSFERENCIA</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">Transferencia a Bosques UBS</td><td class="num" style="font-size:11px;color:#a32d2d">($1,000,000)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">01-jun-26</td><td><span style="font-size:11px;font-weight:500;color:green">COMPRA</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">SPY 1,913u · XGHGF 319u · CSPX 557u · QQQ 350u</td><td class="num" style="font-size:11px">$2,723,918</td><td style="font-size:10px;color:#aaa">CSV Bosques/ML jun-26</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">20-abr-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">CAPITAL CALL</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">Estelio Partners — Capital Call #1</td><td class="num" style="font-size:11px;color:#a32d2d">($35,714)</td><td style="font-size:10px;color:#aaa">Compromiso total $500K · TWR ajustado</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">01-abr-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">Pago honorarios abogados</td><td class="num" style="font-size:11px;color:#a32d2d">($8,225)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td style="font-size:11px">04-mar-26</td><td><span style="font-size:11px;font-weight:500;color:green">APORTE</span></td><td style="font-size:11px">Bosq/JPM</td><td style="font-size:11.5px">Transferencia desde Bosques ML</td><td class="num" style="font-size:11px;color:green">+$200,000</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">04-mar-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO/TRANSFERENCIA</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">Transferencia a Bosques JPM</td><td class="num" style="font-size:11px;color:#a32d2d">($200,000)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">27-mar-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">Pago sueldo asesorías Nicolás</td><td class="num" style="font-size:11px;color:#a32d2d">($7,613)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td style="font-size:11px">27-mar-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO</span></td><td style="font-size:11px">Cent/JPM</td><td style="font-size:11.5px">Pago Trustee</td><td class="num" style="font-size:11px;color:#a32d2d">($11,000)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td style="font-size:11px">30-ene-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO</span></td><td style="font-size:11px">Bosq/ML</td><td style="font-size:11.5px">Pago tarjeta de crédito</td><td class="num" style="font-size:11px;color:#a32d2d">($135,000)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td style="font-size:11px">27-ene-26</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO</span></td><td style="font-size:11px">Cent/JPM</td><td style="font-size:11.5px">Pago Trustee</td><td class="num" style="font-size:11px;color:#a32d2d">($8,000)</td><td style="font-size:10px;color:#aaa">TWR ajustado</td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td style="font-size:11px">30-abr-26</td><td><span style="font-size:11px;font-weight:500;color:green">COMPRA</span></td><td style="font-size:11px">Cent/ML</td><td style="font-size:11.5px">CSPX 1,290u · Xtrackers 11,300u</td><td class="num" style="font-size:11px">$1,495,576</td><td style="font-size:10px;color:#aaa">abr-26</td></tr>
+        <tr data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td style="font-size:11px">ene–mar 26</td><td><span style="font-size:11px;font-weight:500;color:green">COMPRA</span></td><td style="font-size:11px">C+B/JPM</td><td style="font-size:11.5px">Notas estructuradas (9 instrumentos)</td><td class="num" style="font-size:11px">$2,455,285</td><td style="font-size:10px;color:#aaa">SPX, SX5E, Tech, MELI</td></tr>
+        <tr data-accts="cent-ml g-centella g-propias all"><td style="font-size:11px">dic-24</td><td><span style="font-size:11px;font-weight:500;color:#8B5CF6">RETIRO</span></td><td style="font-size:11px">Cent/ML</td><td style="font-size:11.5px">Retiro / transferencia</td><td class="num" style="font-size:11px;color:#a32d2d">($2,000,030)</td><td style="font-size:10px;color:#aaa">dic-2024</td></tr>
+        <tr data-accts="btg banchile" style="color:#aaa"><td style="font-size:11px">pendiente</td><td><span style="font-size:11px;font-weight:500">⏳</span></td><td style="font-size:11px">BTG / Banchile</td><td style="font-size:11.5px">Cartolas CLP pendientes</td><td class="num" style="font-size:11px">—</td><td style="font-size:10px;color:#aaa">Conversión CLP→USD al recibir</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ CUENTAS ══ -->
+<div id="pane-cuentas" style="display:none">
+  <div class="card">
+    <div class="stitle">Cuentas propias</div>
+    <table class="tbl">
+      <thead><tr><th>Sociedad</th><th>Banco</th><th class="num">Valor neto</th><th class="num">MTD may-26</th><th class="num">YTD ene–may</th><th class="num">2025 (dic)</th><th class="num">Desde inicio</th><th>Peso</th></tr></thead>
+      <tbody>
+        <tr data-accts="cent-ml g-centella g-propias all"><td>Centella</td><td><span class="badge b-ml">ML</span></td><td class="num">$7,143,160</td><td class="num"><span class="rc rp">+5.25%</span></td><td class="num"><span class="rc rp">+5.23%</span></td><td class="num"><span class="rc rp">+16.94%</span></td><td class="num"><span class="rc rp">+20.11%</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:23%;background:#378ADD"></div></div></td></tr>
+        <tr data-accts="cent-jpm g-centella g-propias all"><td>Centella <span class="twr-b">TWR</span></td><td><span class="badge b-jpm">JPM</span></td><td class="num">$7,547,457</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:24%;background:#85B7EB"></div></div></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td>Bosques <span class="twr-b">TWR</span></td><td><span class="badge b-jpm">JPM</span></td><td class="num">$5,897,085</td><td class="num"><span class="rc rp">+5.27%</span></td><td class="num"><span class="rc rp">+5.48%</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:19%;background:#1D9E75"></div></div></td></tr>
+        <tr data-accts="bosq-ml g-bosques g-propias all"><td>Bosques <span class="twr-b">TWR</span></td><td><span class="badge b-ml">ML</span></td><td class="num">$3,746,267</td><td class="num"><span class="rc rp">+7.37%</span></td><td class="num"><span class="rc rp">+7.69%</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#C7E2F8"></div></div></td></tr>
+        <tr data-accts="bosq-ubs g-bosques g-propias all"><td>Bosques <span class="new-b">UBS integrado</span></td><td><span class="badge b-ubs">UBS</span></td><td class="num">$1,005,914</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:3%;background:#97C459"></div></div></td></tr>
+        <tr data-accts="mish-jpm g-mishpajot g-propias all"><td>Mishpajot <span class="new-b">✓ hoy</span></td><td><span class="badge b-jpm">JPM</span></td><td class="num">$3,419,256</td><td class="num"><span class="rc rp">+3.26%</span></td><td class="num"><span class="rc rp">+3.21%</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:11%;background:#EF9F27"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td>Bosques Alt. Directos</td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Directos</span></td><td class="num" id="cuentas-bosq-alt">$2,090,176</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:7%;background:#7C3AED"></div></div></td></tr>
+        <tr class="bkt-tot" data-accts="g-propias all"><td colspan="2">Total propias</td><td class="num">$30,849,315</td><td colspan="5"></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="stitle">Carteras No Manejadas — 25%</div>
+    <table class="tbl">
+      <thead><tr><th>Sociedad</th><th>Banco</th><th class="num">Total 100%</th><th class="num">Nuestra parte 25%</th><th class="num">% portafolio</th></tr></thead>
+      <tbody>
+        <tr class="nm-row" data-accts="nm-beaumont g-nm all"><td>Beaumont Ridge</td><td><span class="badge b-ml">ML</span></td><td class="num">$2,637,558</td><td class="num"><strong>$659,390</strong></td><td class="num">2.0%</td></tr>
+        <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td>Nidalbe SP</td><td><span class="badge b-jb">Julius Baer</span></td><td class="num">$11,477,504</td><td class="num"><strong>$2,869,376</strong></td><td class="num">8.6%</td></tr>
+        <tr class="nm-row" data-accts="nm-acc g-nm all"><td>Alberto Calderon (ACC)</td><td><span class="badge b-jb">Julius Baer</span></td><td class="num">$6,164,061</td><td class="num"><strong>$1,541,015</strong></td><td class="num">4.6%</td></tr>
+        <tr class="bkt-tot" data-accts="g-nm all"><td colspan="2">Total NM (25%)</td><td class="num">$20,279,123</td><td class="num"><strong>$5,069,781</strong></td><td class="num">15.1%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="stitle">Pendientes — cartolas CLP</div>
+    <table class="tbl">
+      <thead><tr><th>Sociedad</th><th>Banco</th><th>Moneda</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr data-accts="btg all" style="color:#aaa"><td>BTG ACV</td><td><span class="badge b-clp">BTG</span></td><td>CLP</td><td style="font-size:11px">⏳ Esperando cartola — se convierte a USD al recibir</td></tr>
+        <tr data-accts="banchile all" style="color:#aaa"><td>Banchile ACV</td><td><span class="badge b-clp">Banchile</span></td><td>CLP</td><td style="font-size:11px">⏳ Esperando cartola — se convierte a USD al recibir</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /max-width -->
+<div style="max-width:1100px;margin:8px auto;font-size:10px;color:#aaa;line-height:1.6;padding:0 4px">
+  <strong>Fuentes MTD may-26:</strong> SPY precio cierre oficial may-29 ($756.48 vs $718.66 abr-30). CSPX estimado ≈SPX. QQQ estimado +6.5% (YTD -1.07% confirmado). Fondos JPM (Income, Global Core, Access Growth, AXA, BNY), China, AIEQ, Wellington: NAV abr-26 — pendiente actualización con cartola may. <span style="color:#f59e0b">abr</span> = dato del mes anterior.
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+// Per-account allocation data for dynamic pie chart
+var ACCT_DATA = {
+  // Centella ML: equity $3.60M + RF $0.96M + cash $2.40M + alt $0.19M = $7.15M (neto $7.14M)
+  'cent-ml':    {eq:3600000, rf:960000,  cash:2400000, alt:183160},
+  // Centella JPM: equity $3.49M + RF $2.23M + cash $0.16M + alt $1.67M = $7.55M
+  'cent-jpm':   {eq:3490000, rf:2230000, cash:165471,  alt:1662986},
+  // Bosques JPM: equity $2.88M + RF $1.04M + cash $0.06M = $5.98M → neto $5.90M
+  'bosq-jpm':   {eq:2880000, rf:1040000, cash:57655,   alt:0},
+  // Bosques ML: equity $2.75M + RF $0.52M + cash $0.44M + alt $0.04M = $3.75M (post transferencia $1M a UBS may-26)
+  'bosq-ml':    {eq:2750000, rf:520000,  cash:440553,  alt:35714},
+  // Bosques UBS: equity $0.48M + RF $0 + cash $0.23M + alt $0.30M = $1.01M
+  'bosq-ubs':   {eq:479537,  rf:0,       cash:226377,  alt:300000},
+  // Mishpajot JPM: equity $1.38M + RF $1.45M + cash $0.002M + alt $0.35M = $3.18M
+  'mish-jpm':   {eq:1379796, rf:1445659, cash:2093,    alt:345396},
+  // Bosques Alt Directos — valor NAV / costo actualizado
+  'bosq-alt':   {eq:0, rf:0, cash:0, alt:2092676}, // default moic x5: 1259346 + 833330
+  // NM al 25%
+  'nm-beaumont':{eq:307657,  rf:303973,  cash:348765,  alt:0},
+  'nm-nidalbe': {eq:1236161, rf:820622,  cash:347519,  alt:608890},
+  'nm-acc':     {eq:963829,  rf:308908,  cash:272766,  alt:115070},
+};
+
+var ACCT_LABELS = {
+  all:null,'g-centella':'Centella','g-bosques':'Bosques','g-mishpajot':'Mishpajot',
+  'g-nm':'NM 25%','g-propias':'Propias','cent-ml':'Centella / ML','cent-jpm':'Centella / JPM',
+  'bosq-jpm':'Bosques / JPM','bosq-ml':'Bosques / ML','bosq-ubs':'Bosques / UBS','bosq-alt':'Bosques / Alt. Directos',
+  'mish-jpm':'Mishpajot / JPM','nm-beaumont':'Beaumont 25%','nm-nidalbe':'Nidalbe 25%',
+  'nm-acc':'ACC 25%','btg':'BTG ACV','banchile':'Banchile ACV'
+};
+
+var ACCT_GROUPS = {
+  'g-centella':['cent-ml','cent-jpm'],
+  'g-bosques':['bosq-jpm','bosq-ml','bosq-ubs','bosq-alt'],
+  'g-mishpajot':['mish-jpm'],
+  'g-nm':['nm-beaumont','nm-nidalbe','nm-acc'],
+  'g-propias':['cent-ml','cent-jpm','bosq-jpm','bosq-ml','bosq-ubs','bosq-alt','mish-jpm'],
+  'all':['cent-ml','cent-jpm','bosq-jpm','bosq-ml','bosq-ubs','bosq-alt','mish-jpm','nm-beaumont','nm-nidalbe','nm-acc']
+};
+
+// Top 4 positions per class per account group
+var TOP4 = {
+  eq:{
+    all:[
+      {n:'S&P 500 (SPY+CSPX)',v:'$4.74M',a:'ML × 2 + UBS'},
+      {n:'JPM Global Core Fd',v:'$2.97M',a:'JPM × 3'},
+      {n:'Nasdaq 100 (QQQ+XGHGF)',v:'$1.59M',a:'ML + JPM + UBS'},
+      {n:'JPM Access Growth Fd',v:'$1.02M',a:'JPM × 2'}
+    ],
+    'g-centella':[
+      {n:'S&P 500 (SPY+CSPX)',v:'$2.73M',a:'Cent/ML'},
+      {n:'JPM Global Core Fd',v:'$1.09M',a:'Cent/JPM'},
+      {n:'Notas estructuradas SPX',v:'$797K',a:'Cent/JPM'},
+      {n:'Nasdaq 100 QQQ',v:'$558K',a:'Cent/JPM'}
+    ],
+    'g-bosques':[
+      {n:'S&P 500 (SPY+CSPX)',v:'$2.01M',a:'Bosq/ML + UBS'},
+      {n:'Notas estructuradas SPX',v:'$906K',a:'Bosq/JPM'},
+      {n:'JPM Global Core Fd',v:'$830K',a:'Bosq/JPM'},
+      {n:'JPM Access Growth Fd',v:'$676K',a:'Bosq/JPM'}
+    ],
+    'g-mishpajot':[
+      {n:'JPM Global Core Fd',v:'$1.09M',a:'Mish/JPM'},
+      {n:'JPM Access Growth Fd',v:'$345K',a:'Mish/JPM'},
+      {n:'iShares MSCI ACWI',v:'$290K',a:'Mish/JPM'},
+      {n:'—',v:'—',a:''}
+    ],
+    'cent-ml':[
+      {n:'SPDR S&P 500 ETF (SPY)',v:'$1.74M',a:'Cent/ML'},
+      {n:'iShares Core S&P 500 (CSPX)',v:'$994K',a:'Cent/ML'},
+      {n:'Xtrackers MSCI World Ex USA',v:'$495K',a:'Cent/ML'},
+      {n:'iShares MSCI Chile (ECH)',v:'$257K',a:'Cent/ML'}
+    ],
+    'cent-jpm':[
+      {n:'JPM Global Core Fd',v:'$1.09M',a:'Cent/JPM'},
+      {n:'Notas estructuradas SPX',v:'$797K',a:'Cent/JPM'},
+      {n:'JPM China A Shares',v:'$278K',a:'Cent/JPM'},
+      {n:'Global X Defense Tech (ARMR)',v:'$160K',a:'Cent/JPM'}
+    ],
+    'bosq-jpm':[
+      {n:'Notas estructuradas SPX',v:'$906K',a:'Bosq/JPM'},
+      {n:'JPM Global Core Fd',v:'$830K',a:'Bosq/JPM'},
+      {n:'JPM Access Growth Fd',v:'$676K',a:'Bosq/JPM'},
+      {n:'Amplify AI (AIEQ)',v:'$191K',a:'Bosq/JPM'}
+    ],
+    'bosq-ml':[
+      {n:'SPDR S&P 500 ETF (SPY)',v:'$1.38M',a:'Bosq/ML'},
+      {n:'iShares Nasdaq 100 (XGHGF)',v:'$558K',a:'Bosq/ML'},
+      {n:'iShares Core S&P 500 (CSPX)',v:'$455K',a:'Bosq/ML'},
+      {n:'Invesco QQQ Trust',v:'$420K',a:'Bosq/ML'}
+    ],
+    'bosq-ubs':[
+      {n:'iShares Core MSCI EAFE',v:'$76K',a:'Bosq/UBS'},
+      {n:'iShares Core S&P 500 (CSPX)',v:'$102K',a:'Bosq/UBS'},
+      {n:'Amundi US Pioneer Fund',v:'$51K',a:'Bosq/UBS'},
+      {n:'iShares Nasdaq 100 (XGHGF)',v:'$53K',a:'Bosq/UBS'}
+    ],
+    'mish-jpm':[
+      {n:'JPM Global Core Fd',v:'$1.09M',a:'Mish/JPM'},
+      {n:'JPM Access Growth Fd',v:'$345K',a:'Mish/JPM'},
+      {n:'iShares MSCI ACWI',v:'$290K',a:'Mish/JPM'},
+      {n:'—',v:'—',a:''}
+    ]
+  },
+  rf:{
+    all:[
+      {n:'JPMorgan Income Fund',v:'$1.40M',a:'JPM × 3'},
+      {n:'AXA Wld US Credit SD',v:'$807K',a:'JPM × 2'},
+      {n:'Deutsche Bank 5.37% 2027',v:'$771K',a:'JPM × 2'},
+      {n:'Goldman Sachs MTN Zero 2040',v:'$518K',a:'Cent/JPM'}
+    ],
+    'g-centella':[
+      {n:'JPMorgan Income Fund',v:'$918K',a:'Cent/JPM'},
+      {n:'Goldman Sachs MTN Zero 2040',v:'$518K',a:'Cent/JPM'},
+      {n:'Deutsche Bank 5.37% 2027',v:'$515K',a:'Cent/JPM'},
+      {n:'AB FCP I Mortgage Inc USD',v:'$414K',a:'Cent/ML'}
+    ],
+    'g-bosques':[
+      {n:'JPMorgan Income Fund',v:'$240K',a:'Bosq/JPM'},
+      {n:'GM Financial 3.6% 2030',v:'$243K',a:'Bosq/JPM'},
+      {n:'Saavi Energia 8.875% 2035',v:'$226K',a:'Bosq/JPM'},
+      {n:'Energy Transfer LP 6.55%',v:'$211K',a:'Bosq/JPM'}
+    ],
+    'g-mishpajot':[
+      {n:'AXA Wld US Credit SD',v:'$566K',a:'Mish/JPM'},
+      {n:'BNY Mellon Mult Sec Credit',v:'$539K',a:'Mish/JPM'},
+      {n:'JPMorgan Income Fund',v:'$240K',a:'Mish/JPM'},
+      {n:'GM Financial 3.6% 2030',v:'$239K',a:'Mish/JPM'}
+    ],
+    'cent-ml':[
+      {n:'AB FCP I Mortgage Inc USD',v:'$414K',a:'Cent/ML'},
+      {n:'GAM Star Credit Opps',v:'$264K',a:'Cent/ML'},
+      {n:'Morgan Stanley Sub 4.35%',v:'$250K',a:'Cent/ML'},
+      {n:'—',v:'—',a:''}
+    ],
+    'cent-jpm':[
+      {n:'JPMorgan Income Fund',v:'$918K',a:'Cent/JPM'},
+      {n:'Goldman Sachs MTN Zero 2040',v:'$518K',a:'Cent/JPM'},
+      {n:'Deutsche Bank 5.37% 2027',v:'$515K',a:'Cent/JPM'},
+      {n:'AXA Wld US Credit SD',v:'$240K',a:'Cent/JPM'}
+    ],
+    'bosq-jpm':[
+      {n:'JPMorgan Income Fund',v:'$240K',a:'Bosq/JPM'},
+      {n:'GM Financial 3.6% 2030',v:'$243K',a:'Bosq/JPM'},
+      {n:'Saavi Energia 8.875% 2035',v:'$226K',a:'Bosq/JPM'},
+      {n:'Energy Transfer LP 6.55%',v:'$211K',a:'Bosq/JPM'}
+    ],
+    'bosq-ml':[
+      {n:'GM Financial 4.35% Jan 2027',v:'$152K',a:'Bosq/ML'},
+      {n:'JPMorgan Chase Jr Sub Flt%',v:'$116K',a:'Bosq/ML'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'bosq-ubs':[
+      {n:'Sin posiciones de RF',v:'—',a:'Bosq/UBS solo tiene Equity + Cash + Alt'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'mish-jpm':[
+      {n:'AXA Wld US Credit SD',v:'$566K',a:'Mish/JPM'},
+      {n:'BNY Mellon Mult Sec Credit',v:'$539K',a:'Mish/JPM'},
+      {n:'JPMorgan Income Fund',v:'$240K',a:'Mish/JPM'},
+      {n:'GM Financial 3.6% 2030',v:'$239K',a:'Mish/JPM'}
+    ]
+  },
+  cash:{
+    all:[
+      {n:'MLB&TC USD Autocall Deposit',v:'$2.55M',a:'Cent/ML'},
+      {n:'ML Bank Dep + MLPDA',v:'$486K',a:'Bosq/ML'},
+      {n:'UBS Insured Sweep + Core Savings',v:'$347K',a:'Bosq/UBS'},
+      {n:'Cash USD Centella JPM',v:'$245K',a:'Cent/JPM'}
+    ],
+    'g-centella':[
+      {n:'MLB&TC USD Autocall Deposit',v:'$2.55M',a:'Cent/ML'},
+      {n:'Cash USD JPM sweep',v:'$245K',a:'Cent/JPM'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'g-bosques':[
+      {n:'ML Bank Dep + MLPDA',v:'$486K',a:'Bosq/ML'},
+      {n:'UBS Insured Sweep + Core Savings',v:'$347K',a:'Bosq/UBS'},
+      {n:'Cash USD JPM sweep',v:'$58K',a:'Bosq/JPM'},
+      {n:'—',v:'—',a:''}
+    ],
+    'g-mishpajot':[
+      {n:'Cash USD JPM sweep',v:'$2K',a:'Mish/JPM'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'cent-ml':[{n:'MLB&TC USD Autocall Deposit',v:'$2.55M',a:'Cent/ML'},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''}],
+    'cent-jpm':[{n:'Cash USD JPM sweep',v:'$245K',a:'Cent/JPM'},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''}],
+    'bosq-jpm':[{n:'Cash USD JPM sweep',v:'$58K',a:'Bosq/JPM'},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''}],
+    'bosq-ml':[{n:'ML Bank Dep + MLPDA',v:'$486K',a:'Bosq/ML'},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''}],
+    'bosq-ubs':[{n:'UBS Insured Sweep + Core Savings',v:'$347K',a:'Bosq/UBS'},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''}],
+    'mish-jpm':[{n:'Cash USD JPM sweep',v:'$2K',a:'Mish/JPM'},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''},{n:'—',v:'—',a:''}]
+  },
+  alt:{
+    all:[
+      {n:'Franklin Lexington Pvt Mkt',v:'$624K',a:'Cent/JPM'},
+      {n:'GTIF Private Investors',v:'$500K',a:'Cent/JPM'},
+      {n:'Coatue Innovation Fund',v:'$300K',a:'Bosq/UBS'},
+      {n:'Ardian Access SICAV-RAIF',v:'$280K',a:'Cent/JPM'}
+    ],
+    'g-centella':[
+      {n:'Franklin Lexington Pvt Mkt',v:'$624K',a:'Cent/JPM'},
+      {n:'GTIF Private Investors',v:'$500K',a:'Cent/JPM'},
+      {n:'Ardian Access SICAV-RAIF',v:'$280K',a:'Cent/JPM'},
+      {n:'KKR Infrastructure Fund',v:'$277K',a:'Cent/JPM'}
+    ],
+    'g-bosques':[
+      {n:'Draftea (x5)',v:'$833K',a:'Bosq/Alt'},
+      {n:'Terreno Woodstock',v:'$500K',a:'Bosq/Alt'},
+      {n:'Coatue Innovation Fund',v:'$300K',a:'Bosq/UBS'},
+      {n:'D&W Venture Debt',v:'$188K',a:'Bosq/Alt'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'g-mishpajot':[
+      {n:'Sin alternativos directos',v:'—',a:'Mish/JPM no tiene alt'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'cent-jpm':[
+      {n:'Franklin Lexington Pvt Mkt',v:'$624K',a:'Cent/JPM'},
+      {n:'GTIF Private Investors',v:'$500K',a:'Cent/JPM'},
+      {n:'Ardian Access SICAV-RAIF',v:'$280K',a:'Cent/JPM'},
+      {n:'KKR Infrastructure Fund',v:'$277K',a:'Cent/JPM'}
+    ],
+    'cent-ml':[
+      {n:'Blackstone Alternatives Sol. VI',v:'$184K',a:'Cent/ML'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'bosq-alt':[
+      {n:'Draftea (x5)',v:'$833K',a:'Bosq/Alt'},
+      {n:'Terreno Woodstock',v:'$500K',a:'Bosq/Alt'},
+      {n:'D&W Venture Debt',v:'$188K',a:'Bosq/Alt XIRR 31.78%'},
+      {n:'SW West Loop',v:'$126K',a:'Bosq/Alt'}
+    ],
+    'bosq-ml':[
+      {n:'Estelio Partners',v:'$36K',a:'Bosq/ML'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'bosq-ubs':[
+      {n:'Coatue Innovation Fund',v:'$300K',a:'Bosq/UBS'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ],
+    'mish-jpm':[
+      {n:'Sin alternativos directos',v:'—',a:'Mish/JPM'},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''},
+      {n:'—',v:'—',a:''}
+    ]
+  }
+};
+
+// ─── PIE CHART ───────────────────────────────────────────────────────────────
+var pieChart = new Chart(document.getElementById('pieChart'),{
+  type:'pie',
+  data:{
+    labels:['Equity','Renta fija','Cash','Alternativos'],
+    datasets:[{
+      data:[57.8,21.2,12.5,8.6],
+      backgroundColor:['#378ADD','#1D9E75','#64748B','#EF9F27'],
+      borderColor:'#fff',borderWidth:3,hoverOffset:5
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:function(c){
+        var vals=[document.getElementById('leg-eq-val').textContent,
+                  document.getElementById('leg-rf-val').textContent,
+                  document.getElementById('leg-cash-val').textContent,
+                  document.getElementById('leg-alt-val').textContent];
+        return ' '+c.parsed.toFixed(1)+'% — '+vals[c.dataIndex];
+      }}}
+    },
+    onClick:function(e,els){
+      if(els.length>0) showTop4(els[0].index);
+    }
+  }
+});
+
+var currentSlice = -1;
+function highlightSlice(idx){
+  if(currentSlice===idx){currentSlice=-1;hideTop4();}
+  else{currentSlice=idx;showTop4(idx);}
+}
+
+function showTop4(idx){
+  currentSlice=idx;
+  var classes=['eq','rf','cash','alt'];
+  var labels=['Equity','Renta fija','Cash','Alternativos'];
+  var cls=classes[idx];
+  var sel=document.getElementById('acct-sel').value;
+  // Try exact account match first, then group, then all
+  var key='all';
+  if(TOP4[cls]){
+    if(TOP4[cls][sel]) key=sel;
+    else if(sel.startsWith('g-')){
+      // for groups try each member account
+      var members=ACCT_GROUPS[sel]||[];
+      for(var i=0;i<members.length;i++){
+        if(TOP4[cls][members[i]]){key=members[i];break;}
+      }
+    }
+  }
+  var items=TOP4[cls]?TOP4[cls][key]||TOP4[cls]['all']:[];
+  var panel=document.getElementById('top4-panel');
+  var title=document.getElementById('top4-title');
+  var container=document.getElementById('top4-items');
+  var acctLabel=sel==='all'?'Cartera completa':(ACCT_LABELS[sel]||sel);
+  title.textContent='Top posiciones — '+labels[idx]+' · '+acctLabel;
+  container.innerHTML='';
+  items.forEach(function(it){
+    var d=document.createElement('div');
+    d.className='top4-item';
+    d.innerHTML='<span style="font-weight:500">'+it.n+'</span><span style="color:#888">'+it.v+'<span style="font-size:10px;color:#bbb;margin-left:4px">'+it.a+'</span></span>';
+    container.appendChild(d);
+  });
+  panel.style.display='block';
+}
+
+function hideTop4(){document.getElementById('top4-panel').style.display='none';}
+
+// ─── DYNAMIC ALLOCATION UPDATE ───────────────────────────────────────────────
+function getAccounts(sel){
+  if(!sel||sel==='all') return ACCT_GROUPS['all'];
+  if(ACCT_GROUPS[sel]) return ACCT_GROUPS[sel];
+  return [sel];
+}
+
+function fmt(v){
+  if(v>=1e6) return '$'+(v/1e6).toFixed(1)+'M';
+  if(v>=1e3) return '$'+(v/1e3).toFixed(0)+'K';
+  return '$'+v.toFixed(0);
+}
+
+function updateAllocation(sel){
+  var accts=getAccounts(sel);
+  var eq=0,rf=0,cash=0,alt=0;
+  accts.forEach(function(a){
+    if(ACCT_DATA[a]){eq+=ACCT_DATA[a].eq;rf+=ACCT_DATA[a].rf;cash+=ACCT_DATA[a].cash;alt+=ACCT_DATA[a].alt;}
+  });
+  var total=eq+rf+cash+alt;
+  if(total===0) return;
+  var eqP=(eq/total*100).toFixed(1),rfP=(rf/total*100).toFixed(1),caP=(cash/total*100).toFixed(1),alP=(alt/total*100).toFixed(1);
+
+  // Update pie
+  pieChart.data.datasets[0].data=[parseFloat(eqP),parseFloat(rfP),parseFloat(caP),parseFloat(alP)];
+  pieChart.update();
+
+  // Update legend
+  document.getElementById('leg-eq-val').textContent=fmt(eq);
+  document.getElementById('leg-rf-val').textContent=fmt(rf);
+  document.getElementById('leg-cash-val').textContent=fmt(cash);
+  document.getElementById('leg-alt-val').textContent=fmt(alt);
+  document.getElementById('leg-eq-pct').textContent=eqP+'%';
+  document.getElementById('leg-rf-pct').textContent=rfP+'%';
+  document.getElementById('leg-cash-pct').textContent=caP+'%';
+  document.getElementById('leg-alt-pct').textContent=alP+'%';
+
+  // Update KPIs
+  document.getElementById('kpi-total').textContent=fmt(total);
+  document.getElementById('kpi-eq').textContent=fmt(eq);
+  document.getElementById('kpi-rf').textContent=fmt(rf);
+  document.getElementById('kpi-cash').textContent=fmt(cash);
+  document.getElementById('kpi-alt').textContent=fmt(alt);
+  document.getElementById('kpi-eq-pct').textContent=eqP+'% del total';
+  document.getElementById('kpi-rf-pct').textContent=rfP+'% del total';
+  document.getElementById('kpi-cash-pct').textContent=caP+'% del total';
+  document.getElementById('kpi-alt-pct').textContent=alP+'% del total';
+
+  // Update equity breakdown bars (simplified for main categories)
+  var eqTotal=eq||1;
+  // SP500 portion roughly: bosq-ml+cent-ml SP500 exposure
+  var sp500=0,ndx=0,notas=0,otros=0;
+  accts.forEach(function(a){
+    if(a==='cent-ml'){sp500+=2733963;ndx+=0;notas+=0;otros+=1642776;}
+    else if(a==='bosq-ml'){sp500+=1838750;ndx+=610750;notas+=0;otros+=1200500;}
+    else if(a==='bosq-ubs'){sp500+=204750;ndx+=101500;notas+=0;otros+=173287;}
+    else if(a==='cent-jpm'){sp500+=0;ndx+=420000;notas+=797700;otros+=3807286;}
+    else if(a==='bosq-jpm'){sp500+=0;ndx+=158000;notas+=1409535;otros+=1207565;}
+    else if(a==='mish-jpm'){sp500+=0;ndx+=0;notas+=0;otros+=1379796;}
+    else if(a==='nm-nidalbe'){sp500+=0;ndx+=0;notas+=0;otros+=2869376;}
+    else if(a==='nm-acc'){sp500+=0;ndx+=0;notas+=0;otros+=1541015;}
+    else if(a==='nm-beaumont'){sp500+=0;ndx+=0;notas+=0;otros+=659390;}
+  });
+  var eqSum=sp500+ndx+notas+otros||1;
+  document.getElementById('ab-sp500').style.width=(sp500/eqSum*100).toFixed(1)+'%';
+  document.getElementById('ab-ndx').style.width=(ndx/eqSum*100).toFixed(1)+'%';
+  document.getElementById('ab-notas').style.width=(notas/eqSum*100).toFixed(1)+'%';
+  document.getElementById('ab-otros').style.width=(otros/eqSum*100).toFixed(1)+'%';
+  document.getElementById('av-sp500').textContent=fmt(sp500);
+  document.getElementById('av-ndx').textContent=fmt(ndx);
+  document.getElementById('av-notas').textContent=fmt(notas);
+  document.getElementById('av-otros').textContent=fmt(otros);
+  document.getElementById('ap-sp500').textContent=(sp500/eqSum*100).toFixed(0)+'%';
+  document.getElementById('ap-ndx').textContent=(ndx/eqSum*100).toFixed(0)+'%';
+  document.getElementById('ap-notas').textContent=(notas/eqSum*100).toFixed(0)+'%';
+  document.getElementById('ap-otros').textContent=(otros/eqSum*100).toFixed(0)+'%';
+
+  // Refresh top4 if open
+  if(currentSlice>=0) showTop4(currentSlice);
+}
+
+
+// ─── DRAFTEA MOIC ─────────────────────────────────────────────────────────
+var DRAFTEA_BASE = 166666;
+var BOSQ_ALT_BASE = 35714 + 187691 + 500000 + 100000 + 100000 + 126000 + 102500 + 107441; // 1259346
+
+function updateDraftea(){
+  var moic = parseInt(document.getElementById('draftea-moic').value);
+  var val = DRAFTEA_BASE * moic;           // costo when moic=1, implied when moic>1
+  var totalAlt = BOSQ_ALT_BASE + val;
+  var fmt_val = '$' + val.toLocaleString('en-US',{maximumFractionDigits:0});
+  var pct_port = (val / 32900000 * 100).toFixed(1) + '%';
+  var pct_bucket = (val / totalAlt * 100).toFixed(1) + '%';
+  var moicLabel = moic === 1
+    ? '<span class="rc ra">costo</span>'
+    : '<span class="rc rp">x'+moic+' · +'+(((moic-1)*100))+'%</span>';
+  document.getElementById('draftea-val').textContent = fmt_val;
+  document.getElementById('draftea-pct').textContent = pct_port;
+  document.getElementById('draftea-bucket').textContent = pct_bucket;
+  document.getElementById('draftea-moic-display').innerHTML = moicLabel;
+  document.getElementById('draftea-bar').style.width = Math.min(parseFloat(pct_bucket), 80) + '%';
+  // Update bosq-alt total in landing and cuentas
+  var fmtTotal = '$' + (totalAlt/1e6).toFixed(2) + 'M';
+  if(document.getElementById('bosq-alt-total')) document.getElementById('bosq-alt-total').textContent = fmtTotal;
+  if(document.getElementById('cuentas-bosq-alt')) document.getElementById('cuentas-bosq-alt').textContent = '$' + totalAlt.toLocaleString('en-US',{maximumFractionDigits:0});
+  // Update pie chart allocation
+  ACCT_DATA['bosq-alt'].alt = totalAlt;
+  var sel = document.getElementById('acct-sel').value;
+  updateAllocation(sel);
+}
+
+// ─── CONSOLIDATED ROW VALUE FIX ───────────────────────────────────────────
+// When filter changes, update consolidated rows to show per-account values
+function updateConsolidatedRows(sel){
+  document.querySelectorAll('[data-vals]').forEach(function(row){
+    try {
+      var vals = JSON.parse(row.getAttribute('data-vals'));
+      var valCell = row.querySelector('td.num strong') || row.querySelector('td.num');
+      if(!valCell) return;
+      // Find the value cell with the portfolio value (5th td typically)
+      var tds = row.querySelectorAll('td.num');
+      if(tds.length === 0) return;
+      var targetTd = tds[0]; // first num column = value
+      var displayVal = vals[sel] || vals['all'];
+      if(displayVal) targetTd.innerHTML = '<strong>' + displayVal + '</strong>';
+    } catch(e) {}
+  });
+  // Update JPM Global Core
+  var jpmcoreVals = {
+    'all':'$2,970,381','g-centella':'$1,089,445','g-bosques':'$830,384',
+    'g-mishpajot':'$1,089,445','cent-jpm':'$1,089,445',
+    'bosq-jpm':'$830,384','mish-jpm':'$1,089,445',
+    'g-propias':'$3,009,274'
+  };
+  var jpmcoreEl = document.getElementById('val-jpmcore');
+  if(jpmcoreEl) jpmcoreEl.textContent = jpmcoreVals[sel] || jpmcoreVals['all'];
+  // Update JPM Access Growth
+  var jpmAccessVals = {
+    'all':'$1,021,715','g-bosques':'$676,319','g-mishpajot':'$345,396',
+    'bosq-jpm':'$676,319','mish-jpm':'$345,396',
+    'g-propias':'$1,021,715'
+  };
+  var jpmAccessEl = document.getElementById('val-jpmaccess');
+  if(jpmAccessEl) jpmAccessEl.textContent = jpmAccessVals[sel] || jpmAccessVals['all'];
+}
+
+// ─── FILTER ──────────────────────────────────────────────────────────────────
+function applyFilter(){
+  var sel=document.getElementById('acct-sel').value;
+  var chip=document.getElementById('fchip');
+  var txt=document.getElementById('fchip-txt');
+  if(sel==='all'){chip.style.display='none';}
+  else{chip.style.display='flex';txt.textContent=ACCT_LABELS[sel]||sel;}
+  document.querySelectorAll('[data-accts]').forEach(function(el){
+    var a=el.getAttribute('data-accts').split(' ');
+    el.classList.toggle('hidden-row',sel!=='all'&&a.indexOf(sel)===-1);
+  });
+  updateAllocation(sel);
+  updateConsolidatedRows(sel);
+  hideTop4();
+  currentSlice=-1;
+}
+
+function clearFilter(){document.getElementById('acct-sel').value='all';applyFilter();}
+
+// ─── EXPAND ROWS ─────────────────────────────────────────────────────────────
+function tog(id){
+  var row=document.getElementById('cr-'+id);
+  var open=row.classList.contains('open');
+  for(var i=0;;i++){var c=document.getElementById('ch-'+id+'-'+i);if(!c)break;open?c.classList.remove('show'):c.classList.add('show');}
+  open?row.classList.remove('open'):row.classList.add('open');
+}
+
+// ─── PANES ───────────────────────────────────────────────────────────────────
+function showPane(id,btn){
+  ['landing','equity','rf','cash','alt','tx','cuentas'].forEach(function(p){
+    document.getElementById('pane-'+p).style.display=p===id?'block':'none';
+  });
+  document.querySelectorAll('.tb').forEach(function(b){b.className=b===btn?'tb act':'tb';});
+}
+
+function showSub(show,hide,btn){
+  document.getElementById(show).style.display='block';
+  document.getElementById(hide).style.display='none';
+  document.querySelectorAll('.stb').forEach(function(b){b.className=b===btn?'stb act':'stb';});
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+updateAllocation('all');
+updateConsolidatedRows('all');
+updateDraftea();
+</script>
+</body></html>
