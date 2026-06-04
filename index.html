@@ -1170,6 +1170,28 @@ function applyFilter(){
     var a=el.getAttribute('data-accts').split(' ');
     el.classList.toggle('hidden-row',sel!=='all'&&a.indexOf(sel)===-1);
   });
+  // Auto-expand collapsed rows when filtering by specific account
+  if(sel !== 'all'){
+    document.querySelectorAll('.cons-row').forEach(function(cr){
+      var a = cr.getAttribute('data-accts').split(' ');
+      if(a.indexOf(sel) >= 0){
+        var id = cr.id.replace('cr-','');
+        var children = document.querySelectorAll('.child[id^="ch-'+id+'"]');
+        if(children.length > 0 && children[0].style.display === 'none'){
+          tog(id); // expand
+        }
+      }
+    });
+  } else {
+    // Collapse all when showing all accounts
+    document.querySelectorAll('.cons-row').forEach(function(cr){
+      var id = cr.id.replace('cr-','');
+      var children = document.querySelectorAll('.child[id^="ch-'+id+'"]');
+      if(children.length > 0 && children[0].style.display !== 'none'){
+        tog(id); // collapse
+      }
+    });
+  }
   updateAllocation(sel);
   updateConsolidatedRows(sel);
   hideTop4();
