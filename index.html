@@ -1039,24 +1039,38 @@ var BOSQ_ALT_BASE = 35714 + 187691 + 500000 + 100000 + 100000 + 126000 + 102500 
 
 function updateDraftea(){
   var moic = parseInt(document.getElementById('draftea-moic').value);
-  var val = DRAFTEA_BASE * moic;           // costo when moic=1, implied when moic>1
+  var val = DRAFTEA_BASE * moic;
   var totalAlt = BOSQ_ALT_BASE + val;
   var fmt_val = '$' + val.toLocaleString('en-US',{maximumFractionDigits:0});
-  var pct_port = (val / 32900000 * 100).toFixed(1) + '%';
+
+  // Recalculate total portfolio dynamically
+  var fixedBase = 33900000 - (BOSQ_ALT_BASE + DRAFTEA_BASE); // all except bosq-alt
+  var newTotal = fixedBase + totalAlt;
+  var pct_port = (val / newTotal * 100).toFixed(1) + '%';
   var pct_bucket = (val / totalAlt * 100).toFixed(1) + '%';
+
   var moicLabel = moic === 1
     ? '<span class="rc ra">costo</span>'
     : '<span class="rc rp">x'+moic+' · +'+(((moic-1)*100))+'%</span>';
+
   document.getElementById('draftea-val').textContent = fmt_val;
   document.getElementById('draftea-pct').textContent = pct_port;
   document.getElementById('draftea-bucket').textContent = pct_bucket;
   document.getElementById('draftea-moic-display').innerHTML = moicLabel;
   document.getElementById('draftea-bar').style.width = Math.min(parseFloat(pct_bucket), 80) + '%';
+
   // Update bosq-alt total in landing and cuentas
   var fmtTotal = '$' + (totalAlt/1e6).toFixed(2) + 'M';
   if(document.getElementById('bosq-alt-total')) document.getElementById('bosq-alt-total').textContent = fmtTotal;
   if(document.getElementById('cuentas-bosq-alt')) document.getElementById('cuentas-bosq-alt').textContent = '$' + totalAlt.toLocaleString('en-US',{maximumFractionDigits:0});
-  // Update pie chart allocation
+
+  // Update KPI total and landing table total
+  var fmtNewTotal = '$' + (newTotal/1e6).toFixed(1) + 'M';
+  if(document.getElementById('kpi-total')) document.getElementById('kpi-total').textContent = fmtNewTotal;
+  var totRows = document.querySelectorAll('.bkt-tot td:nth-child(2) strong');
+  totRows.forEach(function(el){ if(el.textContent.match(/^\$\d+/)) el.textContent = fmtNewTotal; });
+
+  // Update ACCT_DATA and pie chart
   ACCT_DATA['bosq-alt'].alt = totalAlt;
   var sel = document.getElementById('acct-sel').value;
   updateAllocation(sel);
