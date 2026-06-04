@@ -146,7 +146,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 <div id="pane-landing">
   <!-- KPI metrics row - dynamic -->
   <div id="kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-bottom:1.25rem">
-    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">$33.5M</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">$33.9M</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
     <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Último mes cerrado (may-26)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#1a7a4a">+1.76%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
     <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD ene–may 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.59%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
@@ -199,9 +199,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr data-accts="nm-beaumont g-nm all" class="nm-row"><td>Beaumont <span class="nm-b">NM 25%</span></td><td class="num">$0.66M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">~0%</span></td></tr>
         <tr data-accts="nm-nidalbe g-nm all" class="nm-row"><td>Nidalbe <span class="nm-b">NM 25%</span></td><td><span class="badge" style="background:#e0f2fe;color:#0369a1">JB</span></td><td class="num">$2,869,376</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rp">+10.38%</span></td><td class="num"><span class="rc rp">+20.82%</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#0369a1"></div></div></td></tr>
           <tr data-accts="nm-acc g-nm all" class="nm-row"><td>ACC <span class="nm-b">NM 25%</span></td><td class="num">$1.54M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rp">+4.64%</span></td></tr>
-          <tr data-accts="btg all" style="color:#aaa"><td>BTG ACV <span class="pend-b">⏳ CLP</span></td><td class="num">—</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
+          <tr data-accts="btg all" style="color:#555"><td>BTG ACV <span class="pend-b">CLP</span></td><td class="num">$0.38M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
           <tr data-accts="banchile all" style="color:#555"><td>Banchile ACV <span class="pend-b">CLP</span></td><td class="num">$0.61M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rn">~−2.6%</span> <span style="font-size:9px;color:#aaa">CLP</span></td></tr>
-          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>$33.5M</strong></td><td class="num"><strong>+1.76%</strong></td><td class="num"><strong>+5.59%</strong></td></tr>
+          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>$33.9M</strong></td><td class="num"><strong>+1.76%</strong></td><td class="num"><strong>+5.59%</strong></td></tr>
         </tbody>
       </table>
       <div style="font-size:10px;color:#aaa;margin-top:8px;line-height:1.5">
@@ -534,7 +534,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
     <table class="tbl">
       <thead><tr><th>Sociedad</th><th>Banco</th><th>Moneda</th><th>Estado</th></tr></thead>
       <tbody>
-        <tr data-accts="btg all" style="color:#aaa"><td>BTG ACV</td><td><span class="badge b-clp">BTG</span></td><td>CLP</td><td style="font-size:11px">⏳ Esperando cartola — se convierte a USD al recibir</td></tr>
+        <tr data-accts="btg all" style="color:#555"><td>BTG ACV</td><td><span class="badge b-clp">BTG</span></td><td class="num">$376,856</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td class="num">1.1%</td></tr>
         <tr data-accts="banchile all" style="color:#555"><td>Banchile ACV</td><td><span class="badge b-clp">Banchile</span></td><td class="num">$614,643</td><td class="num"><span class="rc rn">~−2.6%</span> <span style="font-size:9px;color:#aaa">pond. CLP</span></td><td class="num"><span class="rc ra">—</span></td><td class="num">1.8%</td></tr>
       </tbody>
     </table>
