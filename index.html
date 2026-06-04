@@ -471,7 +471,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>SPDR Gold Trust <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Oro</span></td><td class="num">$271,128</td><td class="num">0.8%</td><td class="num">9.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#D4AF37"></div></div></td></tr>
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>First Eagle Amundi + JB Dynamic <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondo balanceado</span></td><td class="num">$337,892</td><td class="num">1.0%</td><td class="num">11.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#BA7517"></div></div></td></tr>
         <tr class="nm-row" data-accts="nm-acc g-nm all"><td><span class="dot dgy"></span></td><td>Schroder GAIA Sirios US Equity <span class="nm-b">ACC 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Hedge fund</span></td><td class="num">$115,070</td><td class="num">0.3%</td><td class="num">4.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#EF9F27"></div></div></td></tr>
-        <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total alternativos</td><td class="num">$2,924,133</td><td class="num">8.7%</td><td class="num">100%</td><td></td><td></td><td></td></tr>
+        <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total alternativos</td><td class="num" id="alt-table-total">$2,924,133</td><td class="num" id="alt-table-pct">8.7%</td><td class="num">100%</td><td></td><td></td><td></td></tr>
         <tr data-accts="bosq-ml g-bosques g-propias all"><td colspan="10" style="font-size:10px;color:#aaa;padding-top:4px">⚠ Estelio Partners: compromiso total $500,000 · llamado hasta hoy $35,714 · valor a costo de inversión</td></tr>
       </tbody>
     </table></div>
@@ -1069,6 +1069,14 @@ function updateDraftea(){
   if(document.getElementById('kpi-total')) document.getElementById('kpi-total').textContent = fmtNewTotal;
   var totRows = document.querySelectorAll('.bkt-tot td:nth-child(2) strong');
   totRows.forEach(function(el){ if(el.textContent.match(/^\$\d+/)) el.textContent = fmtNewTotal; });
+
+  // Update alt table total row
+  var ALT_FIXED = 300000 + 1030406; // UBS alt + NM gold/alts approx
+  var altGrandTotal = totalAlt + ALT_FIXED;
+  if(document.getElementById('alt-table-total'))
+    document.getElementById('alt-table-total').textContent = '$' + altGrandTotal.toLocaleString('en-US',{maximumFractionDigits:0});
+  if(document.getElementById('alt-table-pct'))
+    document.getElementById('alt-table-pct').textContent = (altGrandTotal/newTotal*100).toFixed(1) + '%';
 
   // Update ACCT_DATA and pie chart
   ACCT_DATA['bosq-alt'].alt = totalAlt;
