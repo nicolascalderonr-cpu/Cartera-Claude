@@ -142,6 +142,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   <button class="tb" onclick="showPane('cuentas',this)">Cuentas</button>
 </div>
 
+<!-- SEARCH BAR -->
+<div id="search-bar" style="margin:8px 0 4px;display:flex;align-items:center;gap:8px">
+  <div style="position:relative;flex:1;max-width:420px">
+    <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#888;font-size:14px">🔍</span>
+    <input id="pos-search" type="text" placeholder="Buscar posición, instrumento, cuenta..." autocomplete="off"
+      style="width:100%;padding:7px 12px 7px 32px;border:1px solid #ddd;border-radius:8px;font-size:13px;outline:none;box-sizing:border-box"
+      oninput="searchPositions(this.value)"
+      onfocus="this.style.borderColor='#3B82F6'"
+      onblur="this.style.borderColor='#ddd'">
+  </div>
+  <span id="search-count" style="font-size:11px;color:#aaa"></span>
+  <button onclick="clearSearch()" id="search-clear" style="display:none;font-size:11px;color:#888;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid #ddd">✕ Limpiar</button>
+</div>
+<div id="search-results" style="display:none;background:#fff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;max-height:380px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+  <table class="tbl" style="margin:0">
+    <thead><tr><th>Instrumento</th><th>Cuenta</th><th>Clase</th><th class="num">Valor</th></tr></thead>
+    <tbody id="search-results-body"></tbody>
+  </table>
+</div>
+
 <!-- ══ LANDING ══ -->
 <div id="pane-landing">
   <!-- KPI metrics row - dynamic -->
@@ -344,7 +364,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">GS AC M+ 3/2/28 basket AI 16.95%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Basket EW</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">EW avg</td><td style="font-size:11px"><span style="color:green">+35.3%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">16.95%</td><td class="num">$255,825</td></tr>
           <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">JPM AC M+ SX5E 2/24/28 11.95%</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SX5E</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,103</td><td style="font-size:11px"><span style="color:#e53935">−0.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">25%</td><td style="font-size:11px;color:green">11.95%</td><td class="num">$195,600</td></tr>
           <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">BNP AC M+ MELI UW 3/2/28 20.33%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">MELI</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">1,741</td><td style="font-size:11px"><span style="color:#e53935">−4.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">30%</td><td style="font-size:11px;color:green">20.33%</td><td class="num">$248,950</td></tr>
-          <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td style="padding-left:12px">BNP Ford Motor CLN 6.27% 2028</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Ford CLN</span></td><td style="font-size:11px">jun-28</td><td style="font-size:11px">—</td><td style="font-size:11px">—</td><td style="font-size:11px">—</td><td style="font-size:11px">—</td><td style="font-size:11px">—</td><td style="font-size:11px;color:green">~6.3%</td><td class="num">$262,275</td></tr>
           <tr><td colspan="12" style="font-size:10px;color:#888;padding:8px 4px">
             <strong>Basket GS equally weighted (promedio pct vs strike):</strong> MRVL +270% · VRT +30% · NVDA +22% · GOOGL +15% · GEV +10% · MSFT +10% · CEG −19% · META −7% · VST −11% → <strong>promedio EW = +35.3%</strong> → ✓ llamable en mar-27. &nbsp;|&nbsp; SX5E −0.6% y MELI −4.6% bajo strike → no se llaman en mar-27 salvo recuperación.
           </td></tr>
@@ -386,6 +405,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Saavi Energia 8.875% 2035</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$226,454</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:3%;background:#9FE1CB"></div></div></td></tr>
         <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Energy Transfer LP 6.55% 2033</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono corp. HY</span></td><td class="num">$211,155</td><td class="num">0.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:3%;background:#9FE1CB"></div></div></td></tr>
         <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>Braskem Neth 4.5% 2028</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$127,925</td><td class="num">0.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:2%;background:#9FE1CB"></div></div></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>BNP Ford Motor CLN ~6.3% jun-28</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">CLN crédito</span></td><td class="num">$262,275</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#9FE1CB"></div></div></td></tr>
         <tr class="grp-hdr" data-accts="nm-beaumont nm-nidalbe nm-acc g-nm all"><td colspan="9">Carteras No Manejadas — RF al 25%</td></tr>
         <tr class="nm-row" data-accts="nm-beaumont g-nm all"><td><span class="dot dgy"></span></td><td>Altria 4.25% 2042 + JPM 5.4% + otros <span class="nm-b">Beaumont</span></td><td><span class="badge b-ml">ML</span></td><td><span class="pill">Bonos IG+EM</span></td><td class="num">$303,973</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#9FE1CB"></div></div></td></tr>
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td><span class="dot dgy"></span></td><td>JB EM Corp + Muzinich + Brandywine <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondos+bonos</span></td><td class="num">$820,622</td><td class="num">2.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#1D9E75"></div></div></td></tr>
@@ -1178,6 +1198,88 @@ function showSub(show,hide,btn){
   document.getElementById(show).style.display='block';
   document.getElementById(hide).style.display='none';
   document.querySelectorAll('.stb').forEach(function(b){b.className=b===btn?'stb act':'stb';});
+}
+
+// ─── SEARCH ──────────────────────────────────────────────────────────────────
+var SEARCH_INDEX = [];
+function buildSearchIndex(){
+  SEARCH_INDEX = [];
+  // Collect all rows from all panes
+  var rows = document.querySelectorAll('#pane-equity tr, #pane-rf tr, #pane-cash tr, #pane-alt tr');
+  rows.forEach(function(row){
+    if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot') || row.classList.contains('cons-row')) return;
+    var cells = row.querySelectorAll('td');
+    if(cells.length < 3) return;
+    var name = '', account = '', cls = '', value = '';
+    cells.forEach(function(c,i){
+      var t = c.innerText.trim();
+      if(i===0) return;
+      if(i===1 && !name) name = t;
+      if(i===2 && !account) account = t;
+      if(i===3 && !cls) cls = t;
+      if(c.classList.contains('num') && t && t!=='—' && !value) value = t;
+    });
+    if(name && name.length > 1){
+      SEARCH_INDEX.push({name:name, account:account, cls:cls, value:value, row:row});
+    }
+  });
+}
+
+function searchPositions(q){
+  if(!q || q.length < 2){
+    document.getElementById('search-results').style.display = 'none';
+    document.getElementById('search-clear').style.display = 'none';
+    document.getElementById('search-count').textContent = '';
+    return;
+  }
+  if(SEARCH_INDEX.length === 0) buildSearchIndex();
+  var terms = q.toLowerCase().split(' ').filter(Boolean);
+  var matches = SEARCH_INDEX.filter(function(item){
+    var haystack = (item.name + ' ' + item.account + ' ' + item.cls).toLowerCase();
+    return terms.every(function(t){ return haystack.indexOf(t) >= 0; });
+  });
+  var tbody = document.getElementById('search-results-body');
+  tbody.innerHTML = '';
+  if(matches.length === 0){
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:16px;font-size:12px">Sin resultados para "'+q+'"</td></tr>';
+  } else {
+    matches.forEach(function(m){
+      var tr = document.createElement('tr');
+      tr.style.cursor = 'pointer';
+      tr.innerHTML = '<td style="font-size:12px">'+m.name+'</td><td style="font-size:11px">'+m.account+'</td><td style="font-size:11px">'+m.cls+'</td><td class="num" style="font-size:12px">'+m.value+'</td>';
+      tr.addEventListener('mouseover', function(){ this.style.background='#f0f7ff'; });
+      tr.addEventListener('mouseout', function(){ this.style.background=''; });
+      tr.addEventListener('click', function(){
+        // Highlight the original row briefly
+        m.row.style.background='#FEF9C3';
+        setTimeout(function(){ m.row.style.background=''; }, 2000);
+        // Navigate to the right pane
+        var panes = ['equity','rf','cash','alt'];
+        for(var i=0;i<panes.length;i++){
+          var pane = document.getElementById('pane-'+panes[i]);
+          if(pane && pane.contains(m.row)){
+            var btn = document.querySelector('[onclick*="showPane(\''+panes[i]+'\'"]');
+            showPane(panes[i], btn);
+            // Scroll to row
+            setTimeout(function(row){ row.scrollIntoView({behavior:'smooth',block:'center'}); }, 150, m.row);
+            break;
+          }
+        }
+        clearSearch();
+      });
+      tbody.appendChild(tr);
+    });
+  }
+  document.getElementById('search-results').style.display = 'block';
+  document.getElementById('search-clear').style.display = 'inline-block';
+  document.getElementById('search-count').textContent = matches.length + ' resultado' + (matches.length!==1?'s':'');
+}
+
+function clearSearch(){
+  document.getElementById('pos-search').value = '';
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('search-clear').style.display = 'none';
+  document.getElementById('search-count').textContent = '';
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
