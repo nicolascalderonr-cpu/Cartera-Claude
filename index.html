@@ -1528,7 +1528,7 @@ async function sendAiMsg(){
   var typing = addTyping();
 
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
+    var res = await fetch('https://portfolio-proxy.nicolascalderonr.workers.dev', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -1543,7 +1543,6 @@ async function sendAiMsg(){
     var reply = data.content && data.content[0] ? data.content[0].text : 'Error al obtener respuesta.';
     addMsg(reply, 'assistant');
     aiHistory.push({role:'assistant', content:reply});
-    // Keep history max 10 turns
     if(aiHistory.length > 20) aiHistory = aiHistory.slice(-20);
   } catch(e) {
     typing.remove();
