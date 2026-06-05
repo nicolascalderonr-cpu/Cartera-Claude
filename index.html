@@ -1035,15 +1035,20 @@ function updateAllocation(sel){
   pieChart.data.datasets[0].data=[parseFloat(eqP),parseFloat(rfP),parseFloat(caP),parseFloat(alP)];
   pieChart.update();
 
-  // Update legend
-  document.getElementById('leg-eq-val').textContent=fmt(eq);
-  document.getElementById('leg-rf-val').textContent=fmt(rf);
-  document.getElementById('leg-cash-val').textContent=fmt(cash);
-  document.getElementById('leg-alt-val').textContent=fmt(alt);
-  document.getElementById('leg-eq-pct').textContent=eqP+'%';
-  document.getElementById('leg-rf-pct').textContent=rfP+'%';
-  document.getElementById('leg-cash-pct').textContent=caP+'%';
-  document.getElementById('leg-alt-pct').textContent=alP+'%';
+  // Update legend — sorted by value descending
+  var slices = [
+    {id:'legend-eq',   valId:'leg-eq-val',   pctId:'leg-eq-pct',   val:eq,   pct:eqP,  idx:0},
+    {id:'legend-rf',   valId:'leg-rf-val',   pctId:'leg-rf-pct',   val:rf,   pct:rfP,  idx:1},
+    {id:'legend-cash', valId:'leg-cash-val', pctId:'leg-cash-pct', val:cash, pct:caP,  idx:2},
+    {id:'legend-alt',  valId:'leg-alt-val',  pctId:'leg-alt-pct',  val:alt,  pct:alP,  idx:3}
+  ];
+  slices.sort(function(a,b){ return b.val - a.val; });
+  var container = document.getElementById('legend-eq').parentNode;
+  slices.forEach(function(s){
+    document.getElementById(s.valId).textContent = fmt(s.val);
+    document.getElementById(s.pctId).textContent = s.pct+'%';
+    container.appendChild(document.getElementById(s.id));
+  });
 
   // Update KPIs
   document.getElementById('kpi-total').textContent=fmt(total);
