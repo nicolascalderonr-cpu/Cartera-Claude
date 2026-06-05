@@ -182,7 +182,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <div style="position:relative;width:160px;height:160px;flex-shrink:0">
           <canvas id="pieChart" role="img" aria-label="Pie chart portafolio"></canvas>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:0">
+        <div id="legend-container" style="display:flex;flex-direction:column;gap:10px;flex:1;min-width:0">
           <div id="legend-eq" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(0)"><span class="leg-dot" style="background:#378ADD"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Equity</div><div id="leg-eq-val" style="font-size:11px;color:#888">$19.4M</div></div><span id="leg-eq-pct" style="font-size:13px;font-weight:600;color:#378ADD">57.8%</span></div>
           <div id="legend-rf" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(1)"><span class="leg-dot" style="background:#1D9E75"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Renta fija</div><div id="leg-rf-val" style="font-size:11px;color:#888">$7.1M</div></div><span id="leg-rf-pct" style="font-size:13px;font-weight:600;color:#1D9E75">21.2%</span></div>
           <div id="legend-cash" style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="highlightSlice(2)"><span class="leg-dot" style="background:#64748B"></span><div style="flex:1"><div style="font-size:12px;font-weight:500">Cash</div><div id="leg-cash-val" style="font-size:11px;color:#888">$4.2M</div></div><span id="leg-cash-pct" style="font-size:13px;font-weight:600;color:#64748B">12.5%</span></div>
@@ -1037,13 +1037,13 @@ function updateAllocation(sel){
 
   // Update legend — sorted by value descending
   var slices = [
-    {id:'legend-eq',   valId:'leg-eq-val',   pctId:'leg-eq-pct',   val:eq,   pct:eqP,  idx:0},
-    {id:'legend-rf',   valId:'leg-rf-val',   pctId:'leg-rf-pct',   val:rf,   pct:rfP,  idx:1},
-    {id:'legend-cash', valId:'leg-cash-val', pctId:'leg-cash-pct', val:cash, pct:caP,  idx:2},
-    {id:'legend-alt',  valId:'leg-alt-val',  pctId:'leg-alt-pct',  val:alt,  pct:alP,  idx:3}
+    {id:'legend-eq',   valId:'leg-eq-val',   pctId:'leg-eq-pct',   val:eq,   pct:eqP},
+    {id:'legend-rf',   valId:'leg-rf-val',   pctId:'leg-rf-pct',   val:rf,   pct:rfP},
+    {id:'legend-cash', valId:'leg-cash-val', pctId:'leg-cash-pct', val:cash, pct:caP},
+    {id:'legend-alt',  valId:'leg-alt-val',  pctId:'leg-alt-pct',  val:alt,  pct:alP}
   ];
   slices.sort(function(a,b){ return b.val - a.val; });
-  var container = document.getElementById('legend-eq').parentNode;
+  var container = document.getElementById('legend-container');
   slices.forEach(function(s){
     document.getElementById(s.valId).textContent = fmt(s.val);
     document.getElementById(s.pctId).textContent = s.pct+'%';
