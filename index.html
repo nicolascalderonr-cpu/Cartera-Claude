@@ -1362,5 +1362,196 @@ updateDraftea();
     document.getElementById('lock-btn').addEventListener('click', tryUnlock);
   });
 })();
+<!-- ══ AI PORTFOLIO ASSISTANT ══ -->
+<div id="ai-fab" title="Pregúntale al portfolio" onclick="toggleChat()"
+  style="position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#1D4ED8);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(59,130,246,0.5);z-index:9999;font-size:22px;transition:transform 0.2s"
+  onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">💬</div>
+
+<div id="ai-chat-box"
+  style="display:none;position:fixed;bottom:88px;right:24px;width:380px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.18);z-index:9998;flex-direction:column;overflow:hidden;border:1px solid #e5e7eb">
+  <div style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:20px">🤖</span>
+      <div>
+        <div style="color:#fff;font-weight:600;font-size:14px">Asistente del Portfolio</div>
+        <div style="color:rgba(255,255,255,0.75);font-size:11px">Pregúntame sobre tus posiciones</div>
+      </div>
+    </div>
+    <span onclick="toggleChat()" style="color:#fff;cursor:pointer;font-size:18px;opacity:0.8;padding:4px">✕</span>
+  </div>
+  <div id="ai-messages" style="height:320px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#f9fafb">
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;border-bottom-left-radius:4px;padding:10px 13px;font-size:13px;color:#374151;max-width:90%;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+      Hola! Soy tu asistente de portfolio. Puedo responder preguntas sobre tus posiciones, bonos, notas estructuradas, vencimientos, allocación y más.<br><br>
+      <span style="color:#6B7280;font-size:11px">Ejemplos: "¿Cuál es el próximo vencimiento de un bono?" · "¿Cuánto tengo en alternativos?" · "¿Qué notas se pueden llamar este año?"</span>
+    </div>
+  </div>
+  <div style="padding:10px 12px;border-top:1px solid #e5e7eb;background:#fff;display:flex;gap:8px;align-items:flex-end">
+    <textarea id="ai-input" placeholder="Escribe tu pregunta..." rows="1"
+      style="flex:1;resize:none;border:1px solid #d1d5db;border-radius:10px;padding:9px 12px;font-size:13px;outline:none;font-family:inherit;line-height:1.4;max-height:100px;overflow-y:auto"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAiMsg();}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"
+      onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#d1d5db'"></textarea>
+    <button onclick="sendAiMsg()" id="ai-send-btn"
+      style="background:#3B82F6;color:#fff;border:none;border-radius:10px;padding:9px 14px;cursor:pointer;font-size:16px;transition:background 0.2s;flex-shrink:0"
+      onmouseover="this.style.background='#2563EB'" onmouseout="this.style.background='#3B82F6'">➤</button>
+  </div>
+</div>
+
+<script>
+var aiHistory = [];
+var aiOpen = false;
+
+function toggleChat(){
+  aiOpen = !aiOpen;
+  var box = document.getElementById('ai-chat-box');
+  box.style.display = aiOpen ? 'flex' : 'none';
+  if(aiOpen) setTimeout(function(){ document.getElementById('ai-input').focus(); }, 100);
+}
+
+function buildPortfolioContext(){
+  return `Eres un asistente experto del portfolio de inversiones de Nicolás Calderón (familia Calderón, Chile). Tienes acceso completo a los datos del portfolio. Responde en español, de forma concisa y precisa. Usa números exactos cuando los conozcas.
+
+PORTFOLIO TOTAL: ~$33.9M USD (propias + NM 25%)
+
+CUENTAS Y VALORES (04-jun-2026):
+- Centella ML: $7,112,799 · YTD +5.23% · Eq 51% / RF 38% / Cash 8% / Alt 3%
+- Centella JPM: $7,529,821 · YTD +3.97% · RF 49% / Eq 30% / Alt 24%
+- Bosques ML: $3,732,315 · YTD +7.69% · Eq 73% / Cash 20% / RF 7%
+- Bosques JPM: $5,897,085 · YTD +5.48%
+- Bosques UBS: $1,005,914
+- Bosques Alt. Directos: ~$2.1M (NAV)
+- Mishpajot JPM: $3,411,113 · MTD −0.29% / YTD +3.21%
+- Beaumont (NM 25%): $659,390 · YTD ~0%
+- Nidalbe (NM 25%): $2,869,376 · YTD +10.38%
+- ACC (NM 25%): $1,541,015 · YTD +4.64%
+- BTG ACV: $376,856 (CLP, abr-26)
+- Banchile ACV: $614,643 (CLP, jun-26) · YTD ~−2.6%
+
+BONOS PRINCIPALES (RF):
+Centella ML: iShares US Agg $984K · iShares Short Dur $732K · iShares HY $248K · PIMCO GIS Income $496K · Morgan Stanley 4.35% sep-2026 $250K
+Centella JPM: MFS Global Opp Bond $1,099K · AXA US Credit SD $537K · BlackRock USD Ult Short $481K · JPM Income $297K · BNY Mellon $265K · GS 0% ene-2040 $525K · JPM 0% ago-2039 $251K
+Bosques ML: GM Financial 4.35% ene-2027 $152K · JPM Float 2037 $116K
+Bosques JPM: JPM Income (compartido) · Saavi Energia 8.875% 2035 $226K · Braskem 4.5% 2028 $128K · Ford CLN ~6.3% jun-2028 $262K
+Mishpajot JPM: AXA US Credit SD $566K · BNY Mellon $538K · JPM Income $240K · GM Financial 3.6% jun-2030 $243K · GS 0% oct-2027 $101K
+
+PRÓXIMOS VENCIMIENTOS DE BONOS:
+- Morgan Stanley 4.35%: sep-2026 ← MÁS PRÓXIMO
+- GM Financial 4.35%: ene-2027
+- Goldman Sachs 0%: oct-2027
+- Braskem 4.5%: 2028
+- Ford CLN: jun-2028
+- GM Financial 3.6%: jun-2030
+- JPM Float: 2037
+- JPM 0%: ago-2039
+- GS 0%: ene-2040
+
+NOTAS ESTRUCTURADAS (8 activas):
+- BARC SPX 11.8% vto sep-2027 · call ago-2026 · SPX +22% → ✓ LLAMABLE
+- JPM DD SPX 9.25% vto ago-2027 · call ago-2026 · SPX +18% → ✓ LLAMABLE (C+B)
+- JPM M+ SPX 11.15% vto mar-2028 · call mar-2027 · SPX +8.5% → ✓ LLAMABLE
+- JPM CBEN SPX 9.45% vto feb-2028 · call mar-2027 · SPX +8.5% → ✓ LLAMABLE
+- GS Basket AI EW 16.95% vto mar-2028 · call mar-2027 · avg EW +35.3% → ✓ LLAMABLE
+- JPM SX5E 11.95% vto feb-2028 · call mar-2027 · SX5E −0.6% → ✗ BAJA
+- BNP MELI 20.33% vto mar-2028 · call mar-2027 · MELI −4.6% → ✗ BAJA
+- BNP Ford CLN ~6.3% vto jun-2028 → movido a RF, sin call definido
+
+ALTERNATIVOS DIRECTOS (Bosques):
+- Draftea Ltd: $166,666 costo (Serie B, x1 MOIC base · Drafteame Series D a $30.59/acc)
+- Terreno Woodstock: $500K
+- D&W Venture Debt: $188K (XIRR 31.78%)
+- SW West Loop: $126K
+- Estelio Partners: $36K (compromiso $500K, llamado $35,714)
+- Blackstone Alt Sol VI (Centella ML): $185,926 · IRR 4.95%
+- Franklin Lexington (Centella JPM): $625,400
+- Ardian Access (Centella JPM): $280,151
+- KKR Infrastructure (Centella JPM): $279,167
+- GTIF Private Investors (Centella JPM): $500,000
+- Global Defense & Security (Centella JPM): $100,000
+- Coatue Innovation (Bosques UBS): $300,000
+
+EQUITY DESTACADO:
+- SPY: 2,421u Cent/ML + 1,913u Bosq/ML = 4,334u total ~$3.3M
+- XGHGF (iShares Nasdaq 100): 319u Bosq/ML · precio $1,756
+- CSPX: 1,290u Cent/ML + 557u Bosq/ML · precio $814
+- QQQ: 350u Bosq/ML + 1,075u Cent/JPM · precio $740
+- iShares MSCI Chile ECH: 6,152u Cent/ML · precio $39.92
+- JPM Global Core Eq: ~$2.97M (3 cuentas JPM)
+
+CARTOLAS CLP:
+- BTG 49458: ENTEL 6,268u + SONDA 1,811u + FM BTG Chile Acción B 191,081u · total CLP 339M
+- Banchile: CFMITNIPSA + CFIBCHDECH + CFIETFBRL · total CLP 553M
+
+Fecha de referencia: 4-5 junio 2026. SPX ~7,558 · SX5E ~6,064 · MELI ~$1,661.`;
+}
+
+function addMsg(text, role){
+  var msgs = document.getElementById('ai-messages');
+  var div = document.createElement('div');
+  var isUser = role === 'user';
+  div.style.cssText = 'padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.5;max-width:88%;word-wrap:break-word;' +
+    (isUser
+      ? 'background:linear-gradient(135deg,#3B82F6,#1D4ED8);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;'
+      : 'background:#fff;color:#374151;border:1px solid #e5e7eb;align-self:flex-start;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.06);');
+  div.innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addTyping(){
+  var msgs = document.getElementById('ai-messages');
+  var div = document.createElement('div');
+  div.id = 'ai-typing';
+  div.style.cssText = 'background:#fff;border:1px solid #e5e7eb;border-radius:12px;border-bottom-left-radius:4px;padding:10px 13px;font-size:13px;color:#9CA3AF;align-self:flex-start;box-shadow:0 1px 3px rgba(0,0,0,0.06);';
+  div.innerHTML = '<span style="animation:blink 1.2s infinite">●</span> <span style="animation:blink 1.2s infinite 0.4s">●</span> <span style="animation:blink 1.2s infinite 0.8s">●</span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+async function sendAiMsg(){
+  var input = document.getElementById('ai-input');
+  var q = input.value.trim();
+  if(!q) return;
+  var btn = document.getElementById('ai-send-btn');
+  btn.disabled = true;
+  input.value = '';
+  input.style.height = 'auto';
+
+  addMsg(q, 'user');
+  aiHistory.push({role:'user', content:q});
+
+  var typing = addTyping();
+
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: buildPortfolioContext(),
+        messages: aiHistory
+      })
+    });
+    var data = await res.json();
+    typing.remove();
+    var reply = data.content && data.content[0] ? data.content[0].text : 'Error al obtener respuesta.';
+    addMsg(reply, 'assistant');
+    aiHistory.push({role:'assistant', content:reply});
+    // Keep history max 10 turns
+    if(aiHistory.length > 20) aiHistory = aiHistory.slice(-20);
+  } catch(e) {
+    typing.remove();
+    addMsg('Error de conexión. Intenta de nuevo.', 'assistant');
+  }
+  btn.disabled = false;
+  input.focus();
+}
+
+// Blink animation for typing indicator
+var styleEl = document.createElement('style');
+styleEl.textContent = '@keyframes blink{0%,100%{opacity:0.2}50%{opacity:1}}';
+document.head.appendChild(styleEl);
 </script>
 </body></html>
