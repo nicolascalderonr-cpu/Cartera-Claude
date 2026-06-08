@@ -1411,7 +1411,9 @@ function showIsinConfig(){
 
 function renderIsinPanel(){
   var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">';
-  Object.keys(DEFAULT_ISIN_MAP).forEach(function(name){
+  var missing = Object.keys(DEFAULT_ISIN_MAP).filter(function(k){ return !DEFAULT_ISIN_MAP[k].sym; });
+  if(missing.length === 0){ html += '<p style="color:#10B981;font-size:12px;grid-column:span 2">✓ Todos los instrumentos tienen ticker configurado.</p>'; }
+  (missing.length > 0 ? missing : Object.keys(DEFAULT_ISIN_MAP)).forEach(function(name){
     var inst = DEFAULT_ISIN_MAP[name];
     var badge = inst.type==='bond'?'🏦':inst.type==='rf'?'📊':'📈';
     html += '<div style="display:flex;flex-direction:column;gap:2px">' +
