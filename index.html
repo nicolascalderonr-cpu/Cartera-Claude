@@ -1337,14 +1337,29 @@ function clearSearch(){
 }
 
 // ─── PRICE UPDATER (EOD Historical Data) ─────────────────────────────────────
-var EOD_KEY = '6a2727fe6a2995.81050794';
+var EOD_KEY = '6a272c1fc65bb6.06336275';
 
-// Map: symbol → {eod: 'TICKER.EXCHANGE', units, cells: [selector], kpiId}
-var PRICE_MAP = {
-  'SPY':  { eod:'SPY.US',   label:'SPY',   units_cent_ml:2421, units_bosq_ml:1913 },
-  'QQQ':  { eod:'QQQ.US',   label:'QQQ',   units_bosq_ml:350,  units_cent_jpm:1075 },
-  'ECH':  { eod:'ECH.US',   label:'ECH',   units_cent_ml:6152 },
-};
+var PRICE_MAP = [
+  // Equity ETFs - US
+  {sym:'SPY.US',   name:'SPY',              units:{cent_ml:2421, bosq_ml:1913}, type:'eq'},
+  {sym:'QQQ.US',   name:'QQQ',              units:{bosq_ml:350,  cent_jpm:1075}, type:'eq'},
+  {sym:'ECH.US',   name:'ECH',              units:{cent_ml:6152}, type:'eq'},
+  // Equity ETFs - LSE
+  {sym:'CSPX.LSE', name:'CSPX',             units:{cent_ml:1290, bosq_ml:557}, type:'eq'},
+  {sym:'CNDX.LSE', name:'XGHGF/CNDX',       units:{bosq_ml:319}, type:'eq'},
+  {sym:'XDWD.LSE', name:'Xtrackers World',  units:{cent_ml:11300}, type:'eq'},
+  {sym:'IQQW.LSE', name:'iShares ACWI',     units:{mish_jpm:2365}, type:'eq'},
+  // RF ETFs - LSE
+  {sym:'IUAG.LSE', name:'iSh US Agg',       units:{cent_ml:171850}, type:'rf'},
+  {sym:'ISDU.LSE', name:'iSh Short Dur',    units:{cent_ml:115020}, type:'rf'},
+  {sym:'IHYU.LSE', name:'iSh HY Corp',      units:{cent_ml:33220}, type:'rf'},
+  // Bonds
+  {sym:'US6174467Y90.BOND', name:'MS 4.35% 2026',  notional:250000, type:'bond'},
+  {sym:'US36159LAA73.BOND', name:'GM 4.35% 2027',  notional:150000, type:'bond'},
+  {sym:'US36164AAF08.BOND', name:'GM 3.6% 2030',   notional:250000, type:'bond'},
+  {sym:'US48126BAA17.BOND', name:'JPM Float 2037',  notional:125000, type:'bond'},
+  {sym:'US38141GYZ41.BOND', name:'GS 0% 2027',     notional:100000, type:'bond'},
+];
 
 async function updatePrices(){
   var btn = document.getElementById('price-btn');
@@ -1353,108 +1368,82 @@ async function updatePrices(){
   btn.textContent = '↻ Actualizando...';
   status.textContent = '';
 
-  var symbols = Object.keys(PRICE_MAP);
-  var results = [];
-  var errors = [];
+  var updated = [], failed = [];
 
-  for(var sym of symbols){
-    var info = PRICE_MAP[sym];
+  for(var inst of PRICE_MAP){
     try {
-      var url = 'https://eodhd.com/api/real-time/' + info.eod + '?api_token=' + EOD_KEY + '&fmt=json';
+      var url = 'https://eodhd.com/api/real-time/' + inst.sym + '?api_token=' + EOD_KEY + '&fmt=json';
       var res = await fetch(url);
+      if(!res.ok) throw new Error(res.status);
       var data = await res.json();
-      if(data && data.close){
-        results.push({sym, price: parseFloat(data.close), label: info.label, change: data.change_p});
-        updatePriceInDOM(sym, parseFloat(data.close), data.change_p);
+      var price = parseFloat(data.close || data.previousClose);
+      if(price > 0){
+        updatePriceInDOM(inst, price, data.change_p);
+        updated.push(inst.name + ' $' + price.toFixed(2));
       } else {
-        errors.push(sym);
+        failed.push(inst.name);
       }
     } catch(e) {
-      errors.push(sym);
+      failed.push(inst.name);
     }
   }
 
   btn.disabled = false;
   btn.textContent = '↻ Actualizar precios';
-
-  var now = new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
-  if(results.length > 0){
-    var summary = results.map(function(r){
-      var sign = r.change >= 0 ? '+' : '';
-      return r.label + ' $' + r.price.toFixed(2) + ' (' + sign + parseFloat(r.change).toFixed(2) + '%)';
-    }).join(' · ');
-    status.innerHTML = '<span style="color:#10B981">✓ ' + now + '</span> · ' + summary;
-  }
-  if(errors.length > 0){
-    status.innerHTML += ' · <span style="color:#f59e0b">Sin datos: ' + errors.join(', ') + '</span>';
-  }
+  var now = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+  status.innerHTML = '<span style="color:#10B981">✓ ' + now + ' · ' + updated.length + ' actualizados</span>';
+  if(failed.length) status.innerHTML += ' · <span style="color:#f59e0b">Sin datos: ' + failed.join(', ') + '</span>';
 }
 
-function updatePriceInDOM(sym, price, changePct){
-  // Update price pills and recalculate market values in equity table
+function updatePriceInDOM(inst, price, changePct){
   var fmt = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
-  var fmtP = function(p){ return (p>=0?'+':'')+parseFloat(p).toFixed(2)+'%'; };
-  var color = changePct >= 0 ? 'green' : '#e53935';
+  var color = (changePct >= 0) ? '#10B981' : '#e53935';
+  var changeStr = (changePct >= 0 ? '+' : '') + parseFloat(changePct||0).toFixed(2) + '%';
 
-  if(sym === 'SPY'){
-    // SPY price pills
-    document.querySelectorAll('.pi').forEach(function(el){
-      if(el.textContent.trim().startsWith('$754') || el.textContent.trim().startsWith('$756') || el.textContent.trim().startsWith('$7')){
-        // Only update SPY pills — check parent row
-        var row = el.closest('tr');
-        if(row && row.innerHTML.indexOf('SPY') >= 0){
-          el.textContent = '$' + price.toFixed(2);
-          // Update market value cell
-          var cells = row.querySelectorAll('.num');
-          if(cells.length >= 1){
-            var totalUnits = 2421 + 1913; // cent-ml + bosq-ml
-            cells[0].textContent = fmt(totalUnits * price);
-          }
-          // Add change indicator
-          var existing = row.querySelector('.price-change');
-          if(!existing){
-            var span = document.createElement('span');
-            span.className = 'price-change';
-            span.style.cssText = 'font-size:10px;margin-left:4px;color:'+color;
-            span.textContent = fmtP(changePct);
-            el.parentNode.appendChild(span);
-          } else {
-            existing.textContent = fmtP(changePct);
-            existing.style.color = color;
-          }
-        }
-      }
-    });
-  }
+  // Find rows containing this instrument name and update price pill + value
+  document.querySelectorAll('#pane-equity tr, #pane-rf tr').forEach(function(row){
+    var txt = row.innerText || '';
+    var match = false;
+    if(inst.name === 'SPY' && txt.includes('SPY') && txt.includes('1,913')) match=true;
+    if(inst.name === 'QQQ' && txt.includes('QQQ')) match=true;
+    if(inst.name === 'ECH' && (txt.includes('ECH') || txt.includes('MSCI Chile'))) match=true;
+    if(inst.name === 'CSPX' && (txt.includes('CSPX') || txt.includes('iShares Core S&P 500 UCITS'))) match=true;
+    if(inst.name === 'XGHGF/CNDX' && (txt.includes('XGHGF') || txt.includes('Nasdaq 100 UCITS'))) match=true;
+    if(inst.name === 'Xtrackers World' && txt.includes('Xtrackers')) match=true;
+    if(inst.name === 'iShares ACWI' && txt.includes('ACWI')) match=true;
+    if(inst.name === 'iSh US Agg' && txt.includes('US Agg')) match=true;
+    if(inst.name === 'iSh Short Dur' && txt.includes('Short Dur')) match=true;
+    if(inst.name === 'iSh HY Corp' && txt.includes('High Yield') || txt.includes('HY Corp')) match=true;
+    if(inst.name === 'MS 4.35% 2026' && txt.includes('Morgan Stanley') && txt.includes('4.35')) match=true;
+    if(inst.name === 'GM 4.35% 2027' && txt.includes('GM Financial') && txt.includes('4.35')) match=true;
+    if(inst.name === 'GM 3.6% 2030' && txt.includes('GM Financial') && txt.includes('3.6')) match=true;
+    if(inst.name === 'JPM Float 2037' && txt.includes('JPMorgan') && txt.includes('Float')) match=true;
+    if(inst.name === 'GS 0% 2027' && txt.includes('Goldman') && txt.includes('2027')) match=true;
 
-  if(sym === 'QQQ'){
-    document.querySelectorAll('tr').forEach(function(row){
-      if(row.innerHTML.indexOf('QQQ') >= 0 && row.innerHTML.indexOf('badge') >= 0){
-        var pills = row.querySelectorAll('.pi');
-        pills.forEach(function(el){
-          if(el.textContent.match(/\$7[0-9]{2}/)) el.textContent = '$' + price.toFixed(2);
-        });
-        var cells = row.querySelectorAll('.num');
-        if(cells.length >= 1){
-          var totalUnits = 350 + 1075;
-          cells[0].textContent = fmt(totalUnits * price);
-        }
-      }
-    });
-  }
+    if(!match) return;
 
-  if(sym === 'ECH'){
-    document.querySelectorAll('tr').forEach(function(row){
-      if(row.innerHTML.indexOf('ECH') >= 0 || row.innerHTML.indexOf('iShares MSCI Chile') >= 0){
-        var pills = row.querySelectorAll('.pi');
-        pills.forEach(function(el){
-          if(el.textContent.match(/\$[34][0-9]/)) el.textContent = '$' + price.toFixed(2);
-        });
-        var cells = row.querySelectorAll('.num');
-        if(cells.length >= 1) cells[0].textContent = fmt(6152 * price);
-      }
-    });
-  }
+    // Update price pill
+    var pill = row.querySelector('.pi');
+    if(pill) {
+      pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
+    }
+
+    // Update market value — calculate based on units or notional
+    var totalUnits = 0;
+    if(inst.units){
+      Object.values(inst.units).forEach(function(u){ totalUnits += u; });
+    }
+    if(inst.notional){
+      // Bond: price is per 100, notional in face value
+      var mv = inst.notional * price / 100;
+      var numCells = row.querySelectorAll('.num');
+      if(numCells.length > 0) numCells[0].textContent = fmt(mv);
+    } else if(totalUnits > 0){
+      var mv = totalUnits * price;
+      var numCells = row.querySelectorAll('.num');
+      if(numCells.length > 0) numCells[0].textContent = fmt(mv);
+    }
+  });
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
