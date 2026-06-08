@@ -1363,6 +1363,39 @@ var DEFAULT_ISIN_MAP = {
   'Braskem 4.5%':    {sym:'',                    notional:250000,                          type:'bond', hint:'US10552TAH08.BOND'},
 };
 
+async function updatePrices(){
+  var btn = document.getElementById('price-btn');
+  var status = document.getElementById('price-status');
+  btn.disabled = true;
+  btn.textContent = '↻ Actualizando...';
+  status.textContent = '';
+
+  var updated = [], failed = [], skipped = [];
+
+  for(var name of Object.keys(DEFAULT_ISIN_MAP)){
+    var inst = DEFAULT_ISIN_MAP[name];
+    if(!inst.sym){ skipped.push(name); continue; }
+    try {
+      var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
+      var res = await fetch(url);
+      if(!res.ok) throw new Error(res.status);
+      var data = await res.json();
+      var price = parseFloat(data.close || data.previousClose);
+      if(price > 0){
+        updatePriceInDOM(name, inst, price, data.change_p);
+        updated.push(name + ' $' + price.toFixed(2));
+      } else { failed.push(name); }
+    } catch(e){ failed.push(name + '(' + (e.message||'') + ')'); }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '↻ Actualizar precios';
+  var now = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+  status.innerHTML = '<span style="color:#10B981">✓ ' + now + ' · ' + updated.length + ' ok</span>';
+  if(skipped.length) status.innerHTML += ' · <span style="color:#aaa">' + skipped.length + ' sin ticker</span>';
+  if(failed.length) status.innerHTML += ' · <span style="color:#f59e0b" title="' + failed.join(', ') + '">⚠ ' + failed.length + ' sin datos</span>';
+}
+
 function updatePriceInDOM(name, inst, price, changePct){
   var fmt = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
   var color = (changePct >= 0) ? '#10B981' : '#e53935';
