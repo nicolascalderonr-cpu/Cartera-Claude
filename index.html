@@ -1463,7 +1463,7 @@ async function updatePrices(){
   var now = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
   status.innerHTML = '<span style="color:#10B981">✓ ' + now + ' · ' + updated.length + ' ok</span>';
   if(skipped.length) status.innerHTML += ' · <span style="color:#aaa">' + skipped.length + ' sin ISIN</span>';
-  if(failed.length) status.innerHTML += ' · <span style="color:#e53935">Error: ' + failed.join(', ') + '</span>';
+  if(failed.length) status.innerHTML += ' · <span style="color:#f59e0b" title="' + failed.join(', ') + '">⚠ ' + failed.length + ' sin datos (hover)</span>';
 }
 
 function updatePriceInDOM(name, inst, price, changePct){
