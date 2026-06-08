@@ -1400,27 +1400,36 @@ function updatePriceInDOM(inst, price, changePct){
   var color = (changePct >= 0) ? '#10B981' : '#e53935';
   var changeStr = (changePct >= 0 ? '+' : '') + parseFloat(changePct||0).toFixed(2) + '%';
 
-  // Find rows containing this instrument name and update price pill + value
+  // Exact name matching map
+  var nameMap = {
+    'SPY':             ['SPY'],
+    'QQQ':             ['QQQ Trust', 'Invesco QQQ'],
+    'ECH':             ['iShares MSCI Chile', 'ECH'],
+    'CSPX':            ['iShares Core S&P 500 UCITS', 'CSPX'],
+    'XGHGF/CNDX':      ['iShares Nasdaq 100 UCITS', 'XGHGF'],
+    'Xtrackers World': ['Xtrackers MSCI World'],
+    'iShares ACWI':    ['iShares MSCI ACWI'],
+    'iSh US Agg':      ['iShares US Aggregate', 'iShares.*Agg Bond'],
+    'iSh Short Dur':   ['iShares USD Short Dur', 'iShares.*Short'],
+    'iSh HY Corp':     ['iShares USD High Yield', 'iShares.*HY'],
+    'MS 4.35% 2026':   ['Morgan Stanley Sub 4.35%', 'Morgan Stanley.*4.35'],
+    'GM 4.35% 2027':   ['GM Financial 4.35%'],
+    'GM 3.6% 2030':    ['GM Financial 3.6%'],
+    'JPM Float 2037':  ['JPMorgan Chase.*Float', 'JPMorgan.*Float'],
+    'GS 0% 2027':      ['Goldman Sachs 0% Oct 2027'],
+    'Braskem 4.5%':    ['Braskem Neth 4.5%'],
+  };
+
+  var keywords = nameMap[inst.name] || [inst.name];
+
   document.querySelectorAll('#pane-equity tr, #pane-rf tr').forEach(function(row){
     var txt = row.innerText || '';
-    var match = false;
-    if(inst.name === 'SPY' && txt.includes('SPY') && txt.includes('1,913')) match=true;
-    if(inst.name === 'QQQ' && txt.includes('QQQ')) match=true;
-    if(inst.name === 'ECH' && (txt.includes('ECH') || txt.includes('MSCI Chile'))) match=true;
-    if(inst.name === 'CSPX' && (txt.includes('CSPX') || txt.includes('iShares Core S&P 500 UCITS'))) match=true;
-    if(inst.name === 'XGHGF/CNDX' && (txt.includes('XGHGF') || txt.includes('Nasdaq 100 UCITS'))) match=true;
-    if(inst.name === 'Xtrackers World' && txt.includes('Xtrackers')) match=true;
-    if(inst.name === 'iShares ACWI' && txt.includes('ACWI')) match=true;
-    if(inst.name === 'iSh US Agg' && txt.includes('US Agg')) match=true;
-    if(inst.name === 'iSh Short Dur' && txt.includes('Short Dur')) match=true;
-    if(inst.name === 'iSh HY Corp' && txt.includes('High Yield') || txt.includes('HY Corp')) match=true;
-    if(inst.name === 'MS 4.35% 2026' && txt.includes('Morgan Stanley') && txt.includes('4.35')) match=true;
-    if(inst.name === 'GM 4.35% 2027' && txt.includes('GM Financial') && txt.includes('4.35')) match=true;
-    if(inst.name === 'GM 3.6% 2030' && txt.includes('GM Financial') && txt.includes('3.6')) match=true;
-    if(inst.name === 'JPM Float 2037' && txt.includes('JPMorgan') && txt.includes('Float')) match=true;
-    if(inst.name === 'GS 0% 2027' && txt.includes('Goldman') && txt.includes('2027')) match=true;
-
-    if(!match) return;
+    var html = row.innerHTML || '';
+    var match = keywords.some(function(k){
+      try { return new RegExp(k,'i').test(txt) || new RegExp(k,'i').test(html); }
+      catch(e){ return txt.toLowerCase().includes(k.toLowerCase()); }
+    });
+    if(!match || row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot')) return;
 
     // Update price pill
     var pill = row.querySelector('.pi');
@@ -1428,20 +1437,16 @@ function updatePriceInDOM(inst, price, changePct){
       pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
     }
 
-    // Update market value — calculate based on units or notional
-    var totalUnits = 0;
-    if(inst.units){
-      Object.values(inst.units).forEach(function(u){ totalUnits += u; });
-    }
+    // Recalculate market value
+    var numCells = row.querySelectorAll('td.num');
+    if(numCells.length === 0) return;
+
     if(inst.notional){
-      // Bond: price is per 100, notional in face value
-      var mv = inst.notional * price / 100;
-      var numCells = row.querySelectorAll('.num');
-      if(numCells.length > 0) numCells[0].textContent = fmt(mv);
-    } else if(totalUnits > 0){
-      var mv = totalUnits * price;
-      var numCells = row.querySelectorAll('.num');
-      if(numCells.length > 0) numCells[0].textContent = fmt(mv);
+      // Bond: price per 100
+      numCells[0].textContent = fmt(inst.notional * price / 100);
+    } else if(inst.units){
+      var totalUnits = Object.values(inst.units).reduce(function(a,b){return a+b;},0);
+      numCells[0].textContent = fmt(totalUnits * price);
     }
   });
 }
