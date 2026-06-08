@@ -1446,7 +1446,7 @@ async function updatePrices(){
     var inst = DEFAULT_ISIN_MAP[name];
     if(!inst.sym){ skipped.push(name); continue; }
     try {
-      var url = 'https://eodhd.com/api/real-time/' + inst.sym + '?api_token=' + EOD_KEY + '&fmt=json';
+      var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
       var res = await fetch(url);
       if(!res.ok) throw new Error(res.status);
       var data = await res.json();
