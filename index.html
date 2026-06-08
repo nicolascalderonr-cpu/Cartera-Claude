@@ -45,9 +45,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .pi{font-size:10px;color:#aaa;white-space:nowrap;margin-left:3px}
 .cons-row{cursor:pointer;background:#f8f8f6}
 .cons-row:hover{background:#f0eeea}
-.ei{font-size:10px;color:#aaa;margin-right:3px;display:inline-block;transition:transform .15s}
-.cons-row.open .ei{transform:rotate(90deg)}
-.child{display:none}.child.show{display:table-row}
+.cons-row.open .child{display:none}.child.show{display:table-row}
 .child td{background:#fff}
 .metric{background:#f8f8f6;border-radius:8px;padding:.875rem 1rem}
 .nm-row td{opacity:.82}
@@ -274,12 +272,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <thead><tr><th></th><th style="width:26%">Instrumento</th><th style="width:11%">Cuenta</th><th style="width:11%">Subclase</th><th class="num" style="width:11%">Valor USD</th><th class="num" style="width:6%">% tot.</th><th class="num" style="width:7%">MTD may-26</th><th class="num" style="width:7%">YTD</th><th style="width:10%">Precio</th></tr></thead>
         <tbody>
           <tr class="cons-row" id="cr-sp500" onclick="tog('sp500')" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$4,741,350","cent-ml":"$2,733,715","bosq-ml":"$1,838,750","bosq-ubs":"$204,750","g-centella":"$2,733,715","g-bosques":"$2,043,500","g-propias":"$4,777,215"}'>
-            <td><span class="ei" id="ei-sp500">▶</span><span class="dot dg"></span></td>
+            <td><span class="dot dg"></span></td>
             <td><strong>S&P 500 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span></td>
             <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US large</span></td>
             <td class="num"><strong>$4,741,350</strong></td><td class="num">14.1%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
-            <td><span class="dot dg"></span><span class="pi">$759/$816</span></td>
+            <td><span class="pi">$759/$816</span></td>
           </tr>
           <tr class="child" id="ch-sp500-0" data-accts="cent-ml bosq-ml g-centella g-bosques g-propias all">
             <td style="padding-left:10px"><span class="dot dg"></span></td>
@@ -287,7 +285,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
             <td><span class="badge b-ml">ML</span></td><td><span class="pill">ETF US large</span></td>
             <td class="num" style="color:#777">$1,442,861</td><td class="num" style="color:#777">4.3%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
-            <td><span class="dot dg"></span><span class="pi">$754.24</span></td>
+            <td><span class="pi">$754.24</span></td>
           </tr>
           <tr class="child" id="ch-sp500-1" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all">
             <td style="padding-left:10px"><span class="dot dg"></span></td>
@@ -295,15 +293,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
             <td><span class="badge b-ml">ML</span> <span class="badge b-ubs">UBS</span></td><td><span class="pill">ETF US large</span></td>
             <td class="num" style="color:#777">$453,766</td><td class="num" style="color:#777">1.4%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
-            <td><span class="dot dg"></span><span class="pi">$814.66</span></td>
+            <td><span class="pi">$814.66</span></td>
           </tr>
           <tr class="cons-row" id="cr-ndx" onclick="tog('ndx')" data-accts="cent-jpm bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$1,588,530","cent-jpm":"$977,780","bosq-ml":"$558,450","bosq-ubs":"$101,500","g-centella":"$977,780","g-bosques":"$659,950","g-propias":"$1,638,030"}'>
-            <td><span class="ei" id="ei-ndx">▶</span><span class="dot dg"></span></td>
+            <td><span class="dot dg"></span></td>
             <td><strong>Nasdaq 100 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span></td>
             <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US growth</span></td>
             <td class="num"><strong>$1,588,530</strong></td><td class="num">4.7%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
-            <td><span class="dot dg"></span><span class="pi">$743/$1,750</span></td>
+            <td><span class="pi">$743/$1,750</span></td>
           </tr>
           <tr class="child" id="ch-ndx-0" data-accts="cent-jpm bosq-ml g-centella g-bosques g-propias all">
             <td style="padding-left:10px"><span class="dot dg"></span></td>
@@ -311,7 +309,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
             <td><span class="badge b-ml">ML</span> <span class="badge b-jpm">JPM</span></td><td><span class="pill">ETF US growth</span></td>
             <td class="num" style="color:#777">$1,056,630</td><td class="num" style="color:#777">3.2%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
-            <td><span class="dot dg"></span><span class="pi">$744.21</span></td>
+            <td><span class="pi">$744.21</span></td>
           </tr>
           <tr class="child" id="ch-ndx-1" data-accts="bosq-ml bosq-ubs g-bosques g-propias all">
             <td style="padding-left:10px"><span class="dot dgy"></span></td>
@@ -323,9 +321,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           </tr>
           <tr data-accts="bosq-jpm cent-jpm mish-jpm g-centella g-bosques g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>JPM Global Core Fd</td><td><span class="badge b-jpm">JPM ×3</span></td><td><span class="pill">Fondo global</span></td><td class="num" id="val-jpmcore">$2,970,381</td><td class="num">8.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$153.95 <span style="font-size:9px;color:#aaa">NAV</span></span></td></tr>
           <tr data-accts="bosq-jpm mish-jpm g-bosques g-mishpajot g-propias all"><td><span class="dot dgy"></span></td><td>JPM Access Growth Fd <span class="eq-b">→ equity</span></td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Fondo balanceado</span></td><td class="num" id="val-jpmaccess">$1,021,715</td><td class="num">3.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$264.50 <span style="font-size:9px;color:#aaa">NAV</span></span></td></tr>
-          <tr data-accts="mish-jpm g-mishpajot g-propias all"><td><span class="dot dg"></span></td><td>iShares MSCI ACWI (ISAC) <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$288,270</td><td class="num">0.9%</td><td class="num"><span class="rc rn">−0.07%</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dg"></span><span class="pi">$121.89</span></td></tr>
+          <tr data-accts="mish-jpm g-mishpajot g-propias all"><td><span class="dot dg"></span></td><td>iShares MSCI ACWI (ISAC) <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$288,270</td><td class="num">0.9%</td><td class="num"><span class="rc rn">−0.07%</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="pi">$121.89</span></td></tr>
           <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>Xtrackers MSCI World Ex USA</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF global</span></td><td class="num">$505,393</td><td class="num">1.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$44.73</span></td></tr>
-          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dg"></span></td><td>iShares Core MSCI EAFE (IEFA) <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF global</span></td><td class="num">$76,086</td><td class="num">0.2%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dg"></span><span class="pi">$98.18</span></td></tr>
+          <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dg"></span></td><td>iShares Core MSCI EAFE (IEFA) <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF global</span></td><td class="num">$76,086</td><td class="num">0.2%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="pi">$98.18</span></td></tr>
           <tr data-accts="cent-jpm g-centella g-propias all"><td><span class="dot dgy"></span></td><td>JPM China A Sh Op</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Fondo China</span></td><td class="num">$287,602</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$36.56 <span style="font-size:9px;color:#aaa">NAV</span></span></td></tr>
           <tr data-accts="cent-ml g-centella g-propias all"><td><span class="dot dgy"></span></td><td>iShares MSCI Chile (ECH)</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF EM</span></td><td class="num">$245,588</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span class="dot dgy"></span><span class="pi">$39.92</span></td></tr>
           <tr data-accts="bosq-ubs g-bosques g-propias all"><td><span class="dot dgy"></span></td><td>iShares MSCI EM UCITS <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF EM</span></td><td class="num">$26,083</td><td class="num">0.1%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span class="dot dgy"></span><span class="pi">$66.88</span></td></tr>
