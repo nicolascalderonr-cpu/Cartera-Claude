@@ -158,7 +158,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
     onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10B981'">
     ↻ Actualizar precios
   </button>
+  <button onclick="showIsinConfig()" title="Configurar ISINs/tickers EOD"
+    style="font-size:11px;color:#6B7280;background:#f3f4f6;border:1px solid #e5e7eb;cursor:pointer;padding:6px 10px;border-radius:6px;white-space:nowrap"
+    onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+    ⚙ ISINs
+  </button>
   <span id="price-status" style="font-size:11px;color:#aaa"></span>
+</div>
+
+<!-- ISIN Config Panel -->
+<div id="isin-panel" style="display:none;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,0.07)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div style="font-size:12px;font-weight:600;color:#374151">⚙ Configurar tickers EOD por instrumento</div>
+    <div style="font-size:10px;color:#9CA3AF">Los cambios se guardan automáticamente en la sesión · 📈 Equity · 📊 RF ETF · 🏦 Bono</div>
+  </div>
+  <div id="isin-panel-body"></div>
+  <div style="margin-top:10px;font-size:10px;color:#9CA3AF">
+    Ejemplos de formato: <code>SPY.US</code> · <code>CSPX.LSE</code> · <code>US6174467Y90.BOND</code> · <code>IE00B3DKXQ41.EUFUND</code>
+  </div>
+</div>
 </div>
 <div id="search-results" style="display:none;background:#fff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;max-height:380px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
   <table class="tbl" style="margin:0">
@@ -1339,27 +1357,75 @@ function clearSearch(){
 // ─── PRICE UPDATER (EOD Historical Data) ─────────────────────────────────────
 var EOD_KEY = '6a272c1fc65bb6.06336275';
 
-var PRICE_MAP = [
-  // Equity ETFs - US
-  {sym:'SPY.US',   name:'SPY',              units:{cent_ml:2421, bosq_ml:1913}, type:'eq'},
-  {sym:'QQQ.US',   name:'QQQ',              units:{bosq_ml:350,  cent_jpm:1075}, type:'eq'},
-  {sym:'ECH.US',   name:'ECH',              units:{cent_ml:6152}, type:'eq'},
-  // Equity ETFs - LSE
-  {sym:'CSPX.LSE', name:'CSPX',             units:{cent_ml:1290, bosq_ml:557}, type:'eq'},
-  {sym:'CNDX.LSE', name:'XGHGF/CNDX',       units:{bosq_ml:319}, type:'eq'},
-  {sym:'XDWD.LSE', name:'Xtrackers World',  units:{cent_ml:11300}, type:'eq'},
-  {sym:'IQQW.LSE', name:'iShares ACWI',     units:{mish_jpm:2365}, type:'eq'},
-  // RF ETFs - LSE
-  {sym:'IUAG.LSE', name:'iSh US Agg',       units:{cent_ml:171850}, type:'rf'},
-  {sym:'ISDU.LSE', name:'iSh Short Dur',    units:{cent_ml:115020}, type:'rf'},
-  {sym:'IHYU.LSE', name:'iSh HY Corp',      units:{cent_ml:33220}, type:'rf'},
-  // Bonds
-  {sym:'US6174467Y90.BOND', name:'MS 4.35% 2026',  notional:250000, type:'bond'},
-  {sym:'US36159LAA73.BOND', name:'GM 4.35% 2027',  notional:150000, type:'bond'},
-  {sym:'US36164AAF08.BOND', name:'GM 3.6% 2030',   notional:250000, type:'bond'},
-  {sym:'US48126BAA17.BOND', name:'JPM Float 2037',  notional:125000, type:'bond'},
-  {sym:'US38141GYZ41.BOND', name:'GS 0% 2027',     notional:100000, type:'bond'},
-];
+// Default ISIN/ticker map — user can edit via the config panel
+var DEFAULT_ISIN_MAP = {
+  'SPY':             {sym:'SPY.US',              units:{cent_ml:2421,bosq_ml:1913},       type:'eq'},
+  'QQQ':             {sym:'QQQ.US',              units:{bosq_ml:350,cent_jpm:1075},        type:'eq'},
+  'ECH':             {sym:'ECH.US',              units:{cent_ml:6152},                     type:'eq'},
+  'CSPX':            {sym:'',                    units:{cent_ml:1290,bosq_ml:557},          type:'eq', hint:'CSPX.LSE o IE00B4L5Y983.EUFUND'},
+  'XGHGF':           {sym:'',                    units:{bosq_ml:319},                      type:'eq', hint:'CNDX.LSE o IE00B53SZB19.EUFUND'},
+  'Xtrackers':       {sym:'',                    units:{cent_ml:11300},                    type:'eq', hint:'XDWD.LSE o IE00BJ0KDQ92.EUFUND'},
+  'iShares ACWI':    {sym:'',                    units:{mish_jpm:2365},                    type:'eq', hint:'IQQW.LSE o IE00B6R52259.EUFUND'},
+  'iSh US Agg':      {sym:'',                    units:{cent_ml:171850},                   type:'rf', hint:'IUAG.LSE o IE00B3DKXQ41.EUFUND'},
+  'iSh Short Dur':   {sym:'',                    units:{cent_ml:115020},                   type:'rf', hint:'ISDU.LSE o IE00BCRY6557.EUFUND'},
+  'iSh HY Corp':     {sym:'',                    units:{cent_ml:33220},                    type:'rf', hint:'IHYU.LSE o IE00B4PY7Y77.EUFUND'},
+  'PIMCO GIS':       {sym:'',                    units:{cent_ml:27800},                    type:'rf', hint:'IGLO.LSE o IE00B7KFL990.EUFUND'},
+  'MS 4.35% 2026':   {sym:'',                    notional:250000,                          type:'bond', hint:'US6174467Y90.BOND'},
+  'GM 4.35% 2027':   {sym:'',                    notional:150000,                          type:'bond', hint:'US36159LAA73.BOND'},
+  'GM 3.6% 2030':    {sym:'',                    notional:250000,                          type:'bond', hint:'US36164AAF08.BOND'},
+  'JPM Float 2037':  {sym:'',                    notional:125000,                          type:'bond', hint:'US48126BAA17.BOND'},
+  'GS 0% 2027':      {sym:'',                    notional:100000,                          type:'bond', hint:'US38141GYZ41.BOND'},
+  'GS 0% 2040':      {sym:'',                    notional:500000,                          type:'bond', hint:'US38141GXC69.BOND'},
+  'JPM 0% 2039':     {sym:'',                    notional:250000,                          type:'bond', hint:'US46647PCA29.BOND'},
+  'Braskem 4.5%':    {sym:'',                    notional:250000,                          type:'bond', hint:'US10552TAH08.BOND'},
+};
+
+function loadIsinMap(){
+  try {
+    var saved = sessionStorage.getItem('eod_isin_map');
+    if(saved){
+      var parsed = JSON.parse(saved);
+      Object.keys(parsed).forEach(function(k){
+        if(DEFAULT_ISIN_MAP[k]) DEFAULT_ISIN_MAP[k].sym = parsed[k];
+      });
+    }
+  } catch(e){}
+}
+loadIsinMap();
+
+function saveIsinMap(){
+  var map = {};
+  Object.keys(DEFAULT_ISIN_MAP).forEach(function(k){ map[k] = DEFAULT_ISIN_MAP[k].sym || ''; });
+  try { sessionStorage.setItem('eod_isin_map', JSON.stringify(map)); } catch(e){}
+}
+
+function showIsinConfig(){
+  var panel = document.getElementById('isin-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+  if(panel.style.display === 'block') renderIsinPanel();
+}
+
+function renderIsinPanel(){
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">';
+  Object.keys(DEFAULT_ISIN_MAP).forEach(function(name){
+    var inst = DEFAULT_ISIN_MAP[name];
+    var badge = inst.type==='bond'?'🏦':inst.type==='rf'?'📊':'📈';
+    html += '<div style="display:flex;flex-direction:column;gap:2px">' +
+      '<label style="font-size:10px;color:#666;font-weight:500">' + badge + ' ' + name + '</label>' +
+      '<input data-isin-key="' + name + '" value="' + (inst.sym||'') + '" placeholder="' + (inst.hint||'ej: TICKER.LSE') + '" ' +
+      'style="font-size:11px;padding:4px 8px;border:1px solid #e5e7eb;border-radius:6px;outline:none;font-family:monospace" ' +
+      'onfocus="this.style.borderColor=\'#3B82F6\'" onblur="this.style.borderColor=\'#e5e7eb\'" ' +
+      'onchange="updateIsin(\''+name+'\',this.value)">' +
+      '</div>';
+  });
+  html += '</div>';
+  document.getElementById('isin-panel-body').innerHTML = html;
+}
+
+function updateIsin(name, val){
+  DEFAULT_ISIN_MAP[name].sym = val.trim();
+  saveIsinMap();
+}
 
 async function updatePrices(){
   var btn = document.getElementById('price-btn');
@@ -1368,9 +1434,11 @@ async function updatePrices(){
   btn.textContent = '↻ Actualizando...';
   status.textContent = '';
 
-  var updated = [], failed = [];
+  var updated = [], failed = [], skipped = [];
 
-  for(var inst of PRICE_MAP){
+  for(var name of Object.keys(DEFAULT_ISIN_MAP)){
+    var inst = DEFAULT_ISIN_MAP[name];
+    if(!inst.sym){ skipped.push(name); continue; }
     try {
       var url = 'https://eodhd.com/api/real-time/' + inst.sym + '?api_token=' + EOD_KEY + '&fmt=json';
       var res = await fetch(url);
@@ -1378,75 +1446,68 @@ async function updatePrices(){
       var data = await res.json();
       var price = parseFloat(data.close || data.previousClose);
       if(price > 0){
-        updatePriceInDOM(inst, price, data.change_p);
-        updated.push(inst.name + ' $' + price.toFixed(2));
-      } else {
-        failed.push(inst.name);
-      }
-    } catch(e) {
-      failed.push(inst.name);
-    }
+        updatePriceInDOM(name, inst, price, data.change_p);
+        updated.push(name + ' $' + price.toFixed(2));
+      } else { failed.push(name); }
+    } catch(e){ failed.push(name + '(' + (e.message||'') + ')'); }
   }
 
   btn.disabled = false;
   btn.textContent = '↻ Actualizar precios';
   var now = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
-  status.innerHTML = '<span style="color:#10B981">✓ ' + now + ' · ' + updated.length + ' actualizados</span>';
-  if(failed.length) status.innerHTML += ' · <span style="color:#f59e0b">Sin datos: ' + failed.join(', ') + '</span>';
+  status.innerHTML = '<span style="color:#10B981">✓ ' + now + ' · ' + updated.length + ' ok</span>';
+  if(skipped.length) status.innerHTML += ' · <span style="color:#aaa">' + skipped.length + ' sin ISIN</span>';
+  if(failed.length) status.innerHTML += ' · <span style="color:#e53935">Error: ' + failed.join(', ') + '</span>';
 }
 
-function updatePriceInDOM(inst, price, changePct){
+function updatePriceInDOM(name, inst, price, changePct){
   var fmt = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
   var color = (changePct >= 0) ? '#10B981' : '#e53935';
   var changeStr = (changePct >= 0 ? '+' : '') + parseFloat(changePct||0).toFixed(2) + '%';
 
-  // Exact name matching map
   var nameMap = {
-    'SPY':             ['SPY'],
-    'QQQ':             ['QQQ Trust', 'Invesco QQQ'],
-    'ECH':             ['iShares MSCI Chile', 'ECH'],
-    'CSPX':            ['iShares Core S&P 500 UCITS', 'CSPX'],
-    'XGHGF/CNDX':      ['iShares Nasdaq 100 UCITS', 'XGHGF'],
-    'Xtrackers World': ['Xtrackers MSCI World'],
-    'iShares ACWI':    ['iShares MSCI ACWI'],
-    'iSh US Agg':      ['iShares US Aggregate', 'iShares.*Agg Bond'],
-    'iSh Short Dur':   ['iShares USD Short Dur', 'iShares.*Short'],
-    'iSh HY Corp':     ['iShares USD High Yield', 'iShares.*HY'],
-    'MS 4.35% 2026':   ['Morgan Stanley Sub 4.35%', 'Morgan Stanley.*4.35'],
-    'GM 4.35% 2027':   ['GM Financial 4.35%'],
-    'GM 3.6% 2030':    ['GM Financial 3.6%'],
-    'JPM Float 2037':  ['JPMorgan Chase.*Float', 'JPMorgan.*Float'],
-    'GS 0% 2027':      ['Goldman Sachs 0% Oct 2027'],
-    'Braskem 4.5%':    ['Braskem Neth 4.5%'],
+    'SPY':           ['SPY'],
+    'QQQ':           ['QQQ'],
+    'ECH':           ['MSCI Chile','ECH'],
+    'CSPX':          ['iShares Core S&P 500 UCITS','CSPX'],
+    'XGHGF':         ['Nasdaq 100 UCITS','XGHGF'],
+    'Xtrackers':     ['Xtrackers MSCI World'],
+    'iShares ACWI':  ['MSCI ACWI','ISAC'],
+    'iSh US Agg':    ['US Aggregate','iShares US Agg'],
+    'iSh Short Dur': ['USD Short Dur'],
+    'iSh HY Corp':   ['USD High Yield'],
+    'PIMCO GIS':     ['PIMCO GIS'],
+    'MS 4.35% 2026': ['Morgan Stanley Sub 4.35'],
+    'GM 4.35% 2027': ['GM Financial 4.35'],
+    'GM 3.6% 2030':  ['GM Financial 3.6'],
+    'JPM Float 2037':['JPMorgan.*Float'],
+    'GS 0% 2027':    ['Goldman Sachs 0% Oct 2027'],
+    'GS 0% 2040':    ['Goldman Sachs 0% Jan 2040'],
+    'JPM 0% 2039':   ['JPMorgan Chase 0% Aug'],
+    'Braskem 4.5%':  ['Braskem Neth 4.5'],
   };
 
-  var keywords = nameMap[inst.name] || [inst.name];
+  var keywords = nameMap[name] || [name];
 
   document.querySelectorAll('#pane-equity tr, #pane-rf tr').forEach(function(row){
+    if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot')) return;
     var txt = row.innerText || '';
-    var html = row.innerHTML || '';
     var match = keywords.some(function(k){
-      try { return new RegExp(k,'i').test(txt) || new RegExp(k,'i').test(html); }
+      try { return new RegExp(k,'i').test(txt); }
       catch(e){ return txt.toLowerCase().includes(k.toLowerCase()); }
     });
-    if(!match || row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot')) return;
+    if(!match) return;
 
-    // Update price pill
     var pill = row.querySelector('.pi');
-    if(pill) {
-      pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
-    }
+    if(pill) pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
 
-    // Recalculate market value
     var numCells = row.querySelectorAll('td.num');
     if(numCells.length === 0) return;
-
     if(inst.notional){
-      // Bond: price per 100
       numCells[0].textContent = fmt(inst.notional * price / 100);
     } else if(inst.units){
-      var totalUnits = Object.values(inst.units).reduce(function(a,b){return a+b;},0);
-      numCells[0].textContent = fmt(totalUnits * price);
+      var total = Object.values(inst.units).reduce(function(a,b){return a+b;},0);
+      numCells[0].textContent = fmt(total * price);
     }
   });
 }
