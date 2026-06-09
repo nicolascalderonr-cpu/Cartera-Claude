@@ -1523,63 +1523,40 @@ function updateNotesStrikes(){
 }
 
 function recalcTotals(){
-  // For each account in ACCT_DATA, recalculate equity from EOD-updated rows
-  // Strategy: start from base ACCT_DATA values, then add delta for each updated instrument
+  // Only recalculate using instruments with confirmed EOD prices
+  // For the rest, use the hardcoded Masttro base values from PERF_DATA
 
-  var updatedInsts = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return DEFAULT_ISIN_MAP[n]._lastPrice; });
-  if(updatedInsts.length === 0) return;
-
-  // Build per-account deltas
-  var deltas = {}; // acct → {eq, rf, bond}
-  updatedInsts.forEach(function(name){
-    var inst = DEFAULT_ISIN_MAP[name];
-    var price = inst._lastPrice;
-    if(!inst.units && !inst.notional) return;
-
-    var mv = inst.notional ? inst.notional * price / 100
-                           : Object.values(inst.units).reduce(function(a,b){return a+b;},0) * price;
-
-    // Determine base value (what was hardcoded)
-    // We need to update ACCT_DATA dynamically — use a separate delta store
-    if(!window._eodDeltas) window._eodDeltas = {};
-
-    var key = name;
-    if(!window._eodDeltas[key]){
-      // First update — compute base MV from ACCT_DATA indirectly
-      window._eodDeltas[key] = {inst: inst, mv: mv};
-    } else {
-      window._eodDeltas[key].mv = mv;
-    }
-  });
-
-  // Recalculate KPI total: sum all account MVs from PERF_DATA + apply instrument deltas
+  // Base portfolio value from last Masttro snapshot (04-jun-26)
   var baseMV = 0;
   var accts = ['cent-ml','cent-jpm','bosq-jpm','bosq-ml','bosq-ubs','bosq-alt','mish-jpm','nm-beaumont','nm-nidalbe','nm-acc'];
   accts.forEach(function(a){ if(PERF_DATA[a] && PERF_DATA[a].mv) baseMV += PERF_DATA[a].mv; });
 
-  // Apply instrument-level deltas vs Masttro base prices
-  var baseInstrumentValues = {
-    'SPY': (2421+1913) * 754.24,
-    'QQQ': (350+1075) * 744.21,
-    'ECH': 6152 * 39.92,
-    'CSPX': (1290+557) * 814.66,
-    'XGHGF': 319 * 1756.40,
-    'Xtrackers': 11300 * 44.73,
-    'iShares ACWI': 2365 * 121.89,
-    'iSh US Agg': 171850 * 5.73,
-    'iSh Short Dur': 115020 * 6.36,
-    'iSh HY Corp': 33220 * 7.46,
-    'PIMCO GIS': 27800 * 17.85,
+  // Instruments with confirmed EOD + known units
+  // Base prices from Masttro 04-jun-26
+  var eodInstruments = {
+    'SPY':          { units: 2421+1913,        basePrice: 536.73  }, // Masttro base
+    'QQQ':          { units: 350+1075,          basePrice: 465.93  },
+    'ECH':          { units: 6152,              basePrice: 38.94   },
+    'CSPX':         { units: 1290+557+125,      basePrice: 584.07  }, // GBp/100
+    'XGHGF':        { units: 319,               basePrice: 844.08  }, // GBp/100
+    'Xtrackers':    { units: 11300,             basePrice: 44.73   },
+    'iShares ACWI': { units: 2365,              basePrice: 121.89  },
+    'iSh US Agg':   { units: 171850,            basePrice: 5.73    },
+    'iSh Short Dur':{ units: 115020,            basePrice: 6.36    },
+    'iSh HY Corp':  { units: 33220,             basePrice: 7.46    },
+    'PIMCO GIS':    { units: 27800,             basePrice: 17.85   },
+    'Global X Def': { units: 5300,              basePrice: 28.70   },
   };
 
   var totalDelta = 0;
-  if(window._eodDeltas){
-    Object.keys(window._eodDeltas).forEach(function(name){
-      var newMV = window._eodDeltas[name].mv;
-      var baseMVInst = baseInstrumentValues[name] || 0;
-      totalDelta += (newMV - baseMVInst);
-    });
-  }
+  Object.keys(eodInstruments).forEach(function(name){
+    var inst = DEFAULT_ISIN_MAP[name];
+    if(!inst || !inst._lastPrice) return; // not updated yet
+    var eod = eodInstruments[name];
+    var newMV  = eod.units * inst._lastPrice;
+    var baseMVI = eod.units * eod.basePrice;
+    totalDelta += (newMV - baseMVI);
+  });
 
   var newTotal = baseMV + totalDelta;
   var fmt = function(n){
@@ -1589,9 +1566,6 @@ function recalcTotals(){
 
   var kpi = document.getElementById('kpi-total');
   if(kpi) kpi.textContent = fmt(newTotal);
-
-  // Also update landing table account rows for affected accounts
-  // (handled individually in updatePriceInDOM)
 }
 
 function updatePriceInDOM(name, inst, price, changePct){
