@@ -1573,7 +1573,14 @@ function updatePriceInDOM(name, inst, price, changePct){
 
   var keywords = nameMap[name] || [name];
 
-  document.querySelectorAll('#pane-equity tr, #pane-rf tr').forEach(function(row){
+  // Query all panes directly (works even when hidden)
+  var allRows = [];
+  ['pane-equity','pane-rf'].forEach(function(paneId){
+    var pane = document.getElementById(paneId);
+    if(pane) pane.querySelectorAll('tr').forEach(function(r){ allRows.push(r); });
+  });
+
+  allRows.forEach(function(row){
     if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot') || row.classList.contains('cons-row')) return;
     var html = row.innerHTML || '';
     var match = keywords.some(function(k){
