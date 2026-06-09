@@ -1423,7 +1423,6 @@ var DEFAULT_ISIN_MAP = {
 };
 
 async function updatePrices(){
-  console.log('updatePrices called');
   var btn = document.getElementById('price-btn');
   var status = document.getElementById('price-status');
   btn.disabled = true;
@@ -1434,30 +1433,24 @@ async function updatePrices(){
 
   var instruments = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return DEFAULT_ISIN_MAP[n].sym; });
   skipped = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return !DEFAULT_ISIN_MAP[n].sym; });
-  console.log('instruments to fetch:', instruments.length, instruments.slice(0,3));
 
   var promises = instruments.map(function(name){
     var inst = DEFAULT_ISIN_MAP[name];
     var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
     return fetch(url)
       .then(function(res){ 
-        console.log(name, 'status:', res.status);
         return res.json(); 
       })
       .then(function(data){
         var price = parseFloat(data.close || data.previousClose || 0);
-        console.log(name, 'price:', price);
         return {name:name, inst:inst, price:price, change:data.change_p, ok:price>0};
       })
       .catch(function(e){ 
-        console.log(name, 'error:', e.message);
         return {name:name, inst:inst, price:0, ok:false, err:e.message}; 
       });
   });
 
-  console.log('waiting for', promises.length, 'promises');
   var results = await Promise.all(promises);
-  console.log('results:', results.length, results.filter(function(r){return r.ok;}).length, 'ok');
 
   results.forEach(function(r){
     if(r.ok){
@@ -1558,26 +1551,26 @@ function updatePriceInDOM(name, inst, price, changePct){
   var changeStr = (changePct >= 0 ? '+' : '') + parseFloat(changePct||0).toFixed(2) + '%';
 
   var nameMap = {
-    'SPY':           ['SPDR S&P 500 ETF','SPY'],
-    'QQQ':           ['Invesco QQQ','QQQ Trust'],
-    'ECH':           ['iShares MSCI Chile','ECH'],
-    'CSPX':          ['iShares Core S&P 500 UCITS','CSPX'],
-    'XGHGF':         ['iShares Nasdaq 100 UCITS','XGHGF','CNDX'],
-    'Xtrackers':     ['Xtrackers MSCI World'],
-    'iShares ACWI':  ['iShares MSCI ACWI','ISAC'],
-    'iSh US Agg':    ['iShares US Aggregate Bond','IUAA'],
-    'iSh Short Dur': ['iShares USD Short Duration','SDIA'],
-    'iSh HY Corp':   ['iShares USD High Yield Corp','IHYA'],
-    'PIMCO GIS':     ['PIMCO GIS Income Fund','IGLO'],
-    'Global X Def':  ['Global X Defence Tech','DFNS'],
-    'MS 4.35% 2026': ['Morgan Stanley Sub 4.35','Morgan Stanley.*4.35'],
-    'GM 4.35% 2027': ['GM Financial 4.35'],
-    'GM 3.6% 2030':  ['GM Financial 3.6'],
-    'JPM Float 2037':['JPMorgan.*Float'],
+    'SPY':           ['SPDR S&P 500 ETF.*SPY','SPY.*2,421','SPY.*1,913'],
+    'QQQ':           ['Invesco QQQ Trust','QQQ.*350u','QQQ.*1,075'],
+    'ECH':           ['iShares MSCI Chile \\(ECH\\)'],
+    'CSPX':          ['iShares Core S&P 500 UCITS \\(CSPX\\)','CSPX.*1,290','CSPX.*557'],
+    'XGHGF':         ['iShares Nasdaq 100 UCITS','XGHGF.*319'],
+    'Xtrackers':     ['Xtrackers MSCI World Ex USA'],
+    'iShares ACWI':  ['iShares MSCI ACWI \\(ISAC\\)'],
+    'iSh US Agg':    ['iShares US Aggregate Bond UCITS'],
+    'iSh Short Dur': ['iShares USD Short Duration Corp UCITS'],
+    'iSh HY Corp':   ['iShares USD High Yield Corp Bond UCITS'],
+    'PIMCO GIS':     ['PIMCO GIS Income Fund'],
+    'Global X Def':  ['Global X Defence Tech UCITS \\(DFNS\\)'],
+    'MS 4.35% 2026': ['Morgan Stanley Sub 4\\.35'],
+    'GM 4.35% 2027': ['GM Financial 4\\.35 Jan'],
+    'GM 3.6% 2030':  ['GM Financial 3\\.6 Jun'],
+    'JPM Float 2037':['JPMorgan.*Float.*2037'],
     'GS 0% 2027':    ['Goldman Sachs 0% Oct 2027'],
     'GS 0% 2040':    ['Goldman Sachs 0% Jan 2040'],
-    'JPM 0% 2039':   ['JPMorgan Chase 0% Aug'],
-    'Braskem 4.5%':  ['Braskem Neth 4.5'],
+    'JPM 0% 2039':   ['JPMorgan Chase 0% Aug 2039'],
+    'Braskem 4.5%':  ['Braskem Neth 4\\.5'],
   };
 
   var keywords = nameMap[name] || [name];
@@ -1600,13 +1593,23 @@ function updatePriceInDOM(name, inst, price, changePct){
 
     var pill = row.querySelector('.pi');
     if(pill) {
-      // Update dot to green (EOD live)
       var dot = row.querySelector('.price-dot');
-      if(dot){
-        dot.style.background = '#10B981';
-        dot.title = 'EOD live';
-      }
+      if(dot){ dot.style.background = '#10B981'; dot.title = 'EOD live'; }
       pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
+    }
+
+    // If this is a child row, also update the parent cons-row price pill
+    if(row.classList.contains('child')){
+      var consRow = row.previousElementSibling;
+      while(consRow && !consRow.classList.contains('cons-row')){
+        consRow = consRow.previousElementSibling;
+      }
+      if(consRow){
+        var consPill = consRow.querySelector('.pi');
+        if(consPill) consPill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
+        var consDot = consRow.querySelector('.price-dot');
+        if(consDot){ consDot.style.background = '#10B981'; consDot.title = 'EOD live'; }
+      }
     }
 
     var numCells = row.querySelectorAll('td.num');
