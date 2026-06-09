@@ -1624,6 +1624,33 @@ function updatePriceInDOM(name, inst, price, changePct){
   });
 }
 
+
+// ─── PRICE CACHE ─────────────────────────────────────────────────────────────
+function loadCachedPrices(){
+  var cached = JSON.parse(localStorage.getItem('eod_prices') || '{}');
+  if(Object.keys(cached).length === 0) return false;
+  var now = Date.now();
+  var maxAge = 24 * 60 * 60 * 1000; // 24 hours
+  var loaded = 0;
+  Object.keys(DEFAULT_ISIN_MAP).forEach(function(name){
+    var inst = DEFAULT_ISIN_MAP[name];
+    if(!inst.isin) return;
+    var c = cached[inst.isin];
+    if(!c || (now - c.ts) > maxAge) return;
+    inst._lastPrice = c.price;
+    updatePriceInDOM(name, inst, c.price, c.change);
+    loaded++;
+  });
+  if(loaded > 0){
+    var status = document.getElementById('price-status');
+    var age = Math.round((now - Math.min.apply(null, Object.values(cached).map(function(c){return c.ts;}))) / 60000);
+    if(status) status.innerHTML = '<span style="color:#10B981">✓ Cache: ' + loaded + ' precios · hace ' + age + 'min</span>';
+    recalcTotals();
+    updateNotesStrikes();
+  }
+  return loaded > 0;
+}
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 updateAllocation('all');
 updateConsolidatedRows('all');
@@ -1639,7 +1666,15 @@ updateDraftea();
     var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
     return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
-  function show(){ document.getElementById('lock-screen').style.display='none'; }
+  function show(){
+    document.getElementById('lock-screen').style.display='none';
+    // Load cached prices immediately, then refresh from EOD in background
+    setTimeout(function(){
+      var hadCache = loadCachedPrices();
+      // Auto-fetch fresh prices (silently)
+      updatePrices();
+    }, 300);
+  }
   window.addEventListener('DOMContentLoaded', function(){
     if(sessionStorage.getItem('auth')==='1'){ show(); return; }
     async function tryUnlock(){
