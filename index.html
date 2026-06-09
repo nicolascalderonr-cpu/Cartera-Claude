@@ -1549,19 +1549,19 @@ function updatePriceInDOM(name, inst, price, changePct){
   var changeStr = (changePct >= 0 ? '+' : '') + parseFloat(changePct||0).toFixed(2) + '%';
 
   var nameMap = {
-    'SPY':           ['SPY'],
-    'QQQ':           ['QQQ'],
-    'ECH':           ['MSCI Chile','ECH'],
+    'SPY':           ['SPDR S&P 500 ETF','SPY'],
+    'QQQ':           ['Invesco QQQ','QQQ Trust'],
+    'ECH':           ['iShares MSCI Chile','ECH'],
     'CSPX':          ['iShares Core S&P 500 UCITS','CSPX'],
-    'XGHGF':         ['Nasdaq 100 UCITS','XGHGF'],
+    'XGHGF':         ['iShares Nasdaq 100 UCITS','XGHGF','CNDX'],
     'Xtrackers':     ['Xtrackers MSCI World'],
     'iShares ACWI':  ['iShares MSCI ACWI','ISAC'],
-    'iSh US Agg':    ['iShares US Aggregate Bond','iShares US Agg'],
-    'iSh Short Dur': ['iShares USD Short Duration'],
-    'iSh HY Corp':   ['iShares USD High Yield Corp Bond'],
-    'PIMCO GIS':     ['PIMCO GIS Income Fund'],
-    'Global X Def':  ['Global X Defence Tech','Global X Def Tech'],
-    'MS 4.35% 2026': ['Morgan Stanley Sub 4.35'],
+    'iSh US Agg':    ['iShares US Aggregate Bond','IUAA'],
+    'iSh Short Dur': ['iShares USD Short Duration','SDIA'],
+    'iSh HY Corp':   ['iShares USD High Yield Corp','IHYA'],
+    'PIMCO GIS':     ['PIMCO GIS Income Fund','IGLO'],
+    'Global X Def':  ['Global X Defence Tech','DFNS'],
+    'MS 4.35% 2026': ['Morgan Stanley Sub 4.35','Morgan Stanley.*4.35'],
     'GM 4.35% 2027': ['GM Financial 4.35'],
     'GM 3.6% 2030':  ['GM Financial 3.6'],
     'JPM Float 2037':['JPMorgan.*Float'],
@@ -1574,11 +1574,11 @@ function updatePriceInDOM(name, inst, price, changePct){
   var keywords = nameMap[name] || [name];
 
   document.querySelectorAll('#pane-equity tr, #pane-rf tr').forEach(function(row){
-    if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot')) return;
-    var txt = row.innerText || '';
+    if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot') || row.classList.contains('cons-row')) return;
+    var html = row.innerHTML || '';
     var match = keywords.some(function(k){
-      try { return new RegExp(k,'i').test(txt); }
-      catch(e){ return txt.toLowerCase().includes(k.toLowerCase()); }
+      try { return new RegExp(k,'i').test(html); }
+      catch(e){ return html.toLowerCase().includes(k.toLowerCase()); }
     });
     if(!match) return;
 
