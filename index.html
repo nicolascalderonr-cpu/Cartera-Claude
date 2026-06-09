@@ -98,36 +98,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 </div>
 
 <!-- FILTER -->
-<div class="fbar">
+<div class="fbar" style="position:relative">
   <label>🔍 Filtrar por cuenta:</label>
-  <select id="acct-sel" onchange="applyFilter()">
-    <option value="all">Todas las cuentas</option>
-    <optgroup label="Grupos">
-      <option value="g-centella">Centella (ML + JPM)</option>
-      <option value="g-bosques">Bosques (JPM + ML + UBS + Alt)</option>
-      <option value="g-mishpajot">Mishpajot (JPM)</option>
-      <option value="g-nm">Carteras No Manejadas (25%)</option>
-      <option value="g-propias">Solo cuentas propias</option>
-    </optgroup>
-    <optgroup label="Cuentas individuales">
-      <option value="cent-ml">Centella / ML</option>
-      <option value="cent-jpm">Centella / JPM</option>
-      <option value="bosq-jpm">Bosques / JPM</option>
-      <option value="bosq-ml">Bosques / ML</option>
-      <option value="bosq-ubs">Bosques / UBS</option>
-      <option value="bosq-alt">Bosques / Alt. Directos</option>
-      <option value="mish-jpm">Mishpajot / JPM</option>
-      <option value="nm-beaumont">Beaumont / ML (25%)</option>
-      <option value="nm-nidalbe">Nidalbe / JB (25%)</option>
-      <option value="nm-acc">ACC / JB (25%)</option>
-    </optgroup>
-    <optgroup label="Pendientes CLP">
-      <option value="g-clp">ACV Chile</option>
-      <option value="btg">BTG ACV (CLP)</option>
-      <option value="banchile">Banchile ACV (CLP)</option>
-    </optgroup>
-  </select>
-  <span class="fchip" id="fchip" onclick="clearFilter()">✕ <span id="fchip-txt"></span></span>
+  <div style="position:relative;display:inline-block">
+    <button id="acct-btn" onclick="toggleAcctDropdown(event)"
+      style="font-size:12px;padding:5px 10px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;min-width:180px;text-align:left;display:flex;align-items:center;gap:6px">
+      <span id="acct-btn-txt">Todas las cuentas</span>
+      <span style="margin-left:auto;color:#9CA3AF">▾</span>
+    </button>
+    <div id="acct-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:999;background:#fff;border:1px solid #d1d5db;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.12);min-width:220px;padding:6px 0;max-height:400px;overflow-y:auto">
+      <div style="padding:6px 10px;border-bottom:1px solid #f3f4f6;display:flex;gap:8px">
+        <button onclick="selectAllAccts()" style="font-size:11px;color:#6B7280;background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #e5e7eb">Todas</button>
+        <button onclick="clearAllAccts()" style="font-size:11px;color:#6B7280;background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #e5e7eb">Ninguna</button>
+      </div>
+      <div style="padding:4px 0">
+        <div style="padding:3px 10px;font-size:10px;color:#9CA3AF;font-weight:600;letter-spacing:.05em;margin-top:2px">GRUPOS</div>
+        <label class="acct-opt"><input type="checkbox" value="g-centella"> Centella (ML + JPM)</label>
+        <label class="acct-opt"><input type="checkbox" value="g-bosques"> Bosques (JPM + ML + UBS)</label>
+        <label class="acct-opt"><input type="checkbox" value="g-mishpajot"> Mishpajot (JPM)</label>
+        <label class="acct-opt"><input type="checkbox" value="g-nm"> Carteras No Manejadas (25%)</label>
+        <label class="acct-opt"><input type="checkbox" value="g-propias"> Solo cuentas propias</label>
+        <div style="padding:3px 10px;font-size:10px;color:#9CA3AF;font-weight:600;letter-spacing:.05em;margin-top:4px">CUENTAS INDIVIDUALES</div>
+        <label class="acct-opt"><input type="checkbox" value="cent-ml"> Centella / ML</label>
+        <label class="acct-opt"><input type="checkbox" value="cent-jpm"> Centella / JPM</label>
+        <label class="acct-opt"><input type="checkbox" value="bosq-jpm"> Bosques / JPM</label>
+        <label class="acct-opt"><input type="checkbox" value="bosq-ml"> Bosques / ML</label>
+        <label class="acct-opt"><input type="checkbox" value="bosq-ubs"> Bosques / UBS</label>
+        <label class="acct-opt"><input type="checkbox" value="bosq-alt"> Bosques / Alt. Directos</label>
+        <label class="acct-opt"><input type="checkbox" value="mish-jpm"> Mishpajot / JPM</label>
+        <label class="acct-opt"><input type="checkbox" value="nm-beaumont"> Beaumont / ML (25%)</label>
+        <label class="acct-opt"><input type="checkbox" value="nm-nidalbe"> Nidalbe / JB (25%)</label>
+        <label class="acct-opt"><input type="checkbox" value="nm-acc"> ACC / JB (25%)</label>
+        <div style="padding:3px 10px;font-size:10px;color:#9CA3AF;font-weight:600;letter-spacing:.05em;margin-top:4px">ACV CHILE</div>
+        <label class="acct-opt"><input type="checkbox" value="g-clp"> ACV Chile</label>
+        <label class="acct-opt"><input type="checkbox" value="btg"> BTG ACV (CLP)</label>
+        <label class="acct-opt"><input type="checkbox" value="banchile"> Banchile ACV (CLP)</label>
+      </div>
+    </div>
+  </div>
+  <span class="fchip" id="fchip" onclick="clearFilter()" style="display:none">✕ <span id="fchip-txt"></span></span>
 </div>
 
 <!-- TABS -->
@@ -1256,15 +1265,66 @@ function updateConsolidatedRows(sel){
 }
 
 // ─── FILTER ──────────────────────────────────────────────────────────────────
+function getSelectedAccts(){
+  var checked = [];
+  document.querySelectorAll('#acct-dropdown input[type=checkbox]:checked').forEach(function(cb){
+    checked.push(cb.value);
+  });
+  return checked;
+}
+
+function toggleAcctDropdown(e){
+  e.stopPropagation();
+  var dd = document.getElementById('acct-dropdown');
+  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener('click', function(e){
+  var dd = document.getElementById('acct-dropdown');
+  if(dd && !dd.contains(e.target) && e.target.id !== 'acct-btn'){
+    dd.style.display = 'none';
+  }
+});
+
+function selectAllAccts(){
+  document.querySelectorAll('#acct-dropdown input[type=checkbox]').forEach(function(cb){ cb.checked = false; });
+  applyFilter();
+}
+
+function clearAllAccts(){
+  document.querySelectorAll('#acct-dropdown input[type=checkbox]').forEach(function(cb){ cb.checked = false; });
+  applyFilter();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('#acct-dropdown input[type=checkbox]').forEach(function(cb){
+    cb.addEventListener('change', applyFilter);
+  });
+});
+
 function applyFilter(){
-  var sel=document.getElementById('acct-sel').value;
-  var chip=document.getElementById('fchip');
-  var txt=document.getElementById('fchip-txt');
-  if(sel==='all'){chip.style.display='none';}
-  else{chip.style.display='flex';txt.textContent=ACCT_LABELS[sel]||sel;}
+  var selected = getSelectedAccts();
+  var isAll = selected.length === 0;
+  var chip = document.getElementById('fchip');
+  var txt = document.getElementById('fchip-txt');
+  var btn = document.getElementById('acct-btn-txt');
+
+  if(isAll){
+    chip.style.display = 'none';
+    if(btn) btn.textContent = 'Todas las cuentas';
+  } else {
+    chip.style.display = 'flex';
+    var labels = selected.map(function(s){ return ACCT_LABELS[s]||s; });
+    txt.textContent = labels.join(', ');
+    if(btn) btn.textContent = selected.length === 1 ? (ACCT_LABELS[selected[0]]||selected[0]) : selected.length + ' cuentas';
+  }
+
+  var sel = isAll ? 'all' : selected[0]; // for backward compat with allocation/consolidated
   document.querySelectorAll('[data-accts]').forEach(function(el){
-    var a=el.getAttribute('data-accts').split(' ');
-    el.classList.toggle('hidden-row',sel!=='all'&&a.indexOf(sel)===-1);
+    if(isAll){ el.classList.remove('hidden-row'); return; }
+    var a = el.getAttribute('data-accts').split(' ');
+    var show = selected.some(function(s){ return a.indexOf(s) > -1; });
+    el.classList.toggle('hidden-row', !show);
   });
   // Auto-expand collapsed rows when filtering by specific account
   if(sel !== 'all'){
@@ -1294,7 +1354,7 @@ function applyFilter(){
   currentSlice=-1;
 }
 
-function clearFilter(){document.getElementById('acct-sel').value='all';applyFilter();}
+function clearFilter(){document.querySelectorAll('#acct-dropdown input[type=checkbox]').forEach(function(cb){cb.checked=false;});applyFilter();}
 
 // ─── EXPAND ROWS ─────────────────────────────────────────────────────────────
 function tog(id){
