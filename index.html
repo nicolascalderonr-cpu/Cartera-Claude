@@ -1423,6 +1423,7 @@ var DEFAULT_ISIN_MAP = {
 };
 
 async function updatePrices(){
+  console.log('updatePrices called');
   var btn = document.getElementById('price-btn');
   var status = document.getElementById('price-status');
   btn.disabled = true;
