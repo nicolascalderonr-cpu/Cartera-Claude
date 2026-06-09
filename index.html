@@ -274,19 +274,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
       <div style="overflow-x:auto"><table class="tbl">
         <thead><tr><th></th><th style="width:26%">Instrumento</th><th style="width:11%">Cuenta</th><th style="width:11%">Subclase</th><th class="num" style="width:11%">Valor USD</th><th class="num" style="width:6%">% tot.</th><th class="num" style="width:7%">MTD may-26</th><th class="num" style="width:7%">YTD</th><th style="width:10%">Precio</th></tr></thead>
         <tbody>
-          <tr class="cons-row" id="cr-sp500" onclick="tog('sp500')" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$4,876,385","cent-ml":"$2,877,011","bosq-ml":"$1,894,469","bosq-ubs":"$101,833","g-centella":"$2,877,011","g-bosques":"$1,996,302","g-propias":"$4,873,313"}'>
+          <tr class="cons-row" id="cr-sp500" onclick="tog('sp500')" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$4,990,337","cent-ml":"$2,733,715","bosq-ml":"$1,546,914","bosq-jpm":"$189,422","bosq-ubs":"$101,833","g-centella":"$2,733,715","g-bosques":"$1,838,169","g-propias":"$4,990,337"}'>
             <td></td>
             <td><strong>S&P 500 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span> <span class="tog-indicator" style="font-size:10px;color:#aaa">▶</span></td>
             <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US large</span></td>
-            <td class="num"><strong>$4,876,385</strong></td><td class="num">14.6%</td>
+            <td class="num"><strong>$4,990,337</strong></td><td class="num">14.9%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
             <td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$759/$816</span></td>
           </tr>
           <tr data-isin="US78462F1030" class="child" id="ch-sp500-0" data-accts="cent-ml bosq-ml g-centella g-bosques g-propias all">
             <td style="padding-left:10px"></td>
-            <td style="padding-left:22px;font-size:11.5px;color:#555">SPDR S&P 500 ETF (SPY) — 2,421u Cent/ML + 1,913u Bosq/ML</td>
+            <td style="padding-left:22px;font-size:11.5px;color:#555">SPDR S&P 500 ETF (SPY) — 2,421u Cent/ML · 1,913u Bosq/ML · 257u Bosq/JPM</td>
             <td><span class="badge b-ml">ML</span></td><td><span class="pill">ETF US large</span></td>
-            <td class="num" style="color:#777">$3,269,875</td><td class="num" style="color:#777">9.8%</td>
+            <td class="num" style="color:#777">$3,383,827</td><td class="num" style="color:#777">10.1%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
             <td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$754.24</span></td>
           </tr>
@@ -298,11 +298,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
             <td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$814.66</span></td>
           </tr>
-          <tr class="cons-row" id="cr-ndx" onclick="tog('ndx')" data-accts="cent-jpm bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$1,588,530","cent-jpm":"$977,780","bosq-ml":"$558,450","bosq-ubs":"$101,500","g-centella":"$977,780","g-bosques":"$659,950","g-propias":"$1,638,030"}'>
+          <tr class="cons-row" id="cr-ndx" onclick="tog('ndx')" data-accts="cent-jpm bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$1,402,209","cent-jpm":"$797,780","bosq-ml":"$252,141","bosq-jpm":"$196,777","bosq-ubs":"$101,500","g-centella":"$797,780","g-bosques":"$550,418","g-propias":"$1,402,209"}'>
             <td></td>
             <td><strong>Nasdaq 100 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span> <span class="tog-indicator" style="font-size:10px;color:#aaa">▶</span></td>
             <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US growth</span></td>
-            <td class="num"><strong>$1,588,530</strong></td><td class="num">4.7%</td>
+            <td class="num"><strong>$1,402,209</strong></td><td class="num">4.2%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
             <td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$743/$1,750</span></td>
           </tr>
@@ -324,7 +324,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           </tr>
           
           
-          <tr data-isin="IE00B6R52259" data-accts="mish-jpm g-mishpajot g-propias all"><td></td><td>iShares MSCI ACWI (ISAC) <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$288,270</td><td class="num">0.9%</td><td class="num"><span class="rc rn">−0.07%</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$121.89</span></td></tr>
+          <tr data-isin="IE00B6R52259" data-accts="mish-jpm bosq-jpm g-mishpajot g-bosques g-propias all"><td></td><td>iShares MSCI ACWI (ISAC) <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$288,270</td><td class="num">0.9%</td><td class="num"><span class="rc rn">−0.07%</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$121.89</span></td></tr>
+          <tr data-isin="IE00BF4G6Y48" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>JPM Global Research Enh. Index Eq UCITS (JREG)</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">ETF global</span></td><td class="num">$629,454</td><td class="num">1.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$64.48</span></td></tr>
+          <tr data-isin="LU2986377740" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>RBC Funds Lux EM Equity (RBCEMUA)</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Fondo EM</span></td><td class="num">$132,705</td><td class="num">0.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$155.83</span></td></tr>
           <tr data-isin="IE00BJ0KDQ92" data-accts="cent-ml g-centella g-propias all"><td></td><td>Xtrackers MSCI World Ex USA</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF global</span></td><td class="num">$505,393</td><td class="num">1.5%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$44.73</span></td></tr>
           <tr data-accts="bosq-ubs g-bosques g-propias all"><td></td><td>iShares Core MSCI EAFE (IEFA) <span class="new-b">UBS</span></td><td><span class="badge b-ubs">Bosq/UBS</span></td><td><span class="pill">ETF global</span></td><td class="num">$76,086</td><td class="num">0.2%</td><td class="num"><span class="rc ra">n/d</span></td><td class="num"><span class="rc ra">n/d</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$98.18</span></td></tr>
           
@@ -391,7 +393,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr data-underlying="SPX" data-strike="6173" data-accts="cent-jpm g-centella g-propias all"><td></td><td style="padding-left:12px">BARC Opti Entry SPX 9/1/27</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">sep-27</td><td style="font-size:11px">ago-26</td><td style="font-size:11px">6,173</td><td style="font-size:11px"><span style="color:green">+22%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">11.8%</td><td class="num">$266,850</td></tr>
           <tr data-underlying="SPX" data-strike="6389" data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td></td><td style="padding-left:12px">JPM SPX AC DD Market Plus 8/12/27</td><td><span class="badge b-jpm">C+B</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">ago-27</td><td style="font-size:11px">ago-26</td><td style="font-size:11px">6,389</td><td style="font-size:11px"><span style="color:green">+18%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">9.25%</td><td class="num">$263,975</td></tr>
           <tr class="grp-hdr" data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td colspan="12">Otros subyacentes</td></tr>
-          <tr data-underlying="BASKET" data-strike="0" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">GS AC M+ 3/2/28 basket AI 16.95%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Basket EW</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">EW avg</td><td style="font-size:11px"><span style="color:green">+35.3%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">16.95%</td><td class="num">$255,825</td></tr>
+          <tr data-underlying="BASKET" data-strike="0" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">GS AC M+ 3/2/28 basket AI 16.95%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Basket EW</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">EW avg</td><td style="font-size:11px"><span style="color:green">+35.3%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">16.95%</td><td class="num">$254,450</td></tr>
+          <tr data-underlying="SPX" data-strike="6581" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SPX 03/28/28 11.65% <span style="font-size:9px;color:#aaa">XS3299586712</span></td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">AC SPX</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">abr-27</td><td style="font-size:11px">6,581</td><td style="font-size:11px"><span style="color:green">+12.0%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">80%</td><td style="font-size:11px;color:green">11.65%</td><td class="num">$258,250</td></tr>
           <tr data-underlying="SX5E" data-strike="6103" data-accts="cent-jpm g-centella g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SX5E 2/24/28 11.95%</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SX5E</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,103</td><td style="font-size:11px"><span style="color:#e53935">−0.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">25%</td><td style="font-size:11px;color:green">11.95%</td><td class="num">$195,600</td></tr>
           <tr data-underlying="MELI" data-strike="1741" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">BNP AC M+ MELI UW 3/2/28 20.33%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">MELI</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">1,741</td><td style="font-size:11px"><span style="color:#e53935">−4.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">30%</td><td style="font-size:11px;color:green">20.33%</td><td class="num">$248,950</td></tr>
           <tr><td colspan="12" style="font-size:10px;color:#888;padding:8px 4px">
@@ -440,7 +443,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tr data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>Saavi Energia 8.875% 2035</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$226,454</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>Energy Transfer LP 6.55% 2033</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono corp. HY</span></td><td class="num">$211,155</td><td class="num">0.6%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr data-isin="USN15516AB83" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>Braskem Neth 4.5% 2028</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$127,925</td><td class="num">0.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
-        <tr data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>BNP Ford Motor CLN ~6.3% jun-28</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">CLN crédito</span></td><td class="num">$262,275</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
+        <tr data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>BNP Ford Motor CLN ~6.3% jun-28</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">CLN crédito</span></td><td class="num">$265,375</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr class="grp-hdr" data-accts="nm-beaumont nm-nidalbe nm-acc g-nm all"><td colspan="9">Carteras No Manejadas — RF al 25%</td></tr>
         <tr class="nm-row" data-accts="nm-beaumont g-nm all"><td></td><td>Altria 4.25% 2042 + JPM 5.4% + otros <span class="nm-b">Beaumont</span></td><td><span class="badge b-ml">ML</span></td><td><span class="pill">Bonos IG+EM</span></td><td class="num">$303,973</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td></td><td>JB EM Corp + Muzinich + Brandywine <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondos+bonos</span></td><td class="num">$820,622</td><td class="num">2.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
@@ -448,6 +451,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tr data-accts="bosq-ubs g-bosques g-propias all"><td colspan="9" style="font-size:11px;color:#aaa;padding:8px;font-style:italic">⚠ Bosques UBS no tiene posiciones de renta fija — la cuenta tiene solo Equity (ETFs) + Cash (sweep) + Coatue (Alternativos).</td></tr>
         <tr class="grp-hdr" data-accts="banchile g-clp"><td colspan="9">ACV Chile — RF CLP (referencial)</td></tr>
         <tr data-accts="banchile g-clp"><td></td><td>CFIBCHDECH Deuda Chile <span style="font-size:9px;color:#aaa">144,800 cuotas</span></td><td><span class="badge b-clp">Banchile</span></td><td><span class="pill">FI RF CLP</span></td><td class="num">$261,979</td><td class="num">0.8%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$1,628 CLP</span></td></tr>
+                  <tr data-isin="LU3272199368" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>OKT LX GB Credit SL Fd (X1UA)</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Fondo S/T</span></td><td class="num">$899,176</td><td class="num">2.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">$100.39</span></td></tr>
         <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total renta fija</td><td class="num">$7,076,905</td><td class="num">21.2%</td><td></td><td></td><td></td></tr>
       </tbody>
     </table></div>
@@ -531,7 +535,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td></td><td>SPDR Gold Trust <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Oro</span></td><td class="num">$271,128</td><td class="num">0.8%</td><td class="num">9.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#D4AF37"></div></div></td></tr>
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td></td><td>First Eagle Amundi + JB Dynamic <span class="nm-b">Nidalbe 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondo balanceado</span></td><td class="num">$337,892</td><td class="num">1.0%</td><td class="num">11.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:#BA7517"></div></div></td></tr>
         <tr class="nm-row" data-accts="nm-acc g-nm all"><td></td><td>Schroder GAIA Sirios US Equity <span class="nm-b">ACC 25%</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Hedge fund</span></td><td class="num">$115,070</td><td class="num">0.3%</td><td class="num">4.0%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:4%;background:#EF9F27"></div></div></td></tr>
-        <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total alternativos</td><td class="num" id="alt-table-total">$2,924,133</td><td class="num" id="alt-table-pct">8.7%</td><td class="num">100%</td><td></td><td></td><td></td></tr>
+                  <tr data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>Apax Helix Feeder SICAV Class A</td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">PE Buyout</span></td><td class="num">$250,000</td><td class="num">0.7%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle" class="price-dot" title="Precio manual"></span><span class="pi">NAV</span></td></tr>
+          <tr class="bkt-tot" data-accts="all"><td></td><td colspan="3">Total alternativos</td><td class="num" id="alt-table-total">$2,924,133</td><td class="num" id="alt-table-pct">8.7%</td><td class="num">100%</td><td></td><td></td><td></td></tr>
         <tr data-accts="bosq-alt g-bosques g-propias all"><td colspan="10" style="font-size:10px;color:#aaa;padding-top:4px">⚠ Estelio Partners: compromiso total $500,000 · llamado hasta hoy $35,714 · valor a costo de inversión</td></tr>
       </tbody>
     </table></div>
@@ -654,7 +659,7 @@ var ACCT_DATA = {
   // Centella JPM: Eq $2,286,685 (incl. BARC nota $269,625) + RF $3,455,102 + Cash $3,318 + Alt $1,784,718 = $7,529,821 (Masttro 04-jun-26)
   'cent-jpm':   {eq:2286685, rf:3455102, cash:3318,    alt:1784718},
   // Bosques JPM: equity $2.88M + RF $1.04M + cash $0.06M = $5.98M → neto $5.90M
-  'bosq-jpm':   {eq:2880000, rf:1040000, cash:57655,   alt:0},
+  'bosq-jpm':   {eq:3342598, rf:2199535, cash:4875,    alt:250000},
   // Bosques ML: SPY 1913u $1,442,861 + XGHGF 319u $560,292 + CSPX 557u $453,766 + QQQ 350u $260,474
   // Cash neto: Pref Dep $987,096 + ML BDP $14,582 - Cash USD -$254,896 = $746,782 | RF GM+JPM $268,142
   // Total $3,732,315 (Masttro Holdings Statement 03-jun-26) — Estelio en bosq-alt, no aquí
@@ -919,7 +924,7 @@ var TOP4 = {
 var PERF_DATA = {
   'cent-ml':    {mv:7112799,  mtd:5.25,  ytd:5.23},
   'cent-jpm':   {mv:7547457,  mtd:1.71,  ytd:3.97},
-  'bosq-jpm':   {mv:5897085,  mtd:5.27,  ytd:5.48},
+  'bosq-jpm':   {mv:5797008,  mtd:null,  ytd:null},
   'bosq-ml':    {mv:3732315,  mtd:null,  ytd:7.69},
   'bosq-ubs':   {mv:1005914,  mtd:null,  ytd:null},
   'bosq-alt':   {mv:2090176,  mtd:null,  ytd:null},
@@ -1386,14 +1391,14 @@ var EOD_KEY = '6a272c1fc65bb6.06336275';
 // Default ISIN/ticker map — user can edit via the config panel
 var DEFAULT_ISIN_MAP = {
   // ── Equity ETFs US ─────────────────────────────────────────────────────────
-  'SPY':             {sym:'SPY.US', isin:'US78462F1030',              units:{cent_ml:2421,bosq_ml:1913},        type:'eq'},
-  'QQQ':             {sym:'QQQ.US', isin:'US46090E1038',              units:{bosq_ml:350,cent_jpm:1075},         type:'eq'},
+  'SPY':             {sym:'SPY.US', isin:'US78462F1030',              units:{cent_ml:2421,bosq_ml:1913,bosq_jpm:257},  type:'eq'},
+  'QQQ':             {sym:'QQQ.US', isin:'US46090E1038',              units:{bosq_ml:350,cent_jpm:1075,bosq_jpm:278},  type:'eq'},
   'ECH':             {sym:'ECH.US', isin:'US4642866408',              units:{cent_ml:6152},                      type:'eq'},
   // ── Equity ETFs UCITS ──────────────────────────────────────────────────────
   'CSPX':            {sym:'CSPX.LSE', isin:'IE00B5BMR087',            units:{cent_ml:1290,bosq_ml:557},          type:'eq'},
   'XGHGF':           {sym:'CNDX.LSE', isin:'IE00B53SZB19',            units:{bosq_ml:319},                       type:'eq'},
   'Xtrackers':       {sym:'XDWD.LSE', isin:'IE00BJ0KDQ92',            units:{cent_ml:11300},                     type:'eq'},
-  'iShares ACWI':    {sym:'ISAC.LSE', isin:'IE00B6R52259', units:{mish_jpm:2365},                     type:'eq'},
+  'iShares ACWI':    {sym:'ISAC.LSE', isin:'IE00B6R52259', units:{mish_jpm:2365,bosq_jpm:5320},        type:'eq'},
   // ── Equity Funds (SICAV) ───────────────────────────────────────────────────
   'JPM Global Core': {sym:'', units:{mish_jpm:7059,bosq_jpm:1000},       type:'eq'},
   'JPM US Sel Eq':   {sym:'', units:{cent_jpm:6615},                     type:'eq'},
@@ -1534,13 +1539,13 @@ function recalcTotals(){
   // Instruments with confirmed EOD + known units
   // Base prices from Masttro 04-jun-26
   var eodInstruments = {
-    'SPY':          { units: 2421+1913,        basePrice: 536.73  }, // Masttro base
-    'QQQ':          { units: 350+1075,          basePrice: 465.93  },
+    'SPY':          { units: 2421+1913+257,     basePrice: 736.07  }, // Masttro base
+    'QQQ':          { units: 350+1075+278,       basePrice: 710.27  },
     'ECH':          { units: 6152,              basePrice: 38.94   },
     'CSPX':         { units: 1290+557+125,      basePrice: 584.07  }, // GBp/100
     'XGHGF':        { units: 319,               basePrice: 844.08  }, // GBp/100
     'Xtrackers':    { units: 11300,             basePrice: 44.73   },
-    'iShares ACWI': { units: 2365,              basePrice: 121.89  },
+    'iShares ACWI': { units: 2365+5320,         basePrice: 117.00  },
     'iSh US Agg':   { units: 171850,            basePrice: 5.73    },
     'iSh Short Dur':{ units: 115020,            basePrice: 6.36    },
     'iSh HY Corp':  { units: 33220,             basePrice: 7.46    },
