@@ -1431,34 +1431,40 @@ async function updatePrices(){
 
   var updated = [], failed = [], skipped = [];
 
-  for(var name of Object.keys(DEFAULT_ISIN_MAP)){
+  var instruments = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return DEFAULT_ISIN_MAP[n].sym; });
+  skipped = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return !DEFAULT_ISIN_MAP[n].sym; });
+
+  // Fetch all in parallel with 8s timeout each
+  var fetchOne = async function(name){
     var inst = DEFAULT_ISIN_MAP[name];
-    if(!inst.sym){ skipped.push(name); continue; }
+    var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, 8000);
     try {
-      var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
-      var res = await fetch(url);
-      if(!res.ok) throw new Error(res.status);
+      var res = await fetch(url, {signal: controller.signal});
+      clearTimeout(timer);
+      if(!res.ok) return {name, error: res.status};
       var data = await res.json();
       var price = parseFloat(data.close || data.previousClose);
-      if(price > 0){
-        inst._lastPrice = price; // store for recalc
-        updatePriceInDOM(name, inst, price, data.change_p);
-        // Recalculate account market value for this instrument
-        if(inst.units){
-          var mv = Object.values(inst.units).reduce(function(a,b){return a+b;},0) * price;
-          // Update PERF_DATA mv for affected accounts
-          Object.keys(inst.units).forEach(function(acct){
-            var acctKey = acct.replace('_','-');
-            if(PERF_DATA[acctKey]){
-              // partial update: adjust for this instrument's new value
-              // (full recalc on recalcTotals)
-            }
-          });
-        }
-        updated.push(name + ' $' + price.toFixed(2));
-      } else { failed.push(name); }
-    } catch(e){ failed.push(name + '(' + (e.message||'') + ')'); }
-  }
+      if(price > 0) return {name, inst, price, change: data.change_p};
+      return {name, error: 'no price'};
+    } catch(e) {
+      clearTimeout(timer);
+      return {name, error: e.message||'timeout'};
+    }
+  };
+
+  var results = await Promise.all(instruments.map(fetchOne));
+
+  results.forEach(function(r){
+    if(r.error){
+      failed.push(r.name + '(' + r.error + ')');
+    } else {
+      r.inst._lastPrice = r.price;
+      updatePriceInDOM(r.name, r.inst, r.price, r.change);
+      updated.push(r.name + ' $' + r.price.toFixed(2));
+    }
+  });
 
   btn.disabled = false;
   btn.textContent = '↻ Actualizar precios';
