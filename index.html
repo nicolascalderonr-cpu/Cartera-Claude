@@ -1434,20 +1434,30 @@ async function updatePrices(){
 
   var instruments = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return DEFAULT_ISIN_MAP[n].sym; });
   skipped = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return !DEFAULT_ISIN_MAP[n].sym; });
+  console.log('instruments to fetch:', instruments.length, instruments.slice(0,3));
 
   var promises = instruments.map(function(name){
     var inst = DEFAULT_ISIN_MAP[name];
     var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
     return fetch(url)
-      .then(function(res){ return res.json(); })
+      .then(function(res){ 
+        console.log(name, 'status:', res.status);
+        return res.json(); 
+      })
       .then(function(data){
         var price = parseFloat(data.close || data.previousClose || 0);
+        console.log(name, 'price:', price);
         return {name:name, inst:inst, price:price, change:data.change_p, ok:price>0};
       })
-      .catch(function(e){ return {name:name, inst:inst, price:0, ok:false, err:e.message}; });
+      .catch(function(e){ 
+        console.log(name, 'error:', e.message);
+        return {name:name, inst:inst, price:0, ok:false, err:e.message}; 
+      });
   });
 
+  console.log('waiting for', promises.length, 'promises');
   var results = await Promise.all(promises);
+  console.log('results:', results.length, results.filter(function(r){return r.ok;}).length, 'ok');
 
   results.forEach(function(r){
     if(r.ok){
