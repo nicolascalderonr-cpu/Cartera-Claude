@@ -1458,7 +1458,7 @@ async function updatePrices(){
       updatePriceInDOM(r.name, r.inst, r.price, r.change);
       updated.push(r.name + ' $' + r.price.toFixed(2));
     } else {
-      failed.push(r.name);
+      failed.push(r.name + (r.err ? '('+r.err+')' : ''));
     }
   });
 
