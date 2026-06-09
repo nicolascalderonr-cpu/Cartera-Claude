@@ -1342,25 +1342,41 @@ var EOD_KEY = '6a272c1fc65bb6.06336275';
 
 // Default ISIN/ticker map — user can edit via the config panel
 var DEFAULT_ISIN_MAP = {
-  'SPY':             {sym:'SPY.US',              units:{cent_ml:2421,bosq_ml:1913},       type:'eq'},
-  'QQQ':             {sym:'QQQ.US',              units:{bosq_ml:350,cent_jpm:1075},        type:'eq'},
-  'ECH':             {sym:'ECH.US',              units:{cent_ml:6152},                     type:'eq'},
-  'CSPX':            {sym:'',                    units:{cent_ml:1290,bosq_ml:557},          type:'eq', hint:'CSPX.LSE o IE00B4L5Y983.EUFUND'},
-  'XGHGF':           {sym:'',                    units:{bosq_ml:319},                      type:'eq', hint:'CNDX.LSE o IE00B53SZB19.EUFUND'},
-  'Xtrackers':       {sym:'',                    units:{cent_ml:11300},                    type:'eq', hint:'XDWD.LSE o IE00BJ0KDQ92.EUFUND'},
-  'iShares ACWI':    {sym:'',                    units:{mish_jpm:2365},                    type:'eq', hint:'IQQW.LSE o IE00B6R52259.EUFUND'},
-  'iSh US Agg':      {sym:'',                    units:{cent_ml:171850},                   type:'rf', hint:'IUAG.LSE o IE00B3DKXQ41.EUFUND'},
-  'iSh Short Dur':   {sym:'',                    units:{cent_ml:115020},                   type:'rf', hint:'ISDU.LSE o IE00BCRY6557.EUFUND'},
-  'iSh HY Corp':     {sym:'',                    units:{cent_ml:33220},                    type:'rf', hint:'IHYU.LSE o IE00B4PY7Y77.EUFUND'},
-  'PIMCO GIS':       {sym:'',                    units:{cent_ml:27800},                    type:'rf', hint:'IGLO.LSE o IE00B7KFL990.EUFUND'},
-  'MS 4.35% 2026':   {sym:'',                    notional:250000,                          type:'bond', hint:'US6174467Y90.BOND'},
-  'GM 4.35% 2027':   {sym:'',                    notional:150000,                          type:'bond', hint:'US36159LAA73.BOND'},
-  'GM 3.6% 2030':    {sym:'',                    notional:250000,                          type:'bond', hint:'US36164AAF08.BOND'},
-  'JPM Float 2037':  {sym:'',                    notional:125000,                          type:'bond', hint:'US48126BAA17.BOND'},
-  'GS 0% 2027':      {sym:'',                    notional:100000,                          type:'bond', hint:'US38141GYZ41.BOND'},
-  'GS 0% 2040':      {sym:'',                    notional:500000,                          type:'bond', hint:'US38141GXC69.BOND'},
-  'JPM 0% 2039':     {sym:'',                    notional:250000,                          type:'bond', hint:'US46647PCA29.BOND'},
-  'Braskem 4.5%':    {sym:'',                    notional:250000,                          type:'bond', hint:'US10552TAH08.BOND'},
+  // ── Equity ETFs US ─────────────────────────────────────────────────────────
+  'SPY':             {sym:'SPY.US',              units:{cent_ml:2421,bosq_ml:1913},        type:'eq'},
+  'QQQ':             {sym:'QQQ.US',              units:{bosq_ml:350,cent_jpm:1075},         type:'eq'},
+  'ECH':             {sym:'ECH.US',              units:{cent_ml:6152},                      type:'eq'},
+  // ── Equity ETFs UCITS ──────────────────────────────────────────────────────
+  'CSPX':            {sym:'CSPX.LSE',            units:{cent_ml:1290,bosq_ml:557},          type:'eq'},
+  'XGHGF':           {sym:'CNDX.LSE',            units:{bosq_ml:319},                       type:'eq'},
+  'Xtrackers':       {sym:'XDWD.LSE',            units:{cent_ml:11300},                     type:'eq'},
+  'iShares ACWI':    {sym:'IE00B6R52259.EUFUND', units:{mish_jpm:2365},                     type:'eq'},
+  // ── Equity Funds (SICAV) ───────────────────────────────────────────────────
+  'JPM Global Core': {sym:'LU2582001959.EUFUND', units:{mish_jpm:7059,bosq_jpm:1000},       type:'eq'},
+  'JPM US Sel Eq':   {sym:'LU0281484617.EUFUND', units:{cent_jpm:6615},                     type:'eq'},
+  'JPM China A':     {sym:'LU1255011501.EUFUND', units:{cent_jpm:7867},                     type:'eq'},
+  'Access Growth':   {sym:'LU0924981581.EUFUND', units:{mish_jpm:1309},                     type:'eq'},
+  'Global X Def':    {sym:'IE000JCW3DZ3.EUFUND', units:{cent_jpm:5300},                     type:'eq'},
+  // ── RF ETFs UCITS ──────────────────────────────────────────────────────────
+  'iSh US Agg':      {sym:'IE00BYXYYM63.EUFUND', units:{cent_ml:171850},                    type:'rf'},
+  'iSh Short Dur':   {sym:'IE00BYXYYP94.EUFUND', units:{cent_ml:115020},                    type:'rf'},
+  'iSh HY Corp':     {sym:'IE00BYXYYL56.EUFUND', units:{cent_ml:33220},                     type:'rf'},
+  'PIMCO GIS':       {sym:'IE00B7KFL990.EUFUND', units:{cent_ml:27800},                     type:'rf'},
+  // ── RF Funds (SICAV) ───────────────────────────────────────────────────────
+  'MFS Meridian':    {sym:'LU1340704474.EUFUND', units:{cent_jpm:86478},                    type:'rf'},
+  'AXA US Credit':   {sym:'LU2819793378.EUFUND', units:{cent_jpm:4878,mish_jpm:5141},       type:'rf'},
+  'BlackRock USD':   {sym:'IE00BFZD2467.EUFUND', units:{cent_jpm:3679},                     type:'rf'},
+  'JPM Income':      {sym:'LU1041600427.EUFUND', units:{cent_jpm:1913,mish_jpm:1545},       type:'rf'},
+  'BNY Mellon':      {sym:'IE000LFUAKZ8.EUFUND', units:{cent_jpm:247573,mish_jpm:502976},   type:'rf'},
+  // ── Bonds ──────────────────────────────────────────────────────────────────
+  'MS 4.35% 2026':   {sym:'US6174467Y92.BOND',   notional:250000,                           type:'bond'},
+  'GM 4.35% 2027':   {sym:'US37045XBT28.BOND',   notional:150000,                           type:'bond'},
+  'GM 3.6% 2030':    {sym:'US37045XCY04.BOND',   notional:250000,                           type:'bond'},
+  'JPM Float 2037':  {sym:'US48123KAE64.BOND',   notional:125000,                           type:'bond'},
+  'GS 0% 2027':      {sym:'US38141GVX95.BOND',   notional:100000,                           type:'bond'},
+  'GS 0% 2040':      {sym:'US38151FDS92.BOND',   notional:500000,                           type:'bond'},
+  'JPM 0% 2039':     {sym:'US48130CQG32.BOND',   notional:250000,                           type:'bond'},
+  'Braskem 4.5%':    {sym:'USN15516AB83.BOND',   notional:100000,                           type:'bond'},
 };
 
 async function updatePrices(){
