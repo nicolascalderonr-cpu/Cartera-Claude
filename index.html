@@ -45,7 +45,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .pi{font-size:10px;color:#aaa;white-space:nowrap;margin-left:3px}
 .cons-row{cursor:pointer;background:#f8f8f6}
 .cons-row:hover{background:#f0eeea}
-.cons-row.open .child{display:none}.child.show{display:table-row}
+.child{display:none}
+.child.show{display:table-row}
+.cons-row.open .child{display:none}
 .child td{background:#fff}
 .metric{background:#f8f8f6;border-radius:8px;padding:.875rem 1rem}
 .nm-row td{opacity:.82}
@@ -274,7 +276,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tbody>
           <tr class="cons-row" id="cr-sp500" onclick="tog('sp500')" data-accts="cent-ml bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$4,876,385","cent-ml":"$2,877,011","bosq-ml":"$1,894,469","bosq-ubs":"$101,833","g-centella":"$2,877,011","g-bosques":"$1,996,302","g-propias":"$4,873,313"}'>
             <td></td>
-            <td><strong>S&P 500 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span></td>
+            <td><strong>S&P 500 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span> <span class="tog-indicator" style="font-size:10px;color:#aaa">▶</span></td>
             <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US large</span></td>
             <td class="num"><strong>$4,876,385</strong></td><td class="num">14.6%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
@@ -298,7 +300,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           </tr>
           <tr class="cons-row" id="cr-ndx" onclick="tog('ndx')" data-accts="cent-jpm bosq-ml bosq-ubs g-centella g-bosques g-propias all" data-vals='{"all":"$1,588,530","cent-jpm":"$977,780","bosq-ml":"$558,450","bosq-ubs":"$101,500","g-centella":"$977,780","g-bosques":"$659,950","g-propias":"$1,638,030"}'>
             <td></td>
-            <td><strong>Nasdaq 100 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span></td>
+            <td><strong>Nasdaq 100 exposición total</strong> <span style="font-size:10px;color:#aaa">(2 vehículos)</span> <span class="tog-indicator" style="font-size:10px;color:#aaa">▶</span></td>
             <td><span style="font-size:10px;color:#aaa">consolidado</span></td><td><span class="pill">ETF US growth</span></td>
             <td class="num"><strong>$1,588,530</strong></td><td class="num">4.7%</td>
             <td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td>
@@ -1261,10 +1263,17 @@ function clearFilter(){document.getElementById('acct-sel').value='all';applyFilt
 
 // ─── EXPAND ROWS ─────────────────────────────────────────────────────────────
 function tog(id){
-  var row=document.getElementById('cr-'+id);
-  var open=row.classList.contains('open');
-  for(var i=0;;i++){var c=document.getElementById('ch-'+id+'-'+i);if(!c)break;open?c.classList.remove('show'):c.classList.add('show');}
-  open?row.classList.remove('open'):row.classList.add('open');
+  var row = document.getElementById('cr-'+id);
+  var isOpen = row.classList.contains('open');
+  for(var i=0;;i++){
+    var c = document.getElementById('ch-'+id+'-'+i);
+    if(!c) break;
+    if(isOpen){ c.classList.remove('show'); }
+    else { c.classList.add('show'); }
+  }
+  isOpen ? row.classList.remove('open') : row.classList.add('open');
+  var ind = row.querySelector('.tog-indicator');
+  if(ind) ind.textContent = isOpen ? '▶' : '▼';
 }
 
 // ─── PANES ───────────────────────────────────────────────────────────────────
