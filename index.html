@@ -1434,35 +1434,27 @@ async function updatePrices(){
   var instruments = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return DEFAULT_ISIN_MAP[n].sym; });
   skipped = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return !DEFAULT_ISIN_MAP[n].sym; });
 
-  // Fetch all in parallel with 8s timeout each
-  var fetchOne = async function(name){
+  var promises = instruments.map(function(name){
     var inst = DEFAULT_ISIN_MAP[name];
     var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
-    var controller = new AbortController();
-    var timer = setTimeout(function(){ controller.abort(); }, 8000);
-    try {
-      var res = await fetch(url, {signal: controller.signal});
-      clearTimeout(timer);
-      if(!res.ok) return {name, error: res.status};
-      var data = await res.json();
-      var price = parseFloat(data.close || data.previousClose);
-      if(price > 0) return {name, inst, price, change: data.change_p};
-      return {name, error: 'no price'};
-    } catch(e) {
-      clearTimeout(timer);
-      return {name, error: e.message||'timeout'};
-    }
-  };
+    return fetch(url)
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        var price = parseFloat(data.close || data.previousClose || 0);
+        return {name:name, inst:inst, price:price, change:data.change_p, ok:price>0};
+      })
+      .catch(function(e){ return {name:name, inst:inst, price:0, ok:false, err:e.message}; });
+  });
 
-  var results = await Promise.all(instruments.map(fetchOne));
+  var results = await Promise.all(promises);
 
   results.forEach(function(r){
-    if(r.error){
-      failed.push(r.name + '(' + r.error + ')');
-    } else {
+    if(r.ok){
       r.inst._lastPrice = r.price;
       updatePriceInDOM(r.name, r.inst, r.price, r.change);
       updated.push(r.name + ' $' + r.price.toFixed(2));
+    } else {
+      failed.push(r.name);
     }
   });
 
@@ -1585,7 +1577,6 @@ function updatePriceInDOM(name, inst, price, changePct){
     var pane = document.getElementById(paneId);
     if(pane) pane.querySelectorAll('tr').forEach(function(r){ allRows.push(r); });
   });
-  console.log('updatePriceInDOM: name='+name+' keywords='+JSON.stringify(keywords)+' rows='+allRows.length);
 
   allRows.forEach(function(row){
     if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot') || row.classList.contains('cons-row')) return;
@@ -1594,7 +1585,6 @@ function updatePriceInDOM(name, inst, price, changePct){
       try { return new RegExp(k,'i').test(html); }
       catch(e){ return html.toLowerCase().includes(k.toLowerCase()); }
     });
-    if(match) console.log('  MATCH: '+name+' in row id='+row.id+' class='+row.className);
     if(!match) return;
 
     var pill = row.querySelector('.pi');
