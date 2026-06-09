@@ -270,7 +270,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   </div>
   <div id="eq-etfs">
     <div class="card">
-      <div class="stitle">ETFs y fondos &nbsp;<span style="font-size:11px;color:#aaa;font-weight:400">▶ clic en filas consolidadas para expandir</span></div>
+      <div class="stitle">ETFs &nbsp;<span style="font-size:11px;color:#aaa;font-weight:400">▶ clic en filas consolidadas para expandir</span></div>
       <div style="overflow-x:auto"><table class="tbl">
         <thead><tr><th></th><th style="width:26%">Instrumento</th><th style="width:11%">Cuenta</th><th style="width:11%">Subclase</th><th class="num" style="width:11%">Valor USD</th><th class="num" style="width:6%">% tot.</th><th class="num" style="width:7%">MTD may-26</th><th class="num" style="width:7%">YTD</th><th style="width:10%">Precio</th></tr></thead>
         <tbody>
@@ -1443,6 +1443,12 @@ async function updatePrices(){
       })
       .then(function(data){
         var price = parseFloat(data.close || data.previousClose || 0);
+        // LSE ETFs sometimes return price in GBp (pence) — convert to GBP/USD
+        // If currency is GBX or GBp and price > 500, likely in pence
+        var currency = data.currency || '';
+        if((currency === 'GBX' || currency === 'GBp' || (inst.sym && inst.sym.indexOf('.LSE') > -1 && price > 200))) {
+          price = price / 100; // convert pence to pounds (approximate USD)
+        }
         return {name:name, inst:inst, price:price, change:data.change_p, ok:price>0};
       })
       .catch(function(e){ 
