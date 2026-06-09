@@ -262,9 +262,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 <!-- ══ EQUITY ══ -->
 <div id="pane-equity" style="display:none">
   <div class="subtabs">
-    <button class="stb act" onclick="showSub('eq-etfs',['eq-fondos','eq-notas'],this)">ETFs</button>
-    <button class="stb" onclick="showSub('eq-fondos',['eq-etfs','eq-notas'],this)">Fondos</button>
-    <button class="stb" onclick="showSub('eq-notas',['eq-etfs','eq-fondos'],this)">Notas estructuradas</button>
+    <button class="stb act" onclick="showEqTab('eq-etfs',this)">ETFs</button>
+    <button class="stb" onclick="showEqTab('eq-fondos',this)">Fondos</button>
+    <button class="stb" onclick="showEqTab('eq-notas',this)">Notas estructuradas</button>
   </div>
   <div id="eq-etfs">
     <div class="card">
@@ -1273,6 +1273,13 @@ function showPane(id,btn){
     document.getElementById('pane-'+p).style.display=p===id?'block':'none';
   });
   document.querySelectorAll('.tb').forEach(function(b){b.className=b===btn?'tb act':'tb';});
+}
+
+function showEqTab(show,btn){
+  ['eq-etfs','eq-fondos','eq-notas'].forEach(function(id){
+    document.getElementById(id).style.display = id===show ? 'block' : 'none';
+  });
+  document.querySelectorAll('.stb').forEach(function(b){b.className=b===btn?'stb act':'stb';});
 }
 
 function showSub(show,hide,btn){
