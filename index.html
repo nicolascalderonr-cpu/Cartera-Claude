@@ -1579,6 +1579,7 @@ function updatePriceInDOM(name, inst, price, changePct){
     var pane = document.getElementById(paneId);
     if(pane) pane.querySelectorAll('tr').forEach(function(r){ allRows.push(r); });
   });
+  console.log('updatePriceInDOM: name='+name+' keywords='+JSON.stringify(keywords)+' rows='+allRows.length);
 
   allRows.forEach(function(row){
     if(row.classList.contains('grp-hdr') || row.classList.contains('bkt-tot') || row.classList.contains('cons-row')) return;
@@ -1587,6 +1588,7 @@ function updatePriceInDOM(name, inst, price, changePct){
       try { return new RegExp(k,'i').test(html); }
       catch(e){ return html.toLowerCase().includes(k.toLowerCase()); }
     });
+    if(match) console.log('  MATCH: '+name+' in row id='+row.id+' class='+row.className);
     if(!match) return;
 
     var pill = row.querySelector('.pi');
