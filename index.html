@@ -1666,8 +1666,19 @@ function recalcTotals(){
 
 function updatePriceInDOM(name, inst, price, changePct){
   var fmt = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
-  var color = (changePct >= 0) ? '#10B981' : '#e53935';
-  var changeStr = (changePct >= 0 ? '+' : '') + parseFloat(changePct||0).toFixed(2) + '%';
+
+  // Calculate change vs our Masttro base price (more reliable than EOD change_p)
+  var basePrices = {
+    'SPY':536.73,'QQQ':465.93,'ECH':38.94,'CSPX':584.07,'XGHGF':1696.20,
+    'Xtrackers':44.73,'iShares ACWI':117.00,'iSh US Agg':5.73,
+    'iSh Short Dur':6.36,'iSh HY Corp':7.46,'PIMCO GIS':17.85,'Global X Def':28.70,
+    '_SPX':5500,'_SX5E':4800,'_MELI':2100
+  };
+  var base = basePrices[name];
+  var pct = base && base > 0 ? (price - base) / base * 100 : parseFloat(changePct||0);
+
+  var color = pct >= 0 ? '#10B981' : '#e53935';
+  var changeStr = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
 
   var isin = inst.isin;
   if(!isin) return; // no ISIN, can't match
