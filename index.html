@@ -1702,14 +1702,20 @@ function updatePriceInDOM(name, inst, price, changePct){
     }
 
     // If child row, also update parent cons-row
+    // Only SPY drives SP500 cons-row, only QQQ drives NDX cons-row
     if(row.classList.contains('child')){
       var prev = row.previousElementSibling;
       while(prev && !prev.classList.contains('cons-row')){ prev = prev.previousElementSibling; }
       if(prev){
-        var cPill = prev.querySelector('.pi');
-        if(cPill) cPill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
-        var cDot = prev.querySelector('.price-dot');
-        if(cDot){ cDot.style.background = '#10B981'; cDot.title = 'EOD live'; }
+        var consId = prev.id;
+        var isPrimary = (name === 'SPY' && consId === 'cr-sp500') ||
+                        (name === 'QQQ' && consId === 'cr-ndx');
+        if(isPrimary){
+          var cPill = prev.querySelector('.pi');
+          if(cPill) cPill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
+          var cDot = prev.querySelector('.price-dot');
+          if(cDot){ cDot.style.background = '#10B981'; cDot.title = 'EOD live'; }
+        }
       }
     }
   });
