@@ -1628,18 +1628,18 @@ function recalcTotals(){
   // Instruments with confirmed EOD + known units
   // Base prices from Masttro 04-jun-26
   var eodInstruments = {
-    'SPY':          { units: 2421+1913+257,     basePrice: 736.07  }, // Masttro base
-    'QQQ':          { units: 350+1075+278,       basePrice: 710.27  },
-    'ECH':          { units: 6152,              basePrice: 38.94   },
-    'CSPX':         { units: 1290+557+125,      basePrice: 584.07  }, // GBp/100
-    'XGHGF':        { units: 319,               basePrice: 844.08  }, // GBp/100
-    'Xtrackers':    { units: 11300,             basePrice: 44.73   },
-    'iShares ACWI': { units: 2365+5320,         basePrice: 117.00  },
-    'iSh US Agg':   { units: 171850,            basePrice: 5.73    },
-    'iSh Short Dur':{ units: 115020,            basePrice: 6.36    },
-    'iSh HY Corp':  { units: 33220,             basePrice: 7.46    },
-    'PIMCO GIS':    { units: 27800,             basePrice: 17.85   },
-    'Global X Def': { units: 5300,              basePrice: 28.70   },
+    'SPY':          { units: 2421+1913+257,  basePrice: 736.07  }, // USD, NYSE
+    'QQQ':          { units: 350+1075+278,   basePrice: 710.27  }, // USD, Nasdaq
+    'ECH':          { units: 6152,           basePrice: 38.94   }, // USD, NYSE
+    'CSPX':         { units: 1290+557+125,   basePrice: 8.14    }, // GBP (post /100 conversion)
+    'XGHGF':        { units: 319,            basePrice: 16.96   }, // GBP (post /100 conversion)
+    'Xtrackers':    { units: 11300,          basePrice: 44.73   }, // USD, LSE
+    'iShares ACWI': { units: 2365+5320,      basePrice: 117.00  }, // USD, LSE
+    'iSh US Agg':   { units: 171850,         basePrice: 5.73    }, // USD, LSE
+    'iSh Short Dur':{ units: 115020,         basePrice: 6.36    }, // USD, LSE
+    'iSh HY Corp':  { units: 33220,          basePrice: 7.46    }, // USD, LSE
+    'PIMCO GIS':    { units: 27800,          basePrice: 17.85   }, // USD, LSE
+    'Global X Def': { units: 5300,           basePrice: 28.70   }, // USD, LSE
   };
 
   var totalDelta = 0;
