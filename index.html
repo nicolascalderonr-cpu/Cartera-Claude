@@ -1690,22 +1690,40 @@ function updatePriceInDOM(name, inst, price, changePct){
       pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
     }
 
-    // Recalculate market value
+    // Recalculate market value — skip for GBP instruments (price in GBP not USD)
     var numCells = row.querySelectorAll('td.num');
-    if(numCells.length === 0) return;
-    if(inst.notional){
-      numCells[0].textContent = fmt(inst.notional * price / 100);
-    } else if(inst.units){
+    if(numCells.length > 0 && inst.units && !inst.sym.includes('.LSE')){
       var total = Object.values(inst.units).reduce(function(a,b){return a+b;},0);
       numCells[0].textContent = fmt(total * price);
+    } else if(numCells.length > 0 && inst.notional){
+      numCells[0].textContent = fmt(inst.notional * price / 100);
     }
 
-    // If child row, also update parent cons-row
-    // Only SPY drives SP500 cons-row, only QQQ drives NDX cons-row
+    // If child row, update parent cons-row total by summing all children
     if(row.classList.contains('child')){
       var prev = row.previousElementSibling;
       while(prev && !prev.classList.contains('cons-row')){ prev = prev.previousElementSibling; }
       if(prev){
+        // Sum all visible child MV cells
+        var consTotal = 0;
+        var sib = prev.nextElementSibling;
+        while(sib && sib.classList.contains('child')){
+          var sibNum = sib.querySelector('td.num');
+          if(sibNum){
+            var val = parseFloat((sibNum.textContent||'').replace(/[$,]/g,''));
+            if(!isNaN(val)) consTotal += val;
+          }
+          sib = sib.nextElementSibling;
+        }
+        if(consTotal > 0){
+          var consNum = prev.querySelector('td.num strong');
+          if(consNum) consNum.textContent = fmt(consTotal);
+          else {
+            var consCell = prev.querySelector('td.num');
+            if(consCell) consCell.innerHTML = '<strong>' + fmt(consTotal) + '</strong>';
+          }
+        }
+        // Update price pill (only from primary instrument)
         var consId = prev.id;
         var isPrimary = (name === 'SPY' && consId === 'cr-sp500') ||
                         (name === 'QQQ' && consId === 'cr-ndx');
