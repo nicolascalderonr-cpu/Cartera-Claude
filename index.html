@@ -1551,10 +1551,11 @@ async function updatePrices(){
         return res.json(); 
       })
       .then(function(data){
-        // 'last' = intraday price when market open, 'close' = end of day
         var price = parseFloat(data.last || data.close || data.previousClose || 0);
-        var currency = data.currency || '';
-        if((currency === 'GBX' || currency === 'GBp' || (inst.sym && inst.sym.indexOf('.LSE') > -1 && price > 200))) {
+        // Known LSE tickers that report price in GBp (pence) — explicit whitelist,
+        // safer than guessing from price magnitude or currency field reliability
+        var gbpTickers = ['CSPX.LSE','CNDX.LSE'];
+        if(gbpTickers.indexOf(inst.sym) > -1){
           price = price / 100;
         }
         return {name:name, inst:inst, price:price, change:data.change_p, ok:price>0};
@@ -1660,7 +1661,13 @@ function recalcTotals(){
     var eod = eodInstruments[name];
     var newMV  = eod.units * inst._lastPrice;
     var baseMVI = eod.units * eod.basePrice;
-    totalDelta += (newMV - baseMVI);
+    var delta = newMV - baseMVI;
+    // Sanity check: reject if delta is more than 25% of base value (likely bad data/currency glitch)
+    if(baseMVI > 0 && Math.abs(delta) > baseMVI * 0.25){
+      console.warn('recalcTotals: rejecting suspicious delta for ' + name + ': base=$' + baseMVI.toFixed(0) + ' new=$' + newMV.toFixed(0));
+      return;
+    }
+    totalDelta += delta;
   });
 
   var newTotal = baseMV + totalDelta;
