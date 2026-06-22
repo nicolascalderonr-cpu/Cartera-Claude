@@ -1107,7 +1107,7 @@ function getAccounts(sel){
 }
 
 function fmt(v){
-  if(v>=1e6) return '$'+(v/1e6).toFixed(1)+'M';
+  if(v>=1e6) return '$'+(v>=10e6?(v/1e6).toFixed(1):(v/1e6).toFixed(2))+'M';
   if(v>=1e3) return '$'+(v/1e3).toFixed(0)+'K';
   return '$'+v.toFixed(0);
 }
@@ -1220,7 +1220,7 @@ function updateDraftea(){
   if(document.getElementById('cuentas-bosq-alt')) document.getElementById('cuentas-bosq-alt').textContent = '$' + totalAlt.toLocaleString('en-US',{maximumFractionDigits:0});
 
   // Update KPI total and landing table total
-  var fmtNewTotal = '$' + (newTotal/1e6).toFixed(1) + 'M';
+  var fmtNewTotal = '$' + (newTotal>=10e6?(newTotal/1e6).toFixed(1):(newTotal/1e6).toFixed(2)) + 'M';
   if(document.getElementById('kpi-total')) document.getElementById('kpi-total').textContent = fmtNewTotal;
   var totRows = document.querySelectorAll('.bkt-tot td:nth-child(2) strong');
   totRows.forEach(function(el){ if(el.textContent.match(/^\$\d+/)) el.textContent = fmtNewTotal; });
@@ -1672,7 +1672,7 @@ function recalcTotals(){
 
   var newTotal = baseMV + totalDelta;
   var fmt = function(n){
-    if(n >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+    if(n >= 1e6) return '$' + (n >= 10e6 ? (n/1e6).toFixed(1) : (n/1e6).toFixed(2)) + 'M';
     return '$' + Math.round(n).toLocaleString('en-US');
   };
 
