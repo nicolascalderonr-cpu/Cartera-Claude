@@ -1525,6 +1525,16 @@ var DEFAULT_ISIN_MAP = {
   'GS 0% 2040':      {sym:'US38151FDS92.BOND', isin:'US38151FDS92',   notional:500000,                           type:'bond'},
   'JPM 0% 2039':     {sym:'US48130CQG32.BOND', isin:'US48130CQG32',   notional:250000,                           type:'bond'},
   'Braskem 4.5%':    {sym:'USN15516AB83.BOND', isin:'USN15516AB83',   notional:100000,                           type:'bond'},
+  // GS Basket AI components (equally weighted, 9 stocks)
+  '_CEG':   {sym:'CEG.US',   type:'basket', basePrice:329.88},
+  '_GEV':   {sym:'GEV.US',   type:'basket', basePrice:873.60},
+  '_GOOGL': {sym:'GOOGL.US', type:'basket', basePrice:311.76},
+  '_META':  {sym:'META.US',  type:'basket', basePrice:648.18},
+  '_MRVL':  {sym:'MRVL.US',  type:'basket', basePrice:81.69},
+  '_MSFT':  {sym:'MSFT.US',  type:'basket', basePrice:392.74},
+  '_NVDA':  {sym:'NVDA.US',  type:'basket', basePrice:177.19},
+  '_VRT':   {sym:'VRT.US',   type:'basket', basePrice:254.89},
+  '_VST':   {sym:'VST.US',   type:'basket', basePrice:173.89},
   // Índices para notas estructuradas
   '_SPX':  {sym:'SPY.US',     type:'index'},  // proxy SPX via SPY (ratio ~5.18x)
   '_SX5E': {sym:'FEZ.US',     type:'index'},  // proxy SX5E via SPDR Euro Stoxx 50 ETF
@@ -1597,10 +1607,24 @@ function updateNotesStrikes(){
   var spyPrice  = DEFAULT_ISIN_MAP['_SPX']  && DEFAULT_ISIN_MAP['_SPX']._lastPrice;
   var fezPrice  = DEFAULT_ISIN_MAP['_SX5E'] && DEFAULT_ISIN_MAP['_SX5E']._lastPrice;
   var meliPrice = DEFAULT_ISIN_MAP['_MELI'] && DEFAULT_ISIN_MAP['_MELI']._lastPrice;
+
+  // GS Basket AI: equally weighted average of 9 stocks vs entry prices
+  var basketComponents = ['_CEG','_GEV','_GOOGL','_META','_MRVL','_MSFT','_NVDA','_VRT','_VST'];
+  var basketPerfSum = 0, basketCount = 0;
+  basketComponents.forEach(function(k){
+    var inst = DEFAULT_ISIN_MAP[k];
+    if(inst && inst._lastPrice && inst.basePrice){
+      basketPerfSum += (inst._lastPrice - inst.basePrice) / inst.basePrice * 100;
+      basketCount++;
+    }
+  });
+  var basketPerf = basketCount === 9 ? basketPerfSum / 9 : null; // EW avg % change
+
   var prices = {
-    SPX:  spyPrice  ? spyPrice  * 9.32  : null,  // SPY→SPX: SPX≈SPY×9.32 (calibrado jun-26)
-    SX5E: fezPrice  ? fezPrice  * 98.0  : null,  // FEZ→SX5E: SX5E≈FEZ×98 (calibrado jun-26)
-    MELI: meliPrice ? meliPrice          : null,  // direct
+    SPX:    spyPrice  ? spyPrice  * 9.32  : null,
+    SX5E:   fezPrice  ? fezPrice  * 98.0  : null,
+    MELI:   meliPrice ? meliPrice          : null,
+    BASKET: basketPerf,  // already in % form
   };
 
   // Update header line in notes
@@ -1618,14 +1642,24 @@ function updateNotesStrikes(){
     var underlying = row.getAttribute('data-underlying');
     var strike = parseFloat(row.getAttribute('data-strike'));
     var spot = prices[underlying];
-    if(!spot || !strike) return;
 
-    var pct = (spot - strike) / strike * 100;
-    var color = pct >= 0 ? 'green' : '#e53935';
-    var sign  = pct >= 0 ? '+' : '';
-    var callText = pct >= 0 ? '✓ Alta' : '✗ Baja';
+    var pct, color, sign, callText;
 
-    // Column index 7 = Hoy vs. Strike (0-indexed td)
+    if(underlying === 'BASKET'){
+      // BASKET: prices.BASKET is already the EW avg % change
+      if(spot === null || spot === undefined) return;
+      pct = spot;
+      color = pct >= 0 ? 'green' : '#e53935';
+      sign  = pct >= 0 ? '+' : '';
+      callText = pct >= 0 ? '✓ Alta' : '✗ Baja';
+    } else {
+      if(!spot || !strike) return;
+      pct = (spot - strike) / strike * 100;
+      color = pct >= 0 ? 'green' : '#e53935';
+      sign  = pct >= 0 ? '+' : '';
+      callText = pct >= 0 ? '✓ Alta' : '✗ Baja';
+    }
+
     var tds = row.querySelectorAll('td');
     if(tds[7]) tds[7].innerHTML = '<span style="color:' + color + '">' + sign + pct.toFixed(1) + '%</span>';
     if(tds[8]) tds[8].innerHTML = '<span style="color:' + color + ';font-weight:600">' + callText + '</span>';
