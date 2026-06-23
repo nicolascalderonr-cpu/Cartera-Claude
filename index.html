@@ -1618,7 +1618,7 @@ function updateNotesStrikes(){
       basketCount++;
     }
   });
-  var basketPerf = basketCount === 9 ? basketPerfSum / 9 : null; // EW avg % change
+  var basketPerf = basketCount > 0 ? basketPerfSum / basketCount : null; // EW avg % change (partial ok)
 
   var prices = {
     SPX:    spyPrice  ? spyPrice  * 9.32  : null,
@@ -1629,11 +1629,12 @@ function updateNotesStrikes(){
 
   // Update header line in notes
   var hdr = document.querySelector('#eq-notas .stitle span');
-  if(hdr && (prices.SPX || prices.SX5E || prices.MELI)){
+  if(hdr && (prices.SPX || prices.SX5E || prices.MELI || prices.BASKET !== null)){
     var parts = [];
-    if(prices.SPX)  parts.push('SPX: ' + prices.SPX.toLocaleString('en-US', {maximumFractionDigits:0}));
-    if(prices.SX5E) parts.push('SX5E: ' + prices.SX5E.toLocaleString('en-US', {maximumFractionDigits:0}));
+    if(prices.SPX)  parts.push('SPX: ' + Math.round(prices.SPX).toLocaleString('en-US'));
+    if(prices.SX5E) parts.push('SX5E: ' + Math.round(prices.SX5E).toLocaleString('en-US'));
     if(prices.MELI) parts.push('MELI: $' + prices.MELI.toFixed(0));
+    if(prices.BASKET !== null && prices.BASKET !== undefined) parts.push('Basket EW: ' + (prices.BASKET>=0?'+':'') + prices.BASKET.toFixed(1) + '%');
     if(parts.length) hdr.textContent = parts.join(' · ');
   }
 
