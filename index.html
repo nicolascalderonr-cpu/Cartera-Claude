@@ -1526,8 +1526,8 @@ var DEFAULT_ISIN_MAP = {
   'JPM 0% 2039':     {sym:'US48130CQG32.BOND', isin:'US48130CQG32',   notional:250000,                           type:'bond'},
   'Braskem 4.5%':    {sym:'USN15516AB83.BOND', isin:'USN15516AB83',   notional:100000,                           type:'bond'},
   // Índices para notas estructuradas
-  '_SPX':  {sym:'GSPC.INDX',  type:'index'},
-  '_SX5E': {sym:'STOXX50E.INDX', type:'index'},
+  '_SPX':  {sym:'SPY.US',     type:'index'},  // proxy SPX via SPY (ratio ~5.18x)
+  '_SX5E': {sym:'FEZ.US',     type:'index'},  // proxy SX5E via SPDR Euro Stoxx 50 ETF
   '_MELI': {sym:'MELI.US',    type:'index'},
 };
 
@@ -1593,10 +1593,14 @@ async function updatePrices(){
 
 function updateNotesStrikes(){
   // Get latest index prices from ISIN_MAP
+  // Use ETF proxies and convert to index levels
+  var spyPrice  = DEFAULT_ISIN_MAP['_SPX']  && DEFAULT_ISIN_MAP['_SPX']._lastPrice;
+  var fezPrice  = DEFAULT_ISIN_MAP['_SX5E'] && DEFAULT_ISIN_MAP['_SX5E']._lastPrice;
+  var meliPrice = DEFAULT_ISIN_MAP['_MELI'] && DEFAULT_ISIN_MAP['_MELI']._lastPrice;
   var prices = {
-    SPX:  DEFAULT_ISIN_MAP['_SPX']  && DEFAULT_ISIN_MAP['_SPX']._lastPrice,
-    SX5E: DEFAULT_ISIN_MAP['_SX5E'] && DEFAULT_ISIN_MAP['_SX5E']._lastPrice,
-    MELI: DEFAULT_ISIN_MAP['_MELI'] && DEFAULT_ISIN_MAP['_MELI']._lastPrice,
+    SPX:  spyPrice  ? spyPrice  * 9.32  : null,  // SPY→SPX: SPX≈SPY×9.32 (calibrado jun-26)
+    SX5E: fezPrice  ? fezPrice  * 98.0  : null,  // FEZ→SX5E: SX5E≈FEZ×98 (calibrado jun-26)
+    MELI: meliPrice ? meliPrice          : null,  // direct
   };
 
   // Update header line in notes
