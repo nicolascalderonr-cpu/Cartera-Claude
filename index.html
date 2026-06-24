@@ -1591,9 +1591,6 @@ async function updatePrices(){
       r.inst._lastPrice = r.price;
       updatePriceInDOM(r.name, r.inst, r.price, r.change);
       updated.push(r.name + ' $' + r.price.toFixed(2));
-      if(r.inst.type === 'index' || r.inst.type === 'basket'){
-        console.log('index/basket price saved: ' + r.name + ' = ' + r.price);
-      }
     } else {
       failed.push(r.name + (r.err ? '('+r.err+')' : ''));
     }
@@ -1671,10 +1668,7 @@ function updateNotesStrikes(){
   if(hdrSpan) hdrSpan.textContent = '— precios via EOD · ' + ts;
 
   // Update each note row — search entire document since eq-notas may be hidden
-  var noteRows = document.querySelectorAll('tr[data-underlying]');
-  console.log('updateNotesStrikes: found ' + noteRows.length + ' rows');
-  console.log('prices:', JSON.stringify({SPX: prices.SPX, SX5E: prices.SX5E, MELI: prices.MELI, BASKET: prices.BASKET}));
-  noteRows.forEach(function(row){
+  document.querySelectorAll('tr[data-underlying]').forEach(function(row){
     var underlying = row.getAttribute('data-underlying');
     var strike = parseFloat(row.getAttribute('data-strike'));
     var spot = prices[underlying];
