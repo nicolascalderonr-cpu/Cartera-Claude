@@ -1673,26 +1673,28 @@ function updateNotesStrikes(){
     var strike = parseFloat(row.getAttribute('data-strike'));
     var spot = prices[underlying];
 
-    var pct, color, sign, callText;
+    var pct, color, sign, callText, callColor;
 
     if(underlying === 'BASKET'){
-      // BASKET: prices.BASKET is already the EW avg % change
       if(spot === null || spot === undefined) return;
       pct = spot;
-      color = pct >= 0 ? 'green' : '#e53935';
-      sign  = pct >= 0 ? '+' : '';
-      callText = pct >= 0 ? '✓ Alta' : '✗ Baja';
     } else {
       if(!spot || !strike) return;
       pct = (spot - strike) / strike * 100;
-      color = pct >= 0 ? 'green' : '#e53935';
-      sign  = pct >= 0 ? '+' : '';
-      callText = pct >= 0 ? '✓ Alta' : '✗ Baja';
+    }
+
+    sign = pct >= 0 ? '+' : '';
+    if(pct > 5){
+      color = '#10B981'; callColor = '#10B981'; callText = '✓ Alta';
+    } else if(pct >= 0){
+      color = '#f59e0b'; callColor = '#f59e0b'; callText = '~ Media';
+    } else {
+      color = '#e53935'; callColor = '#e53935'; callText = '✗ Baja';
     }
 
     var tds = row.querySelectorAll('td');
     if(tds[7]) tds[7].innerHTML = '<span style="color:' + color + '">' + sign + pct.toFixed(1) + '%</span>';
-    if(tds[8]) tds[8].innerHTML = '<span style="color:' + color + ';font-weight:600">' + callText + '</span>';
+    if(tds[8]) tds[8].innerHTML = '<span style="color:' + callColor + ';font-weight:600">' + callText + '</span>';
   });
 }
 
