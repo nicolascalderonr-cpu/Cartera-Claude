@@ -1607,9 +1607,9 @@ async function updatePrices(){
 
 
   // Recalculate portfolio totals from updated row values
-  recalcTotals();
-  updateNotesStrikes();
-  calcRfDuration();
+  try { recalcTotals(); } catch(e){ console.warn('recalcTotals error:', e.message); }
+  try { updateNotesStrikes(); } catch(e){ console.warn('updateNotesStrikes error:', e.message); }
+  try { calcRfDuration(); } catch(e){ console.warn('calcRfDuration error:', e.message); }
 }
 
 
