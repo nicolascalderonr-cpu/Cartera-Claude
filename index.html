@@ -1670,8 +1670,8 @@ function updateNotesStrikes(){
   if(npTs) npTs.textContent = 'actualizado ' + ts;
   if(hdrSpan) hdrSpan.textContent = '— precios via EOD · ' + ts;
 
-  // Update each note row
-  document.querySelectorAll('#eq-notas tr[data-underlying]').forEach(function(row){
+  // Update each note row — search entire document since eq-notas may be hidden
+  document.querySelectorAll('tr[data-underlying]').forEach(function(row){
     var underlying = row.getAttribute('data-underlying');
     var strike = parseFloat(row.getAttribute('data-strike'));
     var spot = prices[underlying];
