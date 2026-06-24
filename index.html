@@ -1546,7 +1546,7 @@ var DEFAULT_ISIN_MAP = {
   '_VST':   {sym:'VST.US',   type:'basket', basePrice:173.89},
   // Índices para notas estructuradas
   '_SPX':  {sym:'SPY.US',     type:'index'},  // proxy SPX via SPY (ratio ~5.18x)
-  '_SX5E': {sym:'FEZ.US',     type:'index'},  // proxy SX5E via SPDR Euro Stoxx 50 ETF
+  '_SX5E': {sym:'STOXX50E.INDX', type:'index'},  // directo SX5E
   '_MELI': {sym:'MELI.US',    type:'index'},
 };
 
@@ -1614,7 +1614,7 @@ function updateNotesStrikes(){
   // Get latest index prices from ISIN_MAP
   // Use ETF proxies and convert to index levels
   var spyPrice  = DEFAULT_ISIN_MAP['_SPX']  && DEFAULT_ISIN_MAP['_SPX']._lastPrice;
-  var fezPrice  = DEFAULT_ISIN_MAP['_SX5E'] && DEFAULT_ISIN_MAP['_SX5E']._lastPrice;
+  var fezPrice  = DEFAULT_ISIN_MAP['_SX5E'] && DEFAULT_ISIN_MAP['_SX5E']._lastPrice;  // ahora es precio directo SX5E
   var meliPrice = DEFAULT_ISIN_MAP['_MELI'] && DEFAULT_ISIN_MAP['_MELI']._lastPrice;
 
   // GS Basket AI: equally weighted average of 9 stocks vs entry prices
@@ -1631,7 +1631,7 @@ function updateNotesStrikes(){
 
   var prices = {
     SPX:    spyPrice  ? spyPrice  * 10.00 : null,  // recalibrado: SPY $737.6 → SPX 7,377 (jun-26)
-    SX5E:   fezPrice  ? fezPrice  * 88.2  : null,  // recalibrado: FEZ $70.60 → SX5E 6,224 (24-jun-26)
+    SX5E:   fezPrice  ? fezPrice  * 1.0   : null,  // precio directo STOXX50E.INDX
     MELI:   meliPrice ? meliPrice          : null,
     BASKET: basketPerf,  // already in % form
   };
