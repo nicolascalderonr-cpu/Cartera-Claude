@@ -1564,7 +1564,7 @@ async function updatePrices(){
         var price = parseFloat(data.last || data.close || data.previousClose || 0);
         // Known LSE tickers that report price in GBp (pence) — explicit whitelist,
         // safer than guessing from price magnitude or currency field reliability
-        var gbpTickers = ['CSPX.LSE','CNDX.LSE'];
+        var gbpTickers = ['CSPX.LSE','CNDX.LSE','DFNS.LSE'];
         if(gbpTickers.indexOf(inst.sym) > -1){
           price = price / 100;
         }
@@ -1693,7 +1693,7 @@ function recalcTotals(){
     'iSh Short Dur':{ units: 115020,         basePrice: 6.36    }, // USD, LSE
     'iSh HY Corp':  { units: 33220,          basePrice: 7.46    }, // USD, LSE
     'PIMCO GIS':    { units: 27800,          basePrice: 17.85   }, // USD, LSE
-    'Global X Def': { units: 5300,           basePrice: 28.70   }, // USD, LSE
+    'Global X Def': { units: 5300,           basePrice: 28.70   }, // GBP (post /100 from GBp)
   };
 
   var totalDelta = 0;
