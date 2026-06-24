@@ -1626,7 +1626,7 @@ function updateNotesStrikes(){
   var basketPerf = basketCount > 0 ? basketPerfSum / basketCount : null; // EW avg % change (partial ok)
 
   var prices = {
-    SPX:    spyPrice  ? spyPrice  * 9.32  : null,
+    SPX:    spyPrice  ? spyPrice  * 8.00  : null,  // recalibrado: SPY $737 → SPX ~5,900
     SX5E:   fezPrice  ? fezPrice  * 98.0  : null,
     MELI:   meliPrice ? meliPrice          : null,
     BASKET: basketPerf,  // already in % form
