@@ -1193,7 +1193,9 @@ var DRAFTEA_BASE = 166666;
 var BOSQ_ALT_BASE = 35714 + 187691 + 500000 + 100000 + 100000 + 126000 + 102500 + 107441; // 1259346
 
 function updateDraftea(){
-  var moic = parseInt(document.getElementById('draftea-moic').value);
+  var moicEl = document.getElementById('draftea-moic');
+  if(!moicEl) return;
+  var moic = parseInt(moicEl.value);
   var val = DRAFTEA_BASE * moic;
   var totalAlt = BOSQ_ALT_BASE + val;
   var fmt_val = '$' + val.toLocaleString('en-US',{maximumFractionDigits:0});
@@ -1564,7 +1566,7 @@ async function updatePrices(){
         var price = parseFloat(data.last || data.close || data.previousClose || 0);
         // Known LSE tickers that report price in GBp (pence) — explicit whitelist,
         // safer than guessing from price magnitude or currency field reliability
-        var gbpTickers = ['CSPX.LSE','CNDX.LSE','DFNS.LSE'];
+        var gbpTickers = ['CSPX.LSE','CNDX.LSE','DFNS.LSE','XDWD.LSE','IGLO.LSE'];
         if(gbpTickers.indexOf(inst.sym) > -1){
           price = price / 100;
         }
@@ -1687,13 +1689,13 @@ function recalcTotals(){
     'ECH':          { units: 6152,           basePrice: 38.94   }, // USD, NYSE
     'CSPX':         { units: 1290+557+125,   basePrice: 8.14    }, // GBP (post /100 conversion)
     'XGHGF':        { units: 319,            basePrice: 16.96   }, // GBP (post /100 conversion)
-    'Xtrackers':    { units: 11300,          basePrice: 44.73   }, // USD, LSE
-    'iShares ACWI': { units: 2365+5320,      basePrice: 117.00  }, // USD, LSE
-    'iSh US Agg':   { units: 171850,         basePrice: 5.73    }, // USD, LSE
-    'iSh Short Dur':{ units: 115020,         basePrice: 6.36    }, // USD, LSE
-    'iSh HY Corp':  { units: 33220,          basePrice: 7.46    }, // USD, LSE
-    'PIMCO GIS':    { units: 27800,          basePrice: 17.85   }, // USD, LSE
-    'Global X Def': { units: 5300,           basePrice: 28.70   }, // GBP (post /100 from GBp)
+    // 'Xtrackers':    { units: 11300,          basePrice: 44.73   }, // skipped - GBP/USD unclear
+    // 'iShares ACWI': skipped - LSE GBP/USD conversion unclear
+    // 'iSh US Agg':   skipped - LSE GBP/USD conversion unclear
+    // 'iSh Short Dur': skipped - LSE GBP/USD conversion unclear
+    // 'iSh HY Corp':  skipped - LSE GBP/USD conversion unclear
+    // 'PIMCO GIS':    skipped - LSE GBP/USD conversion unclear
+    // 'Global X Def': skipped - LSE GBP/USD conversion unclear
   };
 
   var totalDelta = 0;
