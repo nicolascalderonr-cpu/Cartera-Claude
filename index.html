@@ -1546,7 +1546,7 @@ var DEFAULT_ISIN_MAP = {
   '_VST':   {sym:'VST.US',   type:'basket', basePrice:173.89},
   // Índices para notas estructuradas
   '_SPX':  {sym:'SPY.US',     type:'index'},  // proxy SPX via SPY (ratio ~5.18x)
-  '_SX5E': {sym:'STOXX50E.INDX', type:'index'},  // directo SX5E
+  '_SX5E': {sym:'EXW1.XETRA',    type:'index', ratio:100.0},  // iShares EuroStoxx 50 UCITS en EUR
   '_MELI': {sym:'MELI.US',    type:'index'},
 };
 
@@ -1631,7 +1631,7 @@ function updateNotesStrikes(){
 
   var prices = {
     SPX:    spyPrice  ? spyPrice  * 10.00 : null,  // recalibrado: SPY $737.6 → SPX 7,377 (jun-26)
-    SX5E:   fezPrice  ? fezPrice  * 1.0   : null,  // precio directo STOXX50E.INDX
+    SX5E:   fezPrice  ? fezPrice  * (DEFAULT_ISIN_MAP['_SX5E'].ratio||1.0) : null,
     MELI:   meliPrice ? meliPrice          : null,
     BASKET: basketPerf,  // already in % form
   };
