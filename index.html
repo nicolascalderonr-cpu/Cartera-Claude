@@ -1545,8 +1545,8 @@ var DEFAULT_ISIN_MAP = {
   '_VRT':   {sym:'VRT.US',   type:'basket', basePrice:254.89},
   '_VST':   {sym:'VST.US',   type:'basket', basePrice:173.89},
   // Índices para notas estructuradas
-  '_SPX':  {sym:'SPY.US',     type:'index'},  // proxy SPX via SPY (ratio ~5.18x)
-  '_SX5E': {sym:'EXW1.XETRA',    type:'index', ratio:91.0},   // calibrado: EXW1 ~66.9 → SX5E 6,088 (24-jun-26)
+  '_SPX':  {sym:'GSPC.YAHOO', type:'index'},  // SPX directo via Yahoo Finance
+  '_SX5E': {sym:'SX5E.YAHOO',     type:'index', ratio:1.0},    // SX5E directo via Yahoo Finance
   '_MELI': {sym:'MELI.US',    type:'index'},
 };
 
@@ -1630,8 +1630,8 @@ function updateNotesStrikes(){
   var basketPerf = basketCount > 0 ? basketPerfSum / basketCount : null; // EW avg % change (partial ok)
 
   var prices = {
-    SPX:    spyPrice  ? spyPrice  * 10.00 : null,  // recalibrado: SPY $737.6 → SPX 7,377 (jun-26)
-    SX5E:   fezPrice  ? fezPrice  * (DEFAULT_ISIN_MAP['_SX5E'].ratio||1.0) : null,
+    SPX:    spyPrice  ? spyPrice  * 1.0   : null,  // precio directo GSPC via Yahoo
+    SX5E:   fezPrice  ? fezPrice  * 1.0   : null,  // precio directo SX5E via Yahoo
     MELI:   meliPrice ? meliPrice          : null,
     BASKET: basketPerf,  // already in % form
   };
