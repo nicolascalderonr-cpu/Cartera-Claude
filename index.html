@@ -1582,6 +1582,9 @@ async function updatePrices(){
       r.inst._lastPrice = r.price;
       updatePriceInDOM(r.name, r.inst, r.price, r.change);
       updated.push(r.name + ' $' + r.price.toFixed(2));
+      if(r.inst.type === 'index' || r.inst.type === 'basket'){
+        console.log('index/basket price saved: ' + r.name + ' = ' + r.price);
+      }
     } else {
       failed.push(r.name + (r.err ? '('+r.err+')' : ''));
     }
