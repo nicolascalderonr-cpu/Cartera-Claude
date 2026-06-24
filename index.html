@@ -1671,7 +1671,10 @@ function updateNotesStrikes(){
   if(hdrSpan) hdrSpan.textContent = '— precios via EOD · ' + ts;
 
   // Update each note row — search entire document since eq-notas may be hidden
-  document.querySelectorAll('tr[data-underlying]').forEach(function(row){
+  var noteRows = document.querySelectorAll('tr[data-underlying]');
+  console.log('updateNotesStrikes: found ' + noteRows.length + ' rows');
+  console.log('prices:', JSON.stringify({SPX: prices.SPX, SX5E: prices.SX5E, MELI: prices.MELI, BASKET: prices.BASKET}));
+  noteRows.forEach(function(row){
     var underlying = row.getAttribute('data-underlying');
     var strike = parseFloat(row.getAttribute('data-strike'));
     var spot = prices[underlying];
