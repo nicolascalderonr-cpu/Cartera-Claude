@@ -1545,7 +1545,7 @@ var DEFAULT_ISIN_MAP = {
   '_VRT':   {sym:'VRT.US',   type:'basket', basePrice:254.89},
   '_VST':   {sym:'VST.US',   type:'basket', basePrice:173.89},
   // Índices para notas estructuradas
-  '_SPX':  {sym:'SPY.US',     type:'index'},   // proxy SPX via SPY (real-time)
+  '_SPX':  {sym:'GSPC.INDX',  type:'index'},   // SPX via EOD (cierre diario)
   '_SX5E': {sym:'STOXX50E.INDX',  type:'index'},               // SX5E directo via EOD
   '_MELI': {sym:'MELI.US',    type:'index'},
 };
@@ -1630,7 +1630,7 @@ function updateNotesStrikes(){
   var basketPerf = basketCount > 0 ? basketPerfSum / basketCount : null; // EW avg % change (partial ok)
 
   var prices = {
-    SPX:    spyPrice  ? spyPrice  * 10.0  : null,  // SPY×10 → SPX (ratio estable, calibrado jun-26)
+    SPX:    spyPrice  ? spyPrice  * 1.0   : null,  // precio directo GSPC.INDX
     SX5E:   fezPrice  ? fezPrice  * 1.0   : null,  // precio directo SX5E via Yahoo
     MELI:   meliPrice ? meliPrice          : null,
     BASKET: basketPerf,  // already in % form
