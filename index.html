@@ -90,7 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
   <div>
     <div style="font-size:20px;font-weight:600;color:#1a1a1a">Portafolio consolidado</div>
-    <div style="font-size:12px;color:#888;margin-top:2px">3 sociedades + NM 25% · <strong>30 jun 2026</strong> · 10 cuentas activas · <span style="color:#0369a1">TWR aplicado donde hay flujos</span></div>
+    <div style="font-size:12px;color:#888;margin-top:2px">3 sociedades + NM 25% · <strong>31 jul 2026</strong> · 10 cuentas activas · <span style="color:#0369a1">TWR aplicado donde hay flujos</span></div>
   </div>
   <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
     <span class="badge b-ml">ML</span><span class="badge b-jpm">JPM</span><span class="badge b-ubs">UBS</span><span class="badge b-jb">Julius Baer</span><span class="badge b-nm">NM 25%</span><span class="badge b-clp">BTG/Banchile ⏳</span>
@@ -189,12 +189,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   <!-- KPI metrics row - dynamic -->
   <div id="kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-bottom:1.25rem">
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">&mdash;</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
-    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Último mes cerrado (may-26)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#1a7a4a">+1.76%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Último mes cerrado (jul-26)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#64748B">−0.08%</div><div style="font-size:11px;color:#888">Retorno consolidado</div></div>
     <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD ene–may 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.59%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Cash</div><div id="kpi-cash" style="font-size:22px;font-weight:600;color:#64748B">$4.2M</div><div id="kpi-cash-pct" style="font-size:11px;color:#888">12.5% del total</div></div>
-    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Alternativos</div><div id="kpi-alt" style="font-size:22px;font-weight:600;color:#EF9F27">$2.9M</div><div id="kpi-alt-pct" style="font-size:11px;color:#888">8.6% del total</div></div>
+    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Alternativos</div><div id="kpi-alt" style="font-size:22px;font-weight:600;color:#EF9F27">$2.9M</div><div id="kpi-alt-pct" style="font-size:11px;color:#888">8.6% del total</div><div id="kpi-alt-split" style="font-size:10px;color:#aaa;margin-top:2px">Directos — · vía ctas —</div></div>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
@@ -241,7 +241,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr data-accts="nm-beaumont g-nm all" class="nm-row"><td>Beaumont <span class="nm-b">NM 31.25%</span></td><td class="num">$0.82M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">~0%</span></td></tr>
         <tr data-accts="nm-nidalbe g-nm all" class="nm-row"><td>Nidalbe <span class="nm-b">NM 25%</span></td><td><span class="badge" style="background:#e0f2fe;color:#0369a1">JB</span></td><td class="num">$2,869,376</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rp">+10.38%</span></td><td class="num"><span class="rc rp">+20.82%</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#0369a1"></div></div></td></tr>
           <tr data-accts="nm-acc g-nm all" class="nm-row"><td>ACC <span class="nm-b">NM 25%</span></td><td class="num">$1.54M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rp">+4.64%</span></td></tr>
-          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>&mdash;</strong></td><td class="num"><strong>+1.76%</strong></td><td class="num"><strong>+5.59%</strong></td></tr>
+          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>&mdash;</strong></td><td class="num"><strong>−0.08%</strong></td><td class="num"><strong>+5.59%</strong></td></tr>
           <tr><td colspan="4" style="padding:4px 0;border-top:1px dashed #e5e7eb"></td></tr>
           <tr data-accts="btg g-clp" style="color:#888"><td>BTG ACV <span class="pend-b">CLP</span></td><td class="num">$0.38M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
           <tr data-accts="banchile g-clp" style="color:#888"><td>Banchile ACV <span class="pend-b">CLP</span></td><td class="num">$0.61M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rn">~−2.6%</span> <span style="font-size:9px;color:#aaa">CLP</span></td></tr>
@@ -705,30 +705,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 // ─── DATA ────────────────────────────────────────────────────────────────────
 // Per-account allocation data for dynamic pie chart
 var ACCT_DATA = {
-  // Centella ML: Eq $3,627,907 (SPY 2421u + CSPX 1290u + Xtrackers 11300u + ECH 6152u)
-  // RF $2,712,416 (iShares Agg $984K + Short Dur $732K + HY $248K + PIMCO $496K + MS bond $253K)
-  // Cash $586,550 | Alt $185,926 (Blackstone VI) = $7,112,799 (Masttro 03-jun-26)
-  'cent-ml':    {eq:3627907, rf:2712416, cash:586550, alt:185926},
-  // Centella JPM: equity $3.49M + RF $2.23M + cash $0.16M + alt $1.67M = $7.55M
-  // Centella JPM: Eq $2,286,685 (incl. BARC nota $269,625) + RF $3,455,102 + Cash $3,318 + Alt $1,784,718 = $7,529,821 (Masttro 04-jun-26)
-  'cent-jpm':   {eq:2286685, rf:3455102, cash:3318,    alt:1784718},
-  // Bosques JPM: equity $2.88M + RF $1.04M + cash $0.06M = $5.98M → neto $5.90M
-  'bosq-jpm':   {eq:3408635, rf:1939898, cash:274875,  alt:250000}, // 30-jun-26 CSV; Ford llamado; Saavi/ET/Braskem-parc. vendidos; +ICS Ultra Short
-  // Bosques ML: SPY 1913u $1,442,861 + XGHGF 319u $560,292 + CSPX 557u $453,766 + QQQ 350u $260,474
-  // Cash neto: Pref Dep $987,096 + ML BDP $14,582 - Cash USD -$254,896 = $746,782 | RF GM+JPM $268,142
-  // Total $3,732,315 (Masttro Holdings Statement 03-jun-26) — Estelio en bosq-alt, no aquí
-  'bosq-ml':    {eq:2686451, rf:268553,  cash:971805,  alt:0}, // 30-jun-26 cartola ML; saldo USD neg. eliminado (no era deuda)
-  // Bosques UBS: equity $0.48M + RF $0 + cash $0.23M + alt $0.30M = $1.01M
-  'bosq-ubs':   {eq:506266,  rf:0,       cash:272679,  alt:300000},
-  // Mishpajot JPM: equity $1.38M + RF $1.45M + cash $0.002M + alt $0.35M = $3.18M
-  // Mishpajot JPM: Eq $1,721,249 (incl Access Growth) + RF $1,687,771 + Cash $2,093 + Alt $0 = $3,411,113 (Masttro 04-jun-26)
-  'mish-jpm':   {eq:1706552, rf:1689283, cash:6593,    alt:0}, // 30-jun-26 CSV JPM
-  // Bosques Alt Directos — valor NAV / costo actualizado
-  'bosq-alt':   {eq:0, rf:0, cash:0, alt:1426012}, // base a COSTO (moic x1): 1259346 + 166666
-  // NM al 25%
-  'nm-beaumont':{eq:384571,  rf:379966,  cash:435956,  alt:0},
-  'nm-nidalbe': {eq:1831958, rf:484526,  cash:296797,  alt:239447}, // 25% cartola JB 30-jun-26; fondos estrategia->eq, oro->alt
-  'nm-acc':     {eq:838003,  rf:310292,  cash:273035,  alt:115246}, // 25% cartola JB 30-jun-26; Schroder GAIA->alt
+  // === Cierres 31-jul-2026 (pasada 2026-08-11) ===
+  'cent-ml':    {eq:3600176, rf:2704341, cash:596621, alt:181858}, // 31-jul statement ML (5ZQ03B15) = $7,082,996
+  'cent-jpm':   {eq:1887230, rf:3474954, cash:12021, alt:2086716}, // 31-jul statement JPM (M53697005); clases segun secciones del statement = $7,460,921
+  'bosq-jpm':   {eq:3892580, rf:2113849, cash:5531, alt:250000}, // 31-jul CSV JPM; +nota XS3299651557; caja usada p/ nota = $6,261,960
+  'bosq-ml':    {eq:2733568, rf:265547, cash:631200, alt:0}, // 31-jul CSV ML; -300K wire a Bosques JPM (interno) = $3,630,315
+  'bosq-ubs':   {eq:491412, rf:0, cash:189704, alt:312974}, // 31-jul total 994090; Coatue(alt) trim.; eq/cash mezcla 11-ago (aprox) = $994,090
+  'mish-jpm':   {eq:1777869, rf:1691027, cash:7180, alt:0}, // 31-jul CSV JPM = $3,476,076
+  'bosq-alt':   {eq:0, rf:0, cash:0, alt:1426012}, // base COSTO (moic x1) = $1,426,012
+  'nm-beaumont':{eq:384571, rf:379966, cash:435956, alt:0}, // pendiente cartola jul (31.25%) = $1,200,493
+  'nm-nidalbe': {eq:1782928, rf:471559, cash:288854, alt:233039}, // 25% cartola JB 31-jul (11,105,521); mezcla escalada de jun = $2,776,380
+  'nm-acc':     {eq:845405, rf:313032, cash:275446, alt:116264}, // 25% cartola JB 31-jul (6,200,588); mezcla escalada de jun = $1,550,147
 };
 
 var ACCT_LABELS = {
@@ -989,17 +976,17 @@ var PERF_DATA = {
   'banchile':   {mv:614643,   mtd:null,  ytd:-2.6},
 };
 // Consolidated Masttro total (all accounts incl NM)
-var PERF_CONSOLIDATED = {mtd:1.76, ytd:5.59};
+var PERF_CONSOLIDATED = {mtd:-0.08, ytd:5.59}; // mtd=jul-26 consolidado; ytd pendiente base dic-25
 
 function updatePerf(sel){
   var accts = getAccounts(sel);
   // If all accounts selected, use Masttro consolidated figure
   if(!sel || sel==='all'){
-    document.getElementById('kpi-mtd').textContent = '+1.76%';
-    document.getElementById('kpi-mtd').style.color = '#1a7a4a';
+    document.getElementById('kpi-mtd').textContent = '−0.08%';
+    document.getElementById('kpi-mtd').style.color = '#64748B';
     document.getElementById('kpi-ytd').textContent = '+5.59%';
     document.getElementById('kpi-ytd').style.color = '#1a7a4a';
-    document.getElementById('kpi-mtd').parentElement.querySelector('div:last-child').textContent = 'IRR Masttro consolidado';
+    document.getElementById('kpi-mtd').parentElement.querySelector('div:last-child').textContent = 'Retorno jul-26 consolidado';
     document.getElementById('kpi-ytd').parentElement.querySelector('div:last-child').textContent = 'IRR Masttro consolidado';
     return;
   }
@@ -1107,6 +1094,11 @@ function hideTop4(){document.getElementById('top4-panel').style.display='none';}
 // ─── DYNAMIC ALLOCATION UPDATE ───────────────────────────────────────────────
 function getAccounts(sel){
   if(!sel||sel==='all') return ACCT_GROUPS['all'];
+  if(Array.isArray(sel)){
+    var out=[];
+    sel.forEach(function(s){ (ACCT_GROUPS[s]||[s]).forEach(function(a){ if(out.indexOf(a)<0) out.push(a); }); });
+    return out;
+  }
   if(ACCT_GROUPS[sel]) return ACCT_GROUPS[sel];
   return [sel];
 }
@@ -1156,6 +1148,10 @@ function updateAllocation(sel){
   document.getElementById('kpi-rf-pct').textContent=rfP+'% del total';
   document.getElementById('kpi-cash-pct').textContent=caP+'% del total';
   document.getElementById('kpi-alt-pct').textContent=alP+'% del total';
+  var altDirect = accts.indexOf('bosq-alt')>-1 ? ACCT_DATA['bosq-alt'].alt : 0;
+  var altVia = alt - altDirect;
+  var altSplitEl = document.getElementById('kpi-alt-split');
+  if(altSplitEl) altSplitEl.textContent = 'Directos '+fmt(altDirect)+' · vía ctas '+fmt(altVia);
 
   // Update equity breakdown bars (simplified for main categories)
   var eqTotal=eq||1;
@@ -1344,7 +1340,8 @@ function applyFilter(){
     if(btn) btn.textContent = selected.length === 1 ? (ACCT_LABELS[selected[0]]||selected[0]) : selected.length + ' cuentas';
   }
 
-  var sel = isAll ? 'all' : selected[0]; // for backward compat with allocation/consolidated
+  var sel = isAll ? 'all' : selected[0]; // single acct, para expand/collapse
+  var selView = isAll ? 'all' : (selected.length===1 ? selected[0] : selected); // suma de TODAS las seleccionadas
   document.querySelectorAll('[data-accts]').forEach(function(el){
     if(isAll){ el.classList.remove('hidden-row'); return; }
     var a = el.getAttribute('data-accts').split(' ');
@@ -1373,8 +1370,9 @@ function applyFilter(){
       }
     });
   }
-  updateAllocation(sel);
-  updateConsolidatedRows(sel);
+  updateAllocation(selView);
+  updateConsolidatedRows(selView);
+  updatePerf(selView);
   hideTop4();
   currentSlice=-1;
 }
@@ -1736,53 +1734,14 @@ function updateNotesStrikes(){
 }
 
 function recalcTotals(){
-  // Only recalculate using instruments with confirmed EOD prices
-  // For the rest, use the hardcoded Masttro base values from PERF_DATA
-
-  // Base portfolio value from last Masttro snapshot (04-jun-26)
-  var baseMV = 0;
-  var accts = ['cent-ml','cent-jpm','bosq-jpm','bosq-ml','bosq-ubs','bosq-alt','mish-jpm','nm-beaumont','nm-nidalbe','nm-acc'];
-  accts.forEach(function(a){ if(PERF_DATA[a] && PERF_DATA[a].mv) baseMV += PERF_DATA[a].mv; });
-
-  // Instruments with confirmed EOD + known units
-  // Base prices from Masttro 04-jun-26
-  var eodInstruments = {
-    'SPY':          { units: 2421+1913+257,  basePrice: 736.07  }, // USD, NYSE
-    'QQQ':          { units: 350+1075+278,   basePrice: 710.27  }, // USD, Nasdaq
-    'ECH':          { units: 6152,           basePrice: 38.94   }, // USD, NYSE
-    'CSPX':         { units: 1290+557+125,   basePrice: 8.14    }, // GBP (post /100 conversion)
-    'XGHGF':        { units: 319,            basePrice: 16.96   }, // GBP (post /100 conversion)
-    // 'Xtrackers':    { units: 11300,          basePrice: 44.73   }, // skipped - GBP/USD unclear
-    // 'iShares ACWI': skipped - LSE GBP/USD conversion unclear
-    // 'iSh US Agg':   skipped - LSE GBP/USD conversion unclear
-    // 'iSh Short Dur': skipped - LSE GBP/USD conversion unclear
-    // 'iSh HY Corp':  skipped - LSE GBP/USD conversion unclear
-    // 'PIMCO GIS':    skipped - LSE GBP/USD conversion unclear
-    // 'Global X Def': skipped - LSE GBP/USD conversion unclear
-  };
-
-  var totalDelta = 0;
-  Object.keys(eodInstruments).forEach(function(name){
-    var inst = DEFAULT_ISIN_MAP[name];
-    if(!inst || !inst._lastPrice) return; // not updated yet
-    var eod = eodInstruments[name];
-    var newMV  = eod.units * inst._lastPrice;
-    var baseMVI = eod.units * eod.basePrice;
-    var delta = newMV - baseMVI;
-    // Sanity check: reject if delta is more than 25% of base value (likely bad data/currency glitch)
-    if(baseMVI > 0 && Math.abs(delta) > baseMVI * 0.25){
-      console.warn('recalcTotals: rejecting suspicious delta for ' + name + ': base=$' + baseMVI.toFixed(0) + ' new=$' + newMV.toFixed(0));
-      return;
-    }
-    totalDelta += delta;
-  });
-
-  var newTotal = baseMV + totalDelta;
+  // Suma directa de ACCT_DATA (cierres registrados). Una sola fuente de verdad;
+  // ya no parte de PERF_DATA (Masttro 04-jun) que dejaba el KPI en base vieja.
+  var newTotal = 0;
+  for(var k in ACCT_DATA){ var a = ACCT_DATA[k]; newTotal += a.eq + a.rf + a.cash + a.alt; }
   var fmt = function(n){
     if(n >= 1e6) return '$' + (n >= 10e6 ? (n/1e6).toFixed(1) : (n/1e6).toFixed(2)) + 'M';
     return '$' + Math.round(n).toLocaleString('en-US');
   };
-
   var kpi = document.getElementById('kpi-total');
   if(kpi) kpi.textContent = fmt(newTotal);
 }
