@@ -1073,7 +1073,7 @@ function updatePerf(sel){
 }
 
 // ─── PIE CHART ───────────────────────────────────────────────────────────────
-var pieChart = new Chart(document.getElementById('pieChart'),{
+var pieChart; try { pieChart = new Chart(document.getElementById('pieChart'),{
   type:'pie',
   data:{
     labels:['Equity','Renta fija','Cash','Alternativos'],
@@ -1099,7 +1099,7 @@ var pieChart = new Chart(document.getElementById('pieChart'),{
       if(els.length>0) showTop4(els[0].index);
     }
   }
-});
+}); } catch(e){ console.warn('Chart.js not loaded:', e.message); }
 
 var currentSlice = -1;
 function highlightSlice(idx){
@@ -1246,8 +1246,10 @@ function updateAllocation(sel){
   var eqP=(eq/total*100).toFixed(1),rfP=(rf/total*100).toFixed(1),caP=(cash/total*100).toFixed(1),alP=(alt/total*100).toFixed(1);
 
   // Update pie
-  pieChart.data.datasets[0].data=[parseFloat(eqP),parseFloat(rfP),parseFloat(caP),parseFloat(alP)];
-  pieChart.update();
+  if(typeof pieChart !== 'undefined' && pieChart && pieChart.data){
+    pieChart.data.datasets[0].data=[parseFloat(eqP),parseFloat(rfP),parseFloat(caP),parseFloat(alP)];
+    pieChart.update();
+  }
 
   // Update legend — sorted by value descending
   var slices = [
