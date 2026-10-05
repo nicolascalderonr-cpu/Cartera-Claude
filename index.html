@@ -90,7 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
   <div>
     <div style="font-size:20px;font-weight:600;color:#1a1a1a">Portafolio consolidado</div>
-    <div style="font-size:12px;color:#888;margin-top:2px">3 sociedades + NM 25% · <strong>31 jul 2026</strong> · 10 cuentas activas · <span style="color:#0369a1">TWR aplicado donde hay flujos</span></div>
+    <div style="font-size:12px;color:#888;margin-top:2px">3 sociedades + NM 25% · <strong>oct 2026</strong> · 10 cuentas activas · <span style="color:#0369a1">TWR aplicado donde hay flujos</span></div>
   </div>
   <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
     <span class="badge b-ml">ML</span><span class="badge b-jpm">JPM</span><span class="badge b-ubs">UBS</span><span class="badge b-jb">Julius Baer</span><span class="badge b-nm">NM 25%</span><span class="badge b-clp">BTG/Banchile ⏳</span>
@@ -189,12 +189,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   <!-- KPI metrics row - dynamic -->
   <div id="kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-bottom:1.25rem">
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">&mdash;</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
-    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Último mes cerrado (jul-26)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#64748B">−0.08%</div><div style="font-size:11px;color:#888">Retorno consolidado</div></div>
-    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD ene–may 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.59%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
-    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
-    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
-    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Cash</div><div id="kpi-cash" style="font-size:22px;font-weight:600;color:#64748B">$4.2M</div><div id="kpi-cash-pct" style="font-size:11px;color:#888">12.5% del total</div></div>
-    <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Alternativos</div><div id="kpi-alt" style="font-size:22px;font-weight:600;color:#EF9F27">$2.9M</div><div id="kpi-alt-pct" style="font-size:11px;color:#888">8.6% del total</div><div id="kpi-alt-split" style="font-size:10px;color:#aaa;margin-top:2px">Directos — · vía ctas —</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Q3 2026 (jul-sep)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#64748B">−0.3%</div><div style="font-size:11px;color:#888">Retorno consolidado</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD ene–may 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.8%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
+    <div class="metric" data-class="eq" style="cursor:pointer" onclick="toggleBreakdown('eq')"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity ▾</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
+    <div class="metric" data-class="rf" style="cursor:pointer" onclick="toggleBreakdown('rf')"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija ▾</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
+    <div class="metric" data-class="cash" style="cursor:pointer" onclick="toggleBreakdown('cash')"><div style="font-size:11px;color:#888;margin-bottom:3px">Cash ▾</div><div id="kpi-cash" style="font-size:22px;font-weight:600;color:#64748B">$4.2M</div><div id="kpi-cash-pct" style="font-size:11px;color:#888">12.5% del total</div></div>
+    <div class="metric" data-class="alt" style="cursor:pointer" onclick="toggleBreakdown('alt')"><div style="font-size:11px;color:#888;margin-bottom:3px">Alternativos ▾</div><div id="kpi-alt" style="font-size:22px;font-weight:600;color:#EF9F27">$2.9M</div><div id="kpi-alt-pct" style="font-size:11px;color:#888">8.6% del total</div><div id="kpi-alt-split" style="font-size:10px;color:#aaa;margin-top:2px">Directos — · vía ctas —</div></div>
+    <div class="metric" style="min-width:280px">
+      <div style="font-size:11px;color:#888;margin-bottom:3px">Geografía (equity)</div>
+      <div id="kpi-geo-bars" style="display:flex;height:18px;border-radius:4px;overflow:hidden;margin-bottom:4px"></div>
+      <div id="kpi-geo-legend" style="font-size:10px;color:#888;line-height:1.6"></div>
+    </div>
+    <div class="metric" style="min-width:100px;cursor:pointer" onclick="showOutflows()">
+      <div style="font-size:11px;color:#888;margin-bottom:3px">Salidas 2026</div>
+      <div id="kpi-outflows" style="font-size:18px;font-weight:600;color:#e53935">—</div>
+      <div style="font-size:10px;color:#aaa">click para ver</div>
+    </div>
+  </div>
+
+  <div id="class-breakdown" style="display:none;margin-bottom:12px;padding:12px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div id="bd-title" style="font-weight:600;font-size:14px;color:#334155"></div>
+      <span onclick="document.getElementById('class-breakdown').style.display='none'" style="cursor:pointer;color:#94a3b8;font-size:18px">&times;</span>
+    </div>
+    <div id="bd-content" style="font-size:12px;color:#475569"></div>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
@@ -417,8 +435,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr class="grp-hdr" data-accts="all g-propias cent-jpm bosq-jpm g-centella g-bosques"><td colspan="12">SPX</td></tr>
           <tr data-underlying="SPX" data-strike="6964" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SPX 80% BAR 11.15%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,964</td><td style="font-size:11px"><span style="color:green">+8.5%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">20%</td><td style="font-size:11px;color:green">11.15%</td><td class="num">$350,350</td></tr>
           <tr data-underlying="SPX" data-strike="6969" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">JPM DD CBEN SPX 2/3/28 9.45% Cap</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,969</td><td style="font-size:11px"><span style="color:green">+8.5%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">static</td><td style="font-size:11px;color:green">9.45%</td><td class="num">$300,510</td></tr>
-          <tr data-underlying="SPX" data-strike="7457.69" data-noac="1" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px" title="JPM Dual Directional Capped Enhanced Note sobre SPY (SPDR S&amp;P 500 ETF). ISIN XS3299651557. Nivel inicial S&amp;P 500 = 7457.69 (17-jul-26), equiv. SPY ~745.8. NO autocall: paga solo a vencimiento 20-jul-28. Cap alza +21.47%; dual-directional (0 a -20% pagas el valor absoluto); bajo -20% pierdes 1.25x por punto. Seguida via nivel S&amp;P 500.">JPM DD CBEN SPY 7/20/28 (Abs) <span style="font-size:9px;color:#aaa">XS3299651557</span></td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPY</span></td><td style="font-size:11px">jul-28</td><td style="font-size:11px" title="Sin autocall - paga a vencimiento">venc.</td><td style="font-size:11px" title="Strike SPY ~745.8 (nivel S&amp;P 500 7457.69)">≈746</td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px" title="Nota a vencimiento (sin autocall)."><span style="color:#6B7280;font-weight:600">a vencim.</span></td><td style="font-size:11px"><span style="color:#1D9E75;font-weight:600" title="Buffer 20% con retorno absoluto en zona 0 a -20%.">Buffer 20% (Abs)</span></td><td style="font-size:11px"><span style="color:#6B7280">cap 21.47%<br><span style="font-size:9px">(no cupon)</span></span></td><td class="num">$300,300</td></tr>
-          <tr data-underlying="SPX" data-strike="7656.2" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px" title="JPM Dual Directional Auto-Callable sobre SPY (SPDR S&amp;P 500 ETF). ISIN XS3299672710. Comprada a la par (100). Emitida 31-ago-26; strike = cierre SPY 21-ago-26 (pendiente pricing supplement). Autocall unico 3-sep-27 (pago 9-sep-27) si SPX>=inicial -> paga +10.20%. A vencimiento (24-ago-28) si no fue llamada: 1.5x del alza SIN tope; si SPX cae 0 a -20% pagas el valor absoluto (positivo); bajo 80% (EKI, solo a vencimiento) pierdes la caida COMPLETA 1:1.">JPM SPY DD AC 08/24/28 (EKI) <span style="font-size:9px;color:#aaa">XS3299672710</span></td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPY</span></td><td style="font-size:11px">ago-28</td><td style="font-size:11px" title="Observacion autocall 3-sep-27, pago 9-sep-27">sep-27</td><td style="font-size:11px" title="Strike SPY 765.62 (cierre 21-ago-26); % se calcula vs nivel S&amp;P 500 ~7656.">≈766</td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#e53935;font-weight:600" title="At-Risk Barrier 80% tipo EKI (European Knock-In): solo se observa a vencimiento. Bajo 80% NO hay buffer - pierdes la caida completa 1:1.">Barrera 80% EKI</span></td><td style="font-size:11px"><span style="color:#6B7280">+10.2% call<br><span style="font-size:9px">1.5x s/tope</span></span></td><td class="num">$300,000</td></tr>
+          <tr data-underlying="SPX" data-strike="7457.69" data-noac="1" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px" title="JPM Dual Directional Capped Enhanced Note sobre SPY (SPDR S&amp;P 500 ETF). ISIN XS3299651557. Nivel inicial S&amp;P 500 = 7457.69 (17-jul-26), equiv. SPY ~745.8. NO autocall: paga solo a vencimiento 20-jul-28. Cap alza +21.47%; dual-directional (0 a -20% pagas el valor absoluto); bajo -20% pierdes 1.25x por punto. Seguida via nivel S&amp;P 500.">JPM DD CBEN SPY 7/20/28 (Abs) <span style="font-size:9px;color:#aaa">XS3299651557</span></td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPY</span></td><td style="font-size:11px">jul-28</td><td style="font-size:11px" title="Sin autocall: paga solo a vencimiento (jul-2028)">sin AC</td><td style="font-size:11px" title="Strike SPY ~745.8 (nivel S&amp;P 500 7457.69)">≈746</td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px" title="Nota a vencimiento (sin autocall)."><span style="color:#6B7280;font-weight:600">a vencim.</span></td><td style="font-size:11px"><span style="color:#1D9E75;font-weight:600" title="Buffer 20% con retorno absoluto en zona 0 a -20%.">Buffer 20% (Abs)</span></td><td style="font-size:11px"><span style="color:#6B7280">cap 21.47%<br><span style="font-size:9px">(no cupon)</span></span></td><td class="num">$300,300</td></tr>
+          <tr data-underlying="SPX" data-strike="7656.2" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px" title="JPM Dual Directional Auto-Callable sobre SPY (SPDR S&amp;P 500 ETF). ISIN XS3299672710. Comprada a la par (100). Emitida 31-ago-26; strike = cierre SPY 21-ago-26 (pendiente pricing supplement). Autocall unico 3-sep-27 (pago 9-sep-27) si SPX>=inicial -> paga +10.20%. A vencimiento (24-ago-28) si no fue llamada: 1.5x del alza SIN tope; si SPX cae 0 a -20% pagas el valor absoluto (positivo); bajo 80% (EKI, solo a vencimiento) pierdes la caida COMPLETA 1:1.">JPM SPY DD AC 08/24/28 (EKI) <span style="font-size:9px;color:#aaa">XS3299672710</span></td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">SPY</span></td><td style="font-size:11px">ago-28</td><td style="font-size:11px" title="Observacion autocall 3-sep-2027, pago 9-sep-2027">sep-2027</td><td style="font-size:11px" title="Strike SPY 765.62 (cierre 21-ago-26); % se calcula vs nivel S&amp;P 500 ~7656.">≈766</td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#e53935;font-weight:600" title="At-Risk Barrier 80% tipo EKI (European Knock-In): solo se observa a vencimiento. Bajo 80% NO hay buffer - pierdes la caida completa 1:1.">Barrera 80% EKI</span></td><td style="font-size:11px"><span style="color:#6B7280">+10.2% call<br><span style="font-size:9px">1.5x s/tope</span></span></td><td class="num">$300,000</td></tr>
           <tr data-underlying="SPX" data-strike="6581" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SPX 03/28/28 11.65% <span style="font-size:9px;color:#aaa">XS3299586712</span></td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">SPX</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">abr-27</td><td style="font-size:11px">6,581</td><td style="font-size:11px"><span style="color:green">+12.0%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">80%</td><td style="font-size:11px;color:green">11.65%</td><td class="num">$258,250</td></tr>
           <tr class="grp-hdr" data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td colspan="12">Otros subyacentes</td></tr>
           <tr data-underlying="BASKET" data-strike="0" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px" title="GS Finance Corp. Autocallable Buffered Basket-Linked Notes due 2028. ISIN US40058XSA36. Trade date 27-feb-2026. NO paga interes.">GS Buffered Basket AI 3/2/28</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Basket EW</span></td><td style="font-size:11px">2-mar-28</td><td style="font-size:11px" title="Unica fecha de observacion de call: 12-mar-2027. Pago 17-mar-2027.">12-mar-27</td><td style="font-size:11px" title="Nivel inicial del basket = 100 (trade date 27-feb-26). Autocall si el basket cierra &gt;= 100.">Basket 100</td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#1D9E75;font-weight:600" title="BUFFER (no barrera). Protegido hasta -20%. Bajo -20% se pierde 1.25x por cada punto adicional: 1000 + 1000 x 125% x (retorno + 20%).">Buffer 20%</span></td><td style="font-size:11px"><span style="color:#6B7280" title="La nota NO paga cupon. 16.95% es el premio unico si autocallea el 12-mar-27 (paga $1.169,5 por cada $1.000). Si no callea, al vencimiento participa 125% del alza.">premio 16.95%<br><span style="font-size:9px">(no cupon)</span></span></td><td class="num">$259,375</td></tr>
@@ -705,18 +723,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 // ─── DATA ────────────────────────────────────────────────────────────────────
 // Per-account allocation data for dynamic pie chart
 var ACCT_DATA = {
-  // === Cierres 31-jul-2026 (pasada 2026-08-11) ===
-  'cent-ml':    {eq:3600176, rf:2704341, cash:596621, alt:181858}, // 31-jul statement ML (5ZQ03B15) = $7,082,996
-  'cent-jpm':   {eq:1887230, rf:3474954, cash:12021, alt:2086716}, // 31-jul statement JPM (M53697005); clases segun secciones del statement = $7,460,921
-  'bosq-jpm':   {eq:3892580, rf:2113849, cash:5531, alt:250000}, // 31-jul CSV JPM; +nota XS3299651557; caja usada p/ nota = $6,261,960
-  'bosq-ml':    {eq:2733568, rf:265547, cash:631200, alt:0}, // 31-jul CSV ML; -300K wire a Bosques JPM (interno) = $3,630,315
-  'bosq-ubs':   {eq:491412, rf:0, cash:189704, alt:289530}, // Coatue corregido a MV real 289,530 (era 312,974); eq/cash 31-jul mezcla 11-ago = $970,646
-  'mish-jpm':   {eq:1777869, rf:1691027, cash:7180, alt:0}, // 31-jul CSV JPM = $3,476,076
-  'bosq-alt':   {eq:0, rf:0, cash:0, alt:1426012}, // base COSTO (moic x1) = $1,426,012
-  'nm-beaumont':{eq:384571, rf:379966, cash:435956, alt:0}, // pendiente cartola jul (31.25%) = $1,200,493
-  'nm-nidalbe': {eq:1782928, rf:471559, cash:288854, alt:233039}, // 25% cartola JB 31-jul (11,105,521); mezcla escalada de jun = $2,776,380
-  'nm-acc':     {eq:845405, rf:313032, cash:275446, alt:116264}, // 25% cartola JB 31-jul (6,200,588); mezcla escalada de jun = $1,550,147
+  // === Pasada oct-2026 (10 cuentas, fechas mixtas ago-oct) ===
+  'cent-jpm':   {eq:2228551, rf:2959330, cash:751711, alt:2349579}, // 31-ago JPM report = $8,289,171
+  'cent-ml':    {eq:3574950, rf:1927494, cash:227860, alt:660564},  // 25-sep CRC report = $6,390,868
+  'bosq-jpm':   {eq:4166483, rf:1811037, cash:0,     alt:289460},  // 02-oct CSV JPM = $6,266,980
+  'bosq-ml':    {eq:2735212, rf:268250,  cash:145164, alt:0},      // 02-oct CSV ML = $3,148,626
+  'bosq-ubs':   {eq:696345,  rf:0,       cash:351160, alt:293336}, // 02-05-oct UBS = $1,340,841
+  'mish-jpm':   {eq:1727808, rf:1674916, cash:0,     alt:0},      // 02-oct CSV JPM = $3,402,724
+  'bosq-alt':   {eq:0,       rf:0,       cash:0,     alt:1436012},// costo + SW West Loop $10K = $1,436,012
+  'nm-beaumont':{eq:265672,  rf:262491,  cash:301170, alt:0},     // 09-sep ML 31.25% de $2,653,864 = $829,333
+  'nm-nidalbe': {eq:1829704, rf:471025,  cash:225602, alt:247546},// 30-sep JB 25% de $11,095,507 = $2,773,877
+  'nm-acc':     {eq:840185,  rf:295285,  cash:277760, alt:114204},// 30-sep JB 25% de $6,109,734 = $1,527,434
 };
+
+// Asignacion geografica del EQUITY por cuenta (aproximada, desde statements jul/ago-26).
+// Regiones: us, europe, asia, latam, global (ACWI, multi-region, tematicos globales).
+// Solo equity; RF/cash/alt no se asignan por geografia.
+var GEO_DATA = {
+  // Asignacion geografica EQUITY (aproximada, sep-oct 2026)
+  'cent-jpm':   {us:1578000, europe:209000, asia:0, latam:0, global:441551},
+  'cent-ml':    {us:2942000, europe:516000, asia:0, latam:117000, global:0},
+  'bosq-jpm':   {us:2700000, europe:200000, asia:0, latam:0, global:1266483},
+  'bosq-ml':    {us:2695212, europe:0, asia:0, latam:0, global:40000},
+  'bosq-ubs':   {us:352000, europe:90000, asia:0, latam:0, global:254345},
+  'mish-jpm':   {us:500000, europe:400000, asia:0, latam:0, global:827808},
+  'nm-nidalbe': {us:500000, europe:370000, asia:170000, latam:0, global:789704},
+  'nm-acc':     {us:250000, europe:185000, asia:85000, latam:0, global:320185},
+  'nm-beaumont':{us:140000, europe:55000, asia:0, latam:0, global:70672},
+  'bosq-alt':   {us:0, europe:0, asia:0, latam:0, global:0},
+};
+
+
+// Retiros y gastos externos 2026 (excluye traspasos internos y capital calls a cuentas del dashboard).
+// type: 'retiro' = cash out personal/entidad, 'gasto' = fee/tax/costo que se pierde
+var OUTFLOWS_DATA = [
+  {date:'2026-01',acct:'nm-nidalbe',desc:'Retiro Nidalbe Q1',amt:20854,type:'retiro'},
+  {date:'2026-04',acct:'nm-nidalbe',desc:'Retiro Nidalbe Q2',amt:1086,type:'retiro'},
+  {date:'2026-07',acct:'nm-nidalbe',desc:'Retiro Nidalbe Q3 (jul-sep)',amt:302553,type:'retiro'},
+  {date:'2026-01',acct:'nm-acc',desc:'Retiro ACC YTD',amt:620,type:'retiro'},
+  {date:'2026-01',acct:'mish-jpm',desc:'Retiro Mishpajot YTD',amt:43097,type:'retiro'},
+  {date:'2026-01',acct:'bosq-ml',desc:'Retiros Bosques ML (neto de internos)',amt:218895,type:'retiro'},
+  {date:'2026-09',acct:'bosq-ml',desc:'Taxes Woodstock',amt:58340,type:'gasto'},
+];
+// NOTA: los montos de Nidalbe vienen de la cartola JB (depósitos/retiros QTD).
+// Bosques ML: total YTD $879,895 menos internos ($300K JPM + $351K UBS + $10K Southwind) = $218,895 externo.
+// Mishpajot: $43,097 asumido externo (confirmar).
+// Fechas aproximadas salvo donde se indique.
 
 var ACCT_LABELS = {
   all:null,'g-centella':'Centella','g-bosques':'Bosques','g-mishpajot':'Mishpajot',
@@ -976,7 +1028,7 @@ var PERF_DATA = {
   'banchile':   {mv:614643,   mtd:null,  ytd:-2.6},
 };
 // Consolidated Masttro total (all accounts incl NM)
-var PERF_CONSOLIDATED = {mtd:-0.08, ytd:5.59}; // mtd=jul-26 consolidado; ytd pendiente base dic-25
+var PERF_CONSOLIDATED = {mtd:-0.3, ytd:5.8}; // Q3 QTD promedio NM; YTD ponderado 6/10 cuentas // mtd=jul-26 consolidado; ytd pendiente base dic-25
 
 function updatePerf(sel){
   var accts = getAccounts(sel);
@@ -1109,7 +1161,81 @@ function fmt(v){
   return '$'+v.toFixed(0);
 }
 
+function toggleBreakdown(cls){
+  var panel = document.getElementById('class-breakdown');
+  var title = document.getElementById('bd-title');
+  var content = document.getElementById('bd-content');
+  if(panel.style.display!=='none' && panel.getAttribute('data-active')===cls){
+    panel.style.display='none'; return;
+  }
+  panel.setAttribute('data-active',cls);
+  panel.style.display='block';
+  var colors = {eq:'#378ADD',rf:'#1D9E75',cash:'#64748B',alt:'#EF9F27'};
+  var titles = {eq:'Equity',rf:'Renta fija',cash:'Cash',alt:'Alternativos'};
+  title.textContent = titles[cls] + ' — desglose';
+  title.style.color = colors[cls];
+
+  // Get current filter
+  var sel = window._lastAllocSel || 'all';
+  var accts;
+  if(!sel||sel==='all') accts=ACCT_GROUPS['all'];
+  else if(Array.isArray(sel)){accts=[];sel.forEach(function(x){(ACCT_GROUPS[x]||[x]).forEach(function(a){if(accts.indexOf(a)<0)accts.push(a);});});}
+  else accts=ACCT_GROUPS[sel]||[sel];
+
+  var fmt=function(n){return n>=1e6?'$'+(n/1e6).toFixed(2)+'M':'$'+Math.round(n).toLocaleString('en-US');};
+  var rows=[];
+  var classTotal=0;
+  accts.forEach(function(a){
+    var d=ACCT_DATA[a]; if(!d) return;
+    var v=d[cls]; if(!v) return;
+    classTotal+=v;
+    rows.push({name:ACCT_LABELS[a]||a, val:v});
+  });
+  rows.sort(function(a,b){return b.val-a.val;});
+
+  var html='<table style="width:100%;border-collapse:collapse">';
+  html+='<tr style="border-bottom:1px solid #e2e8f0"><th style="text-align:left;padding:4px 8px;color:#64748B;font-weight:500">Cuenta</th><th style="text-align:right;padding:4px 8px;color:#64748B;font-weight:500">Valor</th><th style="text-align:right;padding:4px 8px;color:#64748B;font-weight:500">%</th><th style="width:40%;padding:4px 8px"></th></tr>';
+  rows.forEach(function(r){
+    var pct=classTotal>0?(r.val/classTotal*100):0;
+    html+='<tr style="border-bottom:1px solid #f1f5f9"><td style="padding:4px 8px">'+r.name+'</td><td style="text-align:right;padding:4px 8px;font-weight:500">'+fmt(r.val)+'</td><td style="text-align:right;padding:4px 8px;color:#64748B">'+pct.toFixed(1)+'%</td>';
+    html+='<td style="padding:4px 8px"><div style="background:#e2e8f0;border-radius:3px;height:14px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+colors[cls]+';border-radius:3px"></div></div></td></tr>';
+  });
+  html+='<tr style="font-weight:600"><td style="padding:4px 8px">Total</td><td style="text-align:right;padding:4px 8px">'+fmt(classTotal)+'</td><td style="text-align:right;padding:4px 8px">100%</td><td></td></tr>';
+  html+='</table>';
+
+  // For equity: add geographic sub-breakdown
+  if(cls==='eq'){
+    var gus=0,geu=0,gas=0,gla=0,ggl=0;
+    accts.forEach(function(a){var g=GEO_DATA[a];if(!g)return;gus+=g.us;geu+=g.europe;gas+=g.asia;gla+=g.latam;ggl+=g.global;});
+    var gtot=gus+geu+gas+gla+ggl;
+    if(gtot>0){
+      var gd=[{l:'US',v:gus,c:'#378ADD'},{l:'Europa',v:geu,c:'#1D9E75'},{l:'Asia',v:gas,c:'#EF9F27'},{l:'LatAm',v:gla,c:'#e53935'},{l:'Global',v:ggl,c:'#64748B'}];
+      html+='<div style="margin-top:10px;padding-top:8px;border-top:1px solid #e2e8f0"><div style="font-weight:500;margin-bottom:6px;color:#334155">Por geografía</div>';
+      html+='<div style="display:flex;height:16px;border-radius:3px;overflow:hidden;margin-bottom:6px">';
+      gd.forEach(function(g){if(g.v>0)html+='<div style="width:'+(g.v/gtot*100)+'%;background:'+g.c+'" title="'+g.l+': '+fmt(g.v)+'"></div>';});
+      html+='</div><div style="font-size:11px;color:#64748B">';
+      gd.forEach(function(g){if(g.v>0)html+='<span style="margin-right:12px"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+g.c+';margin-right:3px;vertical-align:middle"></span>'+g.l+' '+(g.v/gtot*100).toFixed(0)+'% ('+fmt(g.v)+')</span>';});
+      html+='</div></div>';
+    }
+  }
+
+  // For alt: add direct vs via
+  if(cls==='alt'){
+    var altDir=accts.indexOf('bosq-alt')>-1?ACCT_DATA['bosq-alt'].alt:0;
+    var altVia=classTotal-altDir;
+    html+='<div style="margin-top:10px;padding-top:8px;border-top:1px solid #e2e8f0;font-size:11px;color:#64748B">';
+    html+='<span style="margin-right:12px">Directos (Apax/Estelio/Draftea): <strong>'+fmt(altDir)+'</strong></span>';
+    html+='<span>Vía cuentas (Coatue/Franklin/KKR/etc.): <strong>'+fmt(altVia)+'</strong></span></div>';
+  }
+
+  content.innerHTML=html;
+}
+
+// Store last allocation selection for breakdown to use
+var _origUpdateAlloc = null;
+
 function updateAllocation(sel){
+  window._lastAllocSel = sel;
   var accts=getAccounts(sel);
   var eq=0,rf=0,cash=0,alt=0;
   accts.forEach(function(a){
@@ -1152,6 +1278,33 @@ function updateAllocation(sel){
   var altVia = alt - altDirect;
   var altSplitEl = document.getElementById('kpi-alt-split');
   if(altSplitEl) altSplitEl.textContent = 'Directos '+fmt(altDirect)+' · vía ctas '+fmt(altVia);
+
+  // --- Asignacion geografica (solo equity) ---
+  var gus=0,geu=0,gas=0,gla=0,ggl=0;
+  accts.forEach(function(a){
+    var g=GEO_DATA[a]; if(!g) return;
+    gus+=g.us; geu+=g.europe; gas+=g.asia; gla+=g.latam; ggl+=g.global;
+  });
+  var gtot=gus+geu+gas+gla+ggl;
+  var geoData=[
+    {label:'US',val:gus,color:'#378ADD'},
+    {label:'Europa',val:geu,color:'#1D9E75'},
+    {label:'Asia',val:gas,color:'#EF9F27'},
+    {label:'LatAm',val:gla,color:'#e53935'},
+    {label:'Global',val:ggl,color:'#64748B'}
+  ];
+  var barsEl=document.getElementById('kpi-geo-bars');
+  var legEl=document.getElementById('kpi-geo-legend');
+  if(barsEl && gtot>0){
+    barsEl.innerHTML=geoData.filter(function(d){return d.val>0;}).map(function(d){
+      var pct=(d.val/gtot*100);
+      return '<div style="width:'+pct+'%;background:'+d.color+';min-width:'+(pct>3?'0':'2')+'px" title="'+d.label+': '+fmt(d.val)+' ('+pct.toFixed(1)+'%)"></div>';
+    }).join('');
+    legEl.innerHTML=geoData.filter(function(d){return d.val>0;}).map(function(d){
+      var pct=(d.val/gtot*100).toFixed(0);
+      return '<span style="margin-right:10px"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+d.color+';margin-right:3px;vertical-align:middle"></span>'+d.label+' '+pct+'%</span>';
+    }).join('');
+  }
 
   // Update equity breakdown bars (simplified for main categories)
   var eqTotal=eq||1;
@@ -1967,6 +2120,35 @@ calcRfDuration();
       style="background:#3B82F6;color:#fff;border:none;border-radius:10px;padding:9px 14px;cursor:pointer;font-size:16px;transition:background 0.2s;flex-shrink:0"
       onmouseover="this.style.background='#2563EB'" onmouseout="this.style.background='#3B82F6'">➤</button>
   </div>
+
+
+<!-- Retiro de Caja / Gastos -->
+<div class="card" id="outflows-card" style="margin-top:12px;display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <h3 style="margin:0;font-size:15px;color:#334155">Retiro de Caja / Gastos 2026</h3>
+    <span onclick="document.getElementById('outflows-card').style.display='none'" style="cursor:pointer;color:#94a3b8;font-size:18px">&times;</span>
+  </div>
+  <div id="outflows-summary" style="display:flex;gap:20px;margin-bottom:10px;font-size:13px"></div>
+  <table id="outflows-table" style="width:100%;border-collapse:collapse;font-size:12px">
+    <thead>
+      <tr style="border-bottom:2px solid #e2e8f0">
+        <th style="text-align:left;padding:6px 8px;color:#64748B">Fecha</th>
+        <th style="text-align:left;padding:6px 8px;color:#64748B">Cuenta</th>
+        <th style="text-align:left;padding:6px 8px;color:#64748B">Descripción</th>
+        <th style="text-align:left;padding:6px 8px;color:#64748B">Tipo</th>
+        <th style="text-align:right;padding:6px 8px;color:#64748B">Monto</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+      <tr style="border-top:2px solid #e2e8f0;font-weight:600">
+        <td colspan="4" style="padding:6px 8px">Total salidas externas 2026</td>
+        <td id="outflows-total" style="text-align:right;padding:6px 8px;color:#e53935"></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
 </div>
 
 <script>
@@ -2132,5 +2314,43 @@ async function sendAiMsg(){
 var styleEl = document.createElement('style');
 styleEl.textContent = '@keyframes blink{0%,100%{opacity:0.2}50%{opacity:1}}';
 document.head.appendChild(styleEl);
+
+function showOutflows(){
+  var card = document.getElementById('outflows-card');
+  card.style.display = card.style.display==='none' ? 'block' : 'none';
+  renderOutflows();
+}
+function renderOutflows(){
+  var fmt=function(n){return '$'+Math.round(n).toLocaleString('en-US');};
+  var tbody=document.querySelector('#outflows-table tbody');
+  var totalEl=document.getElementById('outflows-total');
+  var summaryEl=document.getElementById('outflows-summary');
+  var kpiEl=document.getElementById('kpi-outflows');
+  if(!tbody) return;
+  var rows=OUTFLOWS_DATA.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+  var html='';
+  var total=0, totalRetiro=0, totalGasto=0;
+  var typeColors={retiro:'#f59e0b',gasto:'#e53935'};
+  var typeLabels={retiro:'Retiro',gasto:'Gasto/Tax'};
+  rows.forEach(function(r){
+    total+=r.amt;
+    if(r.type==='retiro') totalRetiro+=r.amt; else totalGasto+=r.amt;
+    var label=ACCT_LABELS[r.acct]||r.acct;
+    html+='<tr style="border-bottom:1px solid #f1f5f9">';
+    html+='<td style="padding:5px 8px;color:#64748B">'+r.date+'</td>';
+    html+='<td style="padding:5px 8px">'+label+'</td>';
+    html+='<td style="padding:5px 8px">'+r.desc+'</td>';
+    html+='<td style="padding:5px 8px"><span style="background:'+(typeColors[r.type]||'#888')+';color:#fff;padding:1px 6px;border-radius:3px;font-size:10px">'+typeLabels[r.type]+'</span></td>';
+    html+='<td style="text-align:right;padding:5px 8px;font-weight:500;color:#e53935">'+fmt(r.amt)+'</td>';
+    html+='</tr>';
+  });
+  tbody.innerHTML=html;
+  totalEl.textContent=fmt(total);
+  if(kpiEl) kpiEl.textContent=fmt(total);
+  if(summaryEl) summaryEl.innerHTML='<span>Retiros: <strong style="color:#f59e0b">'+fmt(totalRetiro)+'</strong></span><span>Gastos/Taxes: <strong style="color:#e53935">'+fmt(totalGasto)+'</strong></span><span>Total: <strong style="color:#e53935">'+fmt(total)+'</strong></span>';
+}
+// render on load
+document.addEventListener('DOMContentLoaded', function(){ renderOutflows(); });
+
 </script>
 </body></html>
