@@ -593,7 +593,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <td class="num" id="draftea-moic-display"><span class="rc ra">costo</span></td>
           <td><div class="bar-wrap"><div id="draftea-bar" class="bar-fill" style="width:40%;background:#7C3AED"></div></div></td>
         </tr>
-        <tr data-accts="bosq-alt g-bosques g-propias all"><td></td><td>Befinan <span style="font-size:10px;color:#aaa">valor actualizado</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Direct invest.</span></td><td class="num">$107,441</td><td class="num">0.3%</td><td class="num">5.1%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#7C3AED"></div></div></td></tr>
+        <tr data-accts="bosq-alt g-bosques g-propias all"><td></td><td>Befinan <span style="font-size:10px;color:#aaa">3×$50K · valor oct-26</span></td><td><span class="badge" style="background:#F3E8FF;color:#5B21B6">Alt</span></td><td><span class="pill">Direct invest.</span></td><td class="num">$160,834</td><td class="num">0.3%</td><td class="num">5.1%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#7C3AED"></div></div></td></tr>
         <tr data-accts="bosq-alt g-bosques g-propias all"><td colspan="10" style="font-size:10px;color:#aaa;padding:6px 8px;line-height:1.6">
           ⚠ <strong>Compromisos no llamados:</strong> Estelio $464,286 · SW West Loop $74,000 · Total sin llamar: $538,286 &nbsp;|&nbsp;
           <strong>D&amp;W:</strong> llamado $621,144 · distribuido $528,555 · NAV al 31-dic-25 $187,691
@@ -724,7 +724,7 @@ var ACCT_DATA = {
   'bosq-ml':    {eq:2735212, rf:268250,  cash:145164, alt:0},      // 02-oct CSV ML = $3,148,626
   'bosq-ubs':   {eq:696345,  rf:0,       cash:351160, alt:293336}, // 02-05-oct UBS = $1,340,841
   'mish-jpm':   {eq:1727808, rf:1674916, cash:0,     alt:0},      // 02-oct CSV JPM = $3,402,724
-  'bosq-alt':   {eq:0,       rf:0,       cash:0,     alt:1436012},// costo + SW West Loop $10K = $1,436,012
+  'bosq-alt':   {eq:0,       rf:0,       cash:0,     alt:1489405},// costo + Befinan $160,834 = $1,489,405
   'nm-beaumont':{eq:265672,  rf:262491,  cash:301170, alt:0},     // 09-sep ML 31.25% de $2,653,864 = $829,333
   'nm-nidalbe': {eq:1829704, rf:471025,  cash:225602, alt:247546},// 30-sep JB 25% de $11,095,507 = $2,773,877
   'nm-acc':     {eq:840185,  rf:295285,  cash:277760, alt:114204},// 30-sep JB 25% de $6,109,734 = $1,527,434
@@ -1340,7 +1340,7 @@ function updateAllocation(sel){
 
 // ─── DRAFTEA MOIC ─────────────────────────────────────────────────────────
 var DRAFTEA_BASE = 166666;
-var BOSQ_ALT_BASE = 35714 + 187691 + 500000 + 100000 + 100000 + 126000 + 102500 + 107441; // 1259346
+var BOSQ_ALT_BASE = 35714 + 187691 + 500000 + 100000 + 100000 + 126000 + 102500 + 160834; // 1312739
 
 function updateDraftea(){
   var moicEl = document.getElementById('draftea-moic');
