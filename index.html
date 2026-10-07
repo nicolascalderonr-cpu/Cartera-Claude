@@ -190,7 +190,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   <div id="kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-bottom:1.25rem">
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">&mdash;</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
     <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Q3 2026 (jul-sep)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#64748B">−0.3%</div><div style="font-size:11px;color:#888">Retorno consolidado</div></div>
-    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD ene–may 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.8%</div><div style="font-size:11px;color:#888">IRR Masttro consolidado</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.8%</div><div style="font-size:11px;color:#888">YTD Dietz consolidado</div></div>
     <div class="metric" data-class="eq" style="cursor:pointer" onclick="toggleBreakdown('eq')"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity ▾</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
     <div class="metric" data-class="rf" style="cursor:pointer" onclick="toggleBreakdown('rf')"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija ▾</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
     <div class="metric" data-class="cash" style="cursor:pointer" onclick="toggleBreakdown('cash')"><div style="font-size:11px;color:#888;margin-bottom:3px">Cash ▾</div><div id="kpi-cash" style="font-size:22px;font-weight:600;color:#64748B">$4.2M</div><div id="kpi-cash-pct" style="font-size:11px;color:#888">12.5% del total</div></div>
@@ -259,7 +259,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr data-accts="nm-beaumont g-nm all" class="nm-row"><td>Beaumont <span class="nm-b">NM 31.25%</span></td><td class="num">$0.82M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">~0%</span></td></tr>
         <tr data-accts="nm-nidalbe g-nm all" class="nm-row"><td>Nidalbe <span class="nm-b">NM 25%</span></td><td><span class="badge" style="background:#e0f2fe;color:#0369a1">JB</span></td><td class="num">$2,869,376</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rp">+10.38%</span></td><td class="num"><span class="rc rp">+20.82%</span></td><td class="num"><span class="rc ra">—</span></td><td><div class="bar-wrap"><div class="bar-fill" style="width:9%;background:#0369a1"></div></div></td></tr>
           <tr data-accts="nm-acc g-nm all" class="nm-row"><td>ACC <span class="nm-b">NM 25%</span></td><td class="num">$1.54M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rp">+4.64%</span></td></tr>
-          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>&mdash;</strong></td><td class="num"><strong>−0.08%</strong></td><td class="num"><strong>+5.59%</strong></td></tr>
+          <tr class="bkt-tot"><td>Total</td><td class="num"><strong>&mdash;</strong></td><td class="num"><strong>−0.08%</strong></td><td class="num"><strong>+5.8%</strong></td></tr>
           <tr><td colspan="4" style="padding:4px 0;border-top:1px dashed #e5e7eb"></td></tr>
           <tr data-accts="btg g-clp" style="color:#888"><td>BTG ACV <span class="pend-b">CLP</span></td><td class="num">$0.38M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td></tr>
           <tr data-accts="banchile g-clp" style="color:#888"><td>Banchile ACV <span class="pend-b">CLP</span></td><td class="num">$0.61M</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc rn">~−2.6%</span> <span style="font-size:9px;color:#aaa">CLP</span></td></tr>
@@ -1013,7 +1013,7 @@ var TOP4 = {
   }
 };
 
-// ─── PERFORMANCE DATA PER ACCOUNT (IRR Masttro, may-26) ──────────────────────
+// ─── PERFORMANCE DATA PER ACCOUNT (Dietz/JB, oct-26) ──────────────────────
 var PERF_DATA = {
   'cent-ml':    {mv:7112799,  mtd:5.25,  ytd:5.23},
   'cent-jpm':   {mv:7547457,  mtd:1.71,  ytd:3.97},
@@ -1032,14 +1032,14 @@ var PERF_CONSOLIDATED = {mtd:-0.3, ytd:5.8}; // Q3 QTD promedio NM; YTD ponderad
 
 function updatePerf(sel){
   var accts = getAccounts(sel);
-  // If all accounts selected, use Masttro consolidated figure
+  // If all accounts selected, use consolidated Dietz/JB figure
   if(!sel || sel==='all'){
     document.getElementById('kpi-mtd').textContent = '−0.08%';
     document.getElementById('kpi-mtd').style.color = '#64748B';
-    document.getElementById('kpi-ytd').textContent = '+5.59%';
+    document.getElementById('kpi-ytd').textContent = '+5.8%';
     document.getElementById('kpi-ytd').style.color = '#1a7a4a';
     document.getElementById('kpi-mtd').parentElement.querySelector('div:last-child').textContent = 'Retorno jul-26 consolidado';
-    document.getElementById('kpi-ytd').parentElement.querySelector('div:last-child').textContent = 'IRR Masttro consolidado';
+    document.getElementById('kpi-ytd').parentElement.querySelector('div:last-child').textContent = 'YTD Dietz consolidado';
     return;
   }
   // Otherwise compute weighted average of accounts with data
@@ -2355,4 +2355,4 @@ function renderOutflows(){
 document.addEventListener('DOMContentLoaded', function(){ renderOutflows(); });
 
 </script>
-</body></html> 
+</body></html>
