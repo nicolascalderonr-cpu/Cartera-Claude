@@ -183,7 +183,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   <!-- KPI metrics row - dynamic -->
   <div id="kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-bottom:1.25rem">
     <div class="metric"><div style="font-size:11px;color:#888;margin-bottom:3px">Valor total</div><div id="kpi-total" style="font-size:22px;font-weight:600">&mdash;</div><div style="font-size:11px;color:#888">propias + NM 25%</div></div>
-    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">Q3 2026 (jul-sep)</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#64748B">−0.3%</div><div style="font-size:11px;color:#888">Retorno consolidado</div></div>
+    <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">MTD oct-26</div><div id="kpi-mtd" style="font-size:22px;font-weight:600;color:#64748B">−0.08%</div><div style="font-size:11px;color:#888">Retorno mensual consolidado</div></div>
     <div class="metric" style="border:1.5px solid #22C55E33;background:#f0fdf4"><div style="font-size:11px;color:#888;margin-bottom:3px">YTD 2026</div><div id="kpi-ytd" style="font-size:22px;font-weight:600;color:#1a7a4a">+5.8%</div><div style="font-size:11px;color:#888">YTD Dietz consolidado</div></div>
     <div class="metric" data-class="eq" style="cursor:pointer" onclick="toggleBreakdown('eq')"><div style="font-size:11px;color:#888;margin-bottom:3px">Equity ▾</div><div id="kpi-eq" style="font-size:22px;font-weight:600;color:#378ADD">$19.4M</div><div id="kpi-eq-pct" style="font-size:11px;color:#888">57.8% del total</div></div>
     <div class="metric" data-class="rf" style="cursor:pointer" onclick="toggleBreakdown('rf')"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija ▾</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
@@ -1022,7 +1022,7 @@ var PERF_DATA = {
   'banchile':   {mv:614643,   mtd:null,  ytd:-2.6},
 };
 // Consolidated Masttro total (all accounts incl NM)
-var PERF_CONSOLIDATED = {mtd:-0.3, ytd:5.8}; // Q3 QTD promedio NM; YTD ponderado 6/10 cuentas // mtd=jul-26 consolidado; ytd pendiente base dic-25
+var PERF_CONSOLIDATED = {mtd:-0.08, ytd:5.8}; // mtd=oct-26 consolidado; ytd Dietz ponderado 10/10 cuentas
 
 function updatePerf(sel){
   var accts = getAccounts(sel);
@@ -1032,7 +1032,7 @@ function updatePerf(sel){
     document.getElementById('kpi-mtd').style.color = '#64748B';
     document.getElementById('kpi-ytd').textContent = '+5.8%';
     document.getElementById('kpi-ytd').style.color = '#1a7a4a';
-    document.getElementById('kpi-mtd').parentElement.querySelector('div:last-child').textContent = 'Retorno jul-26 consolidado';
+    document.getElementById('kpi-mtd').parentElement.querySelector('div:last-child').textContent = 'Retorno mensual consolidado';
     document.getElementById('kpi-ytd').parentElement.querySelector('div:last-child').textContent = 'YTD Dietz consolidado';
     return;
   }
