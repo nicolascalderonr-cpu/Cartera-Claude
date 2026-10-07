@@ -173,13 +173,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   </div>
   <span id="search-count" style="font-size:11px;color:#aaa"></span>
   <button onclick="clearSearch()" id="search-clear" style="display:none;font-size:11px;color:#888;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid #ddd">✕ Limpiar</button>
-  <button onclick="updatePrices()" id="price-btn"
-    style="font-size:11px;color:#fff;background:#10B981;border:none;cursor:pointer;padding:6px 12px;border-radius:6px;white-space:nowrap;display:flex;align-items:center;gap:5px"
-    onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10B981'">
-    ↻ Actualizar precios
-  </button>
-
-  <span id="price-status" style="font-size:11px;color:#aaa"></span>
+<span id="price-status" style="font-size:11px;color:#aaa"></span>
 </div>
 
 
@@ -421,7 +415,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   </div>
   <div id="eq-notas" style="display:none">
     <div class="card">
-      <div class="stitle">Notas estructuradas — $2.13M · 6.3% &nbsp;<span id="notes-underlying-hdr" style="font-size:11px;color:#888;font-weight:400">— presiona ↻ para actualizar</span></div>
+      <div class="stitle">Notas estructuradas — $2.13M · 6.3% &nbsp;<span id="notes-underlying-hdr" style="font-size:11px;color:#888;font-weight:400"></span></div>
       <div id="notes-underlying-panel" style="display:flex;gap:16px;flex-wrap:wrap;padding:8px 0 4px;font-size:12px;color:#555;border-bottom:1px solid #f3f4f6;margin-bottom:6px">
         <span>SPX: <strong id="np-spx" style="color:#1D9E75">—</strong></span>
         <span>SX5E: <strong id="np-sx5e" style="color:#1D9E75">—</strong></span>
@@ -444,7 +438,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr data-underlying="SX5E" data-strike="6103" data-accts="cent-jpm g-centella g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SX5E 2/24/28 11.95%</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SX5E</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,103</td><td style="font-size:11px"><span style="color:#e53935">−0.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">25%</td><td style="font-size:11px;color:green">11.95%</td><td class="num">$195,600</td></tr>
           <tr data-underlying="MELI" data-strike="1741" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">BNP AC M+ MELI UW 3/2/28 20.33%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">MELI</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">1,741</td><td style="font-size:11px"><span style="color:#e53935">−4.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">30%</td><td style="font-size:11px;color:green">20.33%</td><td class="num">$248,950</td></tr>
           <tr><td colspan="12" style="font-size:10px;color:#888;padding:8px 4px">
-            <strong>Basket GS</strong> (9 acciones EW vs strike jun-26): <span id="basket-detail" style="color:#9CA3AF">presiona ↻ EOD para cargar precios</span> &nbsp;|&nbsp; SX5E y MELI: ver columna "Hoy vs Strike" actualizada con EOD.
+            <strong>Basket GS</strong> (9 acciones EW vs strike jun-26): <span id="basket-detail" style="color:#9CA3AF">rendimiento vs strikes al cierre de cartolas</span> &nbsp;|&nbsp; SX5E y MELI: ver columna "Hoy vs Strike".
           </td></tr>
           <tr class="bkt-tot" data-accts="all"><td></td><td colspan="7">Total notas activas</td><td></td><td></td><td></td><td></td><td class="num">$2,127,785</td></tr>
         </tbody>
@@ -486,19 +480,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
   <div class="card">
     <div class="stitle">Renta fija — $7.1M · 21.2%</div>
     <div style="overflow-x:auto"><table class="tbl">
-      <thead><tr><th></th><th style="width:22%">Instrumento</th><th>Cuenta</th><th>Subclase</th><th class="num">Valor</th><th class="num">% tot.</th><th class="num" title="Modified Duration (años)">Dur.</th><th class="num" title="Yield to Maturity / Yield to Worst">YTM/YTW</th><th class="num">Precio <span title="🟢 EOD live · ⚫ Manual" style="font-size:9px;cursor:help">🟢/⚫</span></th></tr></thead>
+      <thead><tr><th></th><th style="width:22%">Instrumento</th><th>Cuenta</th><th>Subclase</th><th class="num">Valor</th><th class="num">% tot.</th><th class="num" title="Modified Duration (años)">Dur.</th><th class="num" title="Yield to Maturity / Yield to Worst">YTM/YTW</th><th class="num">Precio </th></tr></thead>
       <tbody>
         <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques cent-jpm bosq-jpm mish-jpm all"><td colspan="9">Fondos de crédito</td></tr>
         <tr data-duration="6.5y" data-ytw="6.23%" data-mv="1099000" data-accts="cent-jpm g-centella g-propias all"><td></td><td>MFS Meridian Global Opport. Bond Fd</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Fondo global IG</span></td><td class="num">$1,099,000</td><td class="num">3.3%</td><td class="num" style="color:#555;font-size:11px">6.5y</td><td class="num" style="color:#555;font-size:11px">6.23%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">$12.71 <span style="font-size:9px;color:#aaa">NAV</span></span></td></tr>
         <tr data-duration="2.8y" data-ytw="6.67%" data-mv="1397847" data-accts="cent-jpm bosq-jpm mish-jpm g-propias all"><td></td><td>JPMorgan Income Fund</td><td><span class="badge b-jpm">JPM ×3</span></td><td><span class="pill">Fondo global IG</span></td><td class="num">$1,397,847</td><td class="num">4.2%</td><td class="num" style="color:#555;font-size:11px">2.8y</td><td class="num" style="color:#555;font-size:11px">6.67%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">$155.27</span></td></tr>
         <tr data-duration="1.8y" data-ytw="4.52%" data-mv="806551" data-accts="cent-jpm mish-jpm g-propias all"><td></td><td>AXA Wld US Credit Short Dur IG</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Fondo crédito</span></td><td class="num">$806,551</td><td class="num">2.4%</td><td class="num" style="color:#555;font-size:11px">1.8y</td><td class="num" style="color:#555;font-size:11px">4.52%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">$110.05</span></td></tr>
         <tr data-duration="6.0y" data-ytw="5.43%" data-mv="349380" data-accts="cent-jpm mish-jpm g-propias all"><td></td><td>BNY Mellon Mult Sec Credit</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Fondo crédito</span></td><td class="num">$349,380</td><td class="num">1.0%</td><td class="num" style="color:#555;font-size:11px">6.0y</td><td class="num" style="color:#555;font-size:11px">5.43%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">$1.07</span></td></tr>
-        <tr data-duration="13.0y" data-ytw="4.5%" data-mv="525406" data-isin="US38151FDS92" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Goldman Sachs 0% Jan 2040</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono zero IG</span></td><td class="num">$525,406</td><td class="num">1.6%</td><td class="num" style="color:#555;font-size:11px">13.0y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$105.08</span></td></tr>
-        <tr data-duration="12.6y" data-ytw="4.5%" data-mv="250650" data-isin="US48130CQG32" data-accts="cent-jpm g-centella g-propias all"><td></td><td>JPMorgan Chase 0% Aug 2039</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono zero IG</span></td><td class="num">$250,650</td><td class="num">0.7%</td><td class="num" style="color:#555;font-size:11px">12.6y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$100.26</span></td></tr>
-        <tr data-duration="6.1y" data-ytw="4.8%" data-mv="984357" data-isin="IE00BYXYYM63" data-accts="cent-ml g-centella g-propias all"><td></td><td>iShares US Aggregate Bond UCITS</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF RF Agg</span></td><td class="num">$984,357</td><td class="num">2.9%</td><td class="num" style="color:#555;font-size:11px">6.1y</td><td class="num" style="color:#555;font-size:11px">4.8%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$5.73</span></td></tr>
-        <tr data-duration="1.9y" data-ytw="5.2%" data-mv="731642" data-isin="IE00BYXYYP94" data-accts="cent-ml g-centella g-propias all"><td></td><td>iShares USD Short Duration Corp UCITS</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF RF S/D</span></td><td class="num">$731,642</td><td class="num">2.2%</td><td class="num" style="color:#555;font-size:11px">1.9y</td><td class="num" style="color:#555;font-size:11px">5.2%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$6.36</span></td></tr>
-        <tr data-duration="3.2y" data-ytw="7.1%" data-mv="247655" data-isin="IE00BYXYYL56" data-accts="cent-ml g-centella g-propias all"><td></td><td>iShares USD High Yield Corp Bond UCITS</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF HY</span></td><td class="num">$247,655</td><td class="num">0.7%</td><td class="num" style="color:#555;font-size:11px">3.2y</td><td class="num" style="color:#555;font-size:11px">7.1%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$7.46</span></td></tr>
-        <tr data-duration="3.5y" data-ytw="6.2%" data-mv="496230" data-isin="IE00B7KFL990" data-accts="cent-ml g-centella g-propias all"><td></td><td>PIMCO GIS Income Fund E USD</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo income</span></td><td class="num">$496,230</td><td class="num">1.5%</td><td class="num" style="color:#555;font-size:11px">3.5y</td><td class="num" style="color:#555;font-size:11px">6.2%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$17.85</span></td></tr>
+        <tr data-duration="13.0y" data-ytw="4.5%" data-mv="525406" data-isin="US38151FDS92" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Goldman Sachs 0% Jan 2040</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono zero IG</span></td><td class="num">$525,406</td><td class="num">1.6%</td><td class="num" style="color:#555;font-size:11px">13.0y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span class="pi">$105.08</span></td></tr>
+        <tr data-duration="12.6y" data-ytw="4.5%" data-mv="250650" data-isin="US48130CQG32" data-accts="cent-jpm g-centella g-propias all"><td></td><td>JPMorgan Chase 0% Aug 2039</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono zero IG</span></td><td class="num">$250,650</td><td class="num">0.7%</td><td class="num" style="color:#555;font-size:11px">12.6y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span class="pi">$100.26</span></td></tr>
+        <tr data-duration="6.1y" data-ytw="4.8%" data-mv="984357" data-isin="IE00BYXYYM63" data-accts="cent-ml g-centella g-propias all"><td></td><td>iShares US Aggregate Bond UCITS</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF RF Agg</span></td><td class="num">$984,357</td><td class="num">2.9%</td><td class="num" style="color:#555;font-size:11px">6.1y</td><td class="num" style="color:#555;font-size:11px">4.8%</td><td><span class="pi">$5.73</span></td></tr>
+        <tr data-duration="1.9y" data-ytw="5.2%" data-mv="731642" data-isin="IE00BYXYYP94" data-accts="cent-ml g-centella g-propias all"><td></td><td>iShares USD Short Duration Corp UCITS</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF RF S/D</span></td><td class="num">$731,642</td><td class="num">2.2%</td><td class="num" style="color:#555;font-size:11px">1.9y</td><td class="num" style="color:#555;font-size:11px">5.2%</td><td><span class="pi">$6.36</span></td></tr>
+        <tr data-duration="3.2y" data-ytw="7.1%" data-mv="247655" data-isin="IE00BYXYYL56" data-accts="cent-ml g-centella g-propias all"><td></td><td>iShares USD High Yield Corp Bond UCITS</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">ETF HY</span></td><td class="num">$247,655</td><td class="num">0.7%</td><td class="num" style="color:#555;font-size:11px">3.2y</td><td class="num" style="color:#555;font-size:11px">7.1%</td><td><span class="pi">$7.46</span></td></tr>
+        <tr data-duration="3.5y" data-ytw="6.2%" data-mv="496230" data-isin="IE00B7KFL990" data-accts="cent-ml g-centella g-propias all"><td></td><td>PIMCO GIS Income Fund E USD</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo income</span></td><td class="num">$496,230</td><td class="num">1.5%</td><td class="num" style="color:#555;font-size:11px">3.5y</td><td class="num" style="color:#555;font-size:11px">6.2%</td><td><span class="pi">$17.85</span></td></tr>
         <tr data-duration="3.8y" data-ytw="5.5%" data-mv="414066" data-accts="cent-ml g-centella g-propias all"><td></td><td>AB FCP I Mortgage Inc USD</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo hipotec.</span></td><td class="num">$414,066</td><td class="num">1.2%</td><td class="num" style="color:#555;font-size:11px">3.8y</td><td class="num" style="color:#555;font-size:11px">5.5%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">NAV</span></td></tr>
         <tr data-duration="2.1y" data-ytw="6.8%" data-mv="263733" data-accts="cent-ml g-centella g-propias all"><td></td><td>GAM Star Credit Opps USD</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Fondo crédito</span></td><td class="num">$263,733</td><td class="num">0.8%</td><td class="num" style="color:#555;font-size:11px">2.1y</td><td class="num" style="color:#555;font-size:11px">6.8%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">NAV</span></td></tr>
         <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques cent-ml cent-jpm bosq-ml bosq-jpm mish-jpm all"><td colspan="9">Bonos corporativos IG</td></tr>
@@ -506,16 +500,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <tr data-duration="13.0y" data-ytw="4.5%" data-mv="517514" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Goldman Sachs MTN Zero 2040</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$517,514</td><td class="num">1.5%</td><td class="num" style="color:#555;font-size:11px">13.0y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr data-duration="1.8y" data-ytw="5.1%" data-mv="503135" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Cooperatieve Rabobank 2028</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$503,135</td><td class="num">1.5%</td><td class="num" style="color:#555;font-size:11px">1.8y</td><td class="num" style="color:#555;font-size:11px">5.1%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr data-duration="4.9y" data-ytw="5.8%" data-mv="278524" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Progressive Corp 6.25% 2032</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$278,524</td><td class="num">0.8%</td><td class="num" style="color:#555;font-size:11px">4.9y</td><td class="num" style="color:#555;font-size:11px">5.8%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
-        <tr data-duration="0.2y" data-ytw="4.5%" data-mv="249935" data-isin="US6174467Y92" data-accts="cent-ml g-centella g-propias all"><td></td><td>Morgan Stanley Sub 4.35% 2026</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$249,935</td><td class="num">0.7%</td><td class="num" style="color:#555;font-size:11px">0.2y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$100.03</span></td></tr>
+        <tr data-duration="0.2y" data-ytw="4.5%" data-mv="249935" data-isin="US6174467Y92" data-accts="cent-ml g-centella g-propias all"><td></td><td>Morgan Stanley Sub 4.35% 2026</td><td><span class="badge b-ml">Cent/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$249,935</td><td class="num">0.7%</td><td class="num" style="color:#555;font-size:11px">0.2y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span class="pi">$100.03</span></td></tr>
         <tr data-duration="1.9y" data-ytw="5.2%" data-mv="255464" data-accts="cent-jpm g-centella g-propias all"><td></td><td>VW Group Amer 4.75% 2028</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$255,464</td><td class="num">0.8%</td><td class="num" style="color:#555;font-size:11px">1.9y</td><td class="num" style="color:#555;font-size:11px">5.2%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
-        <tr data-duration="0.6y" data-ytw="4.5%" data-mv="152345" data-isin="US37045XBT28" data-accts="bosq-ml g-bosques g-propias all"><td></td><td>GM Financial 4.35% Jan 2027</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$152,345</td><td class="num">0.5%</td><td class="num" style="color:#555;font-size:11px">0.6y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$99.97</span></td></tr>
-        <tr data-duration="0.3y" data-ytw="FLT" data-mv="115797" data-isin="US48123KAE64" data-accts="bosq-ml g-bosques g-propias all"><td></td><td>JPMorgan Chase Jr Sub Flt% 2037</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$115,797</td><td class="num">0.3%</td><td class="num" style="color:#555;font-size:11px">0.3y</td><td class="num" style="color:#555;font-size:11px">FLT</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$92.27</span></td></tr>
-        <tr data-duration="1.3y" data-ytw="4.8%" data-mv="101130" data-isin="US38141GVX95" data-accts="mish-jpm g-mishpajot g-propias all"><td></td><td>Goldman Sachs 0% Oct 2027 <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">Bono zero IG</span></td><td class="num">$101,130</td><td class="num">0.3%</td><td class="num" style="color:#555;font-size:11px">1.3y</td><td class="num" style="color:#555;font-size:11px">4.8%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$100.56</span></td></tr>
+        <tr data-duration="0.6y" data-ytw="4.5%" data-mv="152345" data-isin="US37045XBT28" data-accts="bosq-ml g-bosques g-propias all"><td></td><td>GM Financial 4.35% Jan 2027</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$152,345</td><td class="num">0.5%</td><td class="num" style="color:#555;font-size:11px">0.6y</td><td class="num" style="color:#555;font-size:11px">4.5%</td><td><span class="pi">$99.97</span></td></tr>
+        <tr data-duration="0.3y" data-ytw="FLT" data-mv="115797" data-isin="US48123KAE64" data-accts="bosq-ml g-bosques g-propias all"><td></td><td>JPMorgan Chase Jr Sub Flt% 2037</td><td><span class="badge b-ml">Bosq/ML</span></td><td><span class="pill">Bono corp. IG</span></td><td class="num">$115,797</td><td class="num">0.3%</td><td class="num" style="color:#555;font-size:11px">0.3y</td><td class="num" style="color:#555;font-size:11px">FLT</td><td><span class="pi">$92.27</span></td></tr>
+        <tr data-duration="1.3y" data-ytw="4.8%" data-mv="101130" data-isin="US38141GVX95" data-accts="mish-jpm g-mishpajot g-propias all"><td></td><td>Goldman Sachs 0% Oct 2027 <span class="new-b">Mish</span></td><td><span class="badge b-jpm">Mish/JPM</span></td><td><span class="pill">Bono zero IG</span></td><td class="num">$101,130</td><td class="num">0.3%</td><td class="num" style="color:#555;font-size:11px">1.3y</td><td class="num" style="color:#555;font-size:11px">4.8%</td><td><span class="pi">$100.56</span></td></tr>
         <tr class="grp-hdr" data-accts="g-propias g-centella g-bosques g-mishpajot all"><td colspan="9">Bonos HY y emergentes</td></tr>
-        <tr data-duration="3.6y" data-ytw="4.8%" data-mv="481895" data-accts="mish-jpm bosq-jpm g-propias all"><td></td><td>Gen Motors Financial 3.6% 2030</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono corp. HY</span></td><td class="num">$481,895</td><td class="num">1.4%</td><td class="num" style="color:#555;font-size:11px">3.6y</td><td class="num" style="color:#555;font-size:11px">4.8%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">$95.39</span></td></tr>
+        <tr data-duration="3.6y" data-ytw="4.8%" data-mv="481895" data-accts="mish-jpm bosq-jpm g-propias all"><td></td><td>Gen Motors Financial 3.6% 2030</td><td><span class="badge b-jpm">JPM ×2</span></td><td><span class="pill">Bono corp. HY</span></td><td class="num">$481,895</td><td class="num">1.4%</td><td class="num" style="color:#555;font-size:11px">3.6y</td><td class="num" style="color:#555;font-size:11px">4.8%</td><td><span class="pi">$95.39</span></td></tr>
         <tr data-duration="1.9y" data-ytw="5.8%" data-mv="526619" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Banco Santander Mexico 2028</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono EM</span></td><td class="num">$526,619</td><td class="num">1.6%</td><td class="num" style="color:#555;font-size:11px">1.9y</td><td class="num" style="color:#555;font-size:11px">5.8%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr data-duration="1.8y" data-ytw="6.0%" data-mv="265965" data-accts="cent-jpm g-centella g-propias all"><td></td><td>Petrobras Global Fin 5.999% 2028</td><td><span class="badge b-jpm">Cent/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$265,965</td><td class="num">0.8%</td><td class="num" style="color:#555;font-size:11px">1.8y</td><td class="num" style="color:#555;font-size:11px">6.0%</td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
-        <tr data-duration="0.9y" data-ytw="8.5%" data-mv="61550" data-isin="USN15516AB83" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>Braskem Neth 4.5% 2028 <span style="font-size:9px;color:#e53935">distressed 61.55</span></td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$61,550</td><td class="num">0.2%</td><td class="num" style="color:#555;font-size:11px">0.9y</td><td class="num" style="color:#555;font-size:11px">8.5%</td><td><span title="EOD live" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
+        <tr data-duration="0.9y" data-ytw="8.5%" data-mv="61550" data-isin="USN15516AB83" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td>Braskem Neth 4.5% 2028 <span style="font-size:9px;color:#e53935">distressed 61.55</span></td><td><span class="badge b-jpm">Bosq/JPM</span></td><td><span class="pill">Bono HY EM</span></td><td class="num">$61,550</td><td class="num">0.2%</td><td class="num" style="color:#555;font-size:11px">0.9y</td><td class="num" style="color:#555;font-size:11px">8.5%</td><td><span class="pi">—</span></td></tr>
         <tr class="grp-hdr" data-accts="nm-beaumont nm-nidalbe nm-acc g-nm all"><td colspan="9">Carteras No Manejadas — RF al 25% (Beaumont 31.25%)</td></tr>
         <tr class="nm-row" data-accts="nm-beaumont g-nm all"><td></td><td>Altria 4.25% 2042 + JPM 5.4% + otros <span class="nm-b">Beaumont</span></td><td><span class="badge b-ml">ML</span></td><td><span class="pill">Bonos IG+EM</span></td><td class="num">$303,973</td><td class="num">0.9%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
         <tr class="nm-row" data-accts="nm-nidalbe g-nm all"><td></td><td>JB EM Corp + Muzinich + Brandywine <span class="nm-b">Nidalbe</span></td><td><span class="badge b-jb">JB</span></td><td><span class="pill">Fondos+bonos</span></td><td class="num">$820,622</td><td class="num">2.4%</td><td class="num"><span class="rc ra">—</span></td><td class="num"><span class="rc ra">—</span></td><td><span title="Precio manual (Masttro)" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#9CA3AF;margin-right:4px;vertical-align:middle"></span><span class="pi">—</span></td></tr>
@@ -1653,334 +1647,8 @@ function clearSearch(){
   document.getElementById('search-count').textContent = '';
 }
 
-// ─── PRICE UPDATER (EOD Historical Data) ─────────────────────────────────────
-var EOD_KEY = '6a272c1fc65bb6.06336275';
-
-// Default ISIN/ticker map — user can edit via the config panel
-var DEFAULT_ISIN_MAP = {
-  // ── Equity ETFs US ─────────────────────────────────────────────────────────
-  'SPY':             {sym:'SPY.US', isin:'US78462F1030',              units:{cent_ml:2421,bosq_ml:1913,bosq_jpm:257},  type:'eq'},
-  'QQQ':             {sym:'QQQ.US', isin:'US46090E1038',              units:{bosq_ml:350,cent_jpm:1075,bosq_jpm:278},  type:'eq'},
-  'ECH':             {sym:'ECH.US', isin:'US4642866408',              units:{cent_ml:6152},                      type:'eq'},
-  // ── Equity ETFs UCITS ──────────────────────────────────────────────────────
-  'CSPX':            {sym:'CSPX.LSE', isin:'IE00B5BMR087',            units:{cent_ml:1290,bosq_ml:557},          type:'eq'},
-  'XGHGF':           {sym:'CNDX.LSE', isin:'IE00B53SZB19',            units:{bosq_ml:319},                       type:'eq'},
-  'Xtrackers':       {sym:'XDWD.LSE', isin:'IE00BJ0KDQ92',            units:{cent_ml:11300},                     type:'eq'},
-  'iShares ACWI':    {sym:'ISAC.LSE', isin:'IE00B6R52259', units:{mish_jpm:2365,bosq_jpm:5320},        type:'eq'},
-  // ── Equity Funds (SICAV) ───────────────────────────────────────────────────
-  'JPM Global Core': {sym:'', units:{mish_jpm:7059,bosq_jpm:1000},       type:'eq'},
-  'JPM US Sel Eq':   {sym:'', units:{cent_jpm:6615},                     type:'eq'},
-  'JPM China A':     {sym:'', units:{cent_jpm:7867},                     type:'eq'},
-  'Access Growth':   {sym:'', units:{mish_jpm:1309},                     type:'eq'},
-  'Global X Def':    {sym:'DFNS.LSE', isin:'IE000JCW3DZ3', units:{cent_jpm:5300},                     type:'eq'},
-  // ── RF ETFs UCITS ──────────────────────────────────────────────────────────
-  'iSh US Agg':      {sym:'IUAA.LSE', isin:'IE00BYXYYM63', units:{cent_ml:171850},                    type:'rf'},
-  'iSh Short Dur':   {sym:'SDIA.LSE', isin:'IE00BYXYYP94', units:{cent_ml:115020},                    type:'rf'},
-  'iSh HY Corp':     {sym:'IHYA.LSE', isin:'IE00BYXYYL56', units:{cent_ml:33220},                     type:'rf'},
-  'PIMCO GIS':       {sym:'IGLO.LSE', isin:'IE00B7KFL990', units:{cent_ml:27800},                     type:'rf'},
-  // ── RF Funds (SICAV) ───────────────────────────────────────────────────────
-  'MFS Meridian':    {sym:'', units:{cent_jpm:86478},                    type:'rf'},
-  'AXA US Credit':   {sym:'', units:{cent_jpm:4878,mish_jpm:5141},       type:'rf'},
-  'BlackRock USD':   {sym:'', units:{cent_jpm:3679},                     type:'rf'},
-  'JPM Income':      {sym:'', units:{cent_jpm:1913,mish_jpm:1545},       type:'rf'},
-  'BNY Mellon':      {sym:'', units:{cent_jpm:247573,mish_jpm:502976},   type:'rf'},
-  // ── Bonds ──────────────────────────────────────────────────────────────────
-  'MS 4.35% 2026':   {sym:'US6174467Y92.BOND', isin:'US6174467Y92',   notional:250000,                           type:'bond'},
-  'GM 4.35% 2027':   {sym:'US37045XBT28.BOND', isin:'US37045XBT28',   notional:150000,                           type:'bond'},
-  'GM 3.6% 2030':    {sym:'US37045XCY04.BOND', isin:'US37045XCY04',   notional:250000,                           type:'bond'},
-  'JPM Float 2037':  {sym:'US48123KAE64.BOND', isin:'US48123KAE64',   notional:125000,                           type:'bond'},
-  'GS 0% 2027':      {sym:'US38141GVX95.BOND', isin:'US38141GVX95',   notional:100000,                           type:'bond'},
-  'GS 0% 2040':      {sym:'US38151FDS92.BOND', isin:'US38151FDS92',   notional:500000,                           type:'bond'},
-  'JPM 0% 2039':     {sym:'US48130CQG32.BOND', isin:'US48130CQG32',   notional:250000,                           type:'bond'},
-  'Braskem 4.5%':    {sym:'USN15516AB83.BOND', isin:'USN15516AB83',   notional:100000,                           type:'bond'},
-  // GS Basket AI components (equally weighted, 9 stocks)
-  '_CEG':   {sym:'CEG.US',   type:'basket', basePrice:329.88},
-  '_GEV':   {sym:'GEV.US',   type:'basket', basePrice:873.60},
-  '_GOOGL': {sym:'GOOGL.US', type:'basket', basePrice:311.76},
-  '_META':  {sym:'META.US',  type:'basket', basePrice:648.18},
-  '_MRVL':  {sym:'MRVL.US',  type:'basket', basePrice:81.69},
-  '_MSFT':  {sym:'MSFT.US',  type:'basket', basePrice:392.74},
-  '_NVDA':  {sym:'NVDA.US',  type:'basket', basePrice:177.19},
-  '_VRT':   {sym:'VRT.US',   type:'basket', basePrice:254.89},
-  '_VST':   {sym:'VST.US',   type:'basket', basePrice:173.89},
-  // Índices para notas estructuradas
-  '_SPX':  {sym:'GSPC.INDX',  type:'index'},   // SPX via EOD (cierre diario)
-  '_SX5E': {sym:'STOXX50E.INDX',  type:'index'},               // SX5E directo via EOD
-  '_MELI': {sym:'MELI.US',    type:'index'},
-};
-
-async function updatePrices(){
-  var btn = document.getElementById('price-btn');
-  var status = document.getElementById('price-status');
-  btn.disabled = true;
-  btn.textContent = '↻ Actualizando...';
-  status.textContent = '';
-
-  var updated = [], failed = [], skipped = [];
-
-  var instruments = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return DEFAULT_ISIN_MAP[n].sym; });
-  skipped = Object.keys(DEFAULT_ISIN_MAP).filter(function(n){ return !DEFAULT_ISIN_MAP[n].sym; });
-
-  var promises = instruments.map(function(name){
-    var inst = DEFAULT_ISIN_MAP[name];
-    var url = 'https://portfolio-proxy.nicolascalderonr.workers.dev/eod?sym=' + inst.sym;
-    return fetch(url)
-      .then(function(res){ 
-        return res.json(); 
-      })
-      .then(function(data){
-        var price = parseFloat(data.last || data.close || data.previousClose || 0);
-        // Known LSE tickers that report price in GBp (pence) — explicit whitelist,
-        // safer than guessing from price magnitude or currency field reliability
-        var gbpTickers = ['CSPX.LSE','CNDX.LSE','DFNS.LSE','XDWD.LSE','IGLO.LSE'];
-        if(gbpTickers.indexOf(inst.sym) > -1){
-          price = price / 100;
-        }
-        return {name:name, inst:inst, price:price, change:data.change_p, ok:price>0};
-      })
-      .catch(function(e){ 
-        return {name:name, inst:inst, price:0, ok:false, err:e.message}; 
-      });
-  });
-
-  var results = await Promise.all(promises);
-
-  results.forEach(function(r){
-    if(r.ok){
-      r.inst._lastPrice = r.price;
-      updatePriceInDOM(r.name, r.inst, r.price, r.change);
-      updated.push(r.name + ' $' + r.price.toFixed(2));
-    } else {
-      failed.push(r.name + (r.err ? '('+r.err+')' : ''));
-    }
-  });
-
-  btn.disabled = false;
-  btn.textContent = '↻ Actualizar precios';
-  var now = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
-  status.innerHTML = '<span style="color:#10B981">✓ ' + now + ' · ' + updated.length + ' ok</span>';
-  if(failed.length + skipped.length > 0) status.innerHTML += ' · <span style="color:#f59e0b" title="' + failed.concat(skipped).join(', ') + '">⚠ ' + (failed.length + skipped.length) + ' sin datos EOD</span>';
-
-
-  // Recalculate portfolio totals from updated row values
-  try { recalcTotals(); } catch(e){ console.warn('recalcTotals error:', e.message); }
-  try { updateNotesStrikes(); } catch(e){ console.warn('updateNotesStrikes error:', e.message); }
-  try { calcRfDuration(); } catch(e){ console.warn('calcRfDuration error:', e.message); }
-}
-
-
-function updateNotesStrikes(){
-  // Get latest index prices from ISIN_MAP
-  // Use ETF proxies and convert to index levels
-  var spyPrice  = DEFAULT_ISIN_MAP['_SPX']  && DEFAULT_ISIN_MAP['_SPX']._lastPrice;
-  var fezPrice  = DEFAULT_ISIN_MAP['_SX5E'] && DEFAULT_ISIN_MAP['_SX5E']._lastPrice;  // ahora es precio directo SX5E
-  var meliPrice = DEFAULT_ISIN_MAP['_MELI'] && DEFAULT_ISIN_MAP['_MELI']._lastPrice;
-
-  // GS Basket AI: equally weighted average of 9 stocks vs entry prices
-  var basketComponents = ['_CEG','_GEV','_GOOGL','_META','_MRVL','_MSFT','_NVDA','_VRT','_VST'];
-  var basketPerfSum = 0, basketCount = 0;
-  var basketDetail = [], basketMissing = [];
-  basketComponents.forEach(function(k){
-    var inst = DEFAULT_ISIN_MAP[k];
-    if(inst && inst._lastPrice && inst.basePrice){
-      var pc = (inst._lastPrice - inst.basePrice) / inst.basePrice * 100;
-      basketPerfSum += pc;
-      basketCount++;
-      basketDetail.push({name:k.replace('_',''), pc:pc, px:inst._lastPrice});
-    } else if(inst){
-      basketMissing.push(k.replace('_',''));
-    }
-  });
-  var basketPerf = basketCount > 0 ? basketPerfSum / basketCount : null; // EW avg % change (partial ok)
-
-  // Render the per-component detail line under the notes table (dynamic, no hardcode)
-  (function(){
-    var el = document.getElementById('basket-detail');
-    if(!el) return;
-    if(basketCount === 0){
-      el.innerHTML = '<span style="color:#9CA3AF">sin precios EOD - presiona ↻ EOD</span>';
-      return;
-    }
-    basketDetail.sort(function(a,b){ return b.pc - a.pc; });
-    var parts = basketDetail.map(function(d){
-      var col = d.pc >= 0 ? '#1D9E75' : '#e53935';
-      var sign = d.pc >= 0 ? '+' : '';
-      return '<span title="' + d.name + ' $' + d.px.toFixed(2) + '">' + d.name +
-             ' <span style="color:' + col + '">' + sign + d.pc.toFixed(0) + '%</span></span>';
-    });
-    var ewCol = basketPerf >= 0 ? '#1D9E75' : '#e53935';
-    var ewSign = basketPerf >= 0 ? '+' : '';
-    var html = parts.join(' · ') + ' &rarr; <strong>EW ' + ewSign + basketPerf.toFixed(1) + '%</strong>';
-    if(basketCount < basketComponents.length){
-      html += ' <span style="color:#f59e0b">(parcial: ' + basketCount + '/' + basketComponents.length +
-              (basketMissing.length ? '; sin precio: ' + basketMissing.join(', ') : '') + ')</span>';
-    }
-    el.innerHTML = html;
-    el.style.color = '#888';
-  })();
-
-  var prices = {
-    SPX:    spyPrice  ? spyPrice  * 1.0   : null,  // precio directo GSPC.INDX
-    SX5E:   fezPrice  ? fezPrice  * 1.0   : null,  // precio directo SX5E via Yahoo
-    MELI:   meliPrice ? meliPrice          : null,
-    BASKET: basketPerf,  // already in % form
-  };
-
-  // Update underlying prices panel
-  var ts = new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
-  var npSpx    = document.getElementById('np-spx');
-  var npSx5e   = document.getElementById('np-sx5e');
-  var npMeli   = document.getElementById('np-meli');
-  var npBasket = document.getElementById('np-basket');
-  var npTs     = document.getElementById('np-ts');
-  var hdrSpan  = document.getElementById('notes-underlying-hdr');
-
-  if(prices.SPX && npSpx){
-    var spxVal = Math.round(prices.SPX).toLocaleString('en-US');
-    npSpx.textContent = spxVal;
-    npSpx.style.color = '#1D9E75';
-  }
-  if(prices.SX5E && npSx5e){
-    var sx5eVal = Math.round(prices.SX5E).toLocaleString('en-US');
-    npSx5e.textContent = sx5eVal;
-    // Color vs strike 6103
-    npSx5e.style.color = prices.SX5E > 6103 ? '#1D9E75' : '#e53935';
-  }
-  if(prices.MELI && npMeli){
-    npMeli.textContent = '$' + prices.MELI.toFixed(0);
-    npMeli.style.color = prices.MELI > 1741 ? '#1D9E75' : '#e53935';
-  }
-  if(prices.BASKET !== null && prices.BASKET !== undefined && npBasket){
-    npBasket.textContent = (prices.BASKET>=0?'+':'') + prices.BASKET.toFixed(1) + '%';
-    npBasket.style.color = prices.BASKET > 0 ? '#1D9E75' : '#e53935';
-  }
-  if(npTs) npTs.textContent = 'actualizado ' + ts;
-  if(hdrSpan) hdrSpan.textContent = '— precios via EOD · ' + ts;
-
-  // Update each note row — search entire document since eq-notas may be hidden
-  document.querySelectorAll('tr[data-underlying]').forEach(function(row){
-    var underlying = row.getAttribute('data-underlying');
-    var strike = parseFloat(row.getAttribute('data-strike'));
-    var spot = prices[underlying];
-
-    var pct, color, sign, callText, callColor;
-
-    if(underlying === 'BASKET'){
-      if(spot === null || spot === undefined) return;
-      pct = spot;
-    } else {
-      if(!spot || !strike) return;
-      pct = (spot - strike) / strike * 100;
-    }
-
-    sign = pct >= 0 ? '+' : '';
-    if(pct > 5){
-      color = '#10B981'; callColor = '#10B981'; callText = '✓ Alta';
-    } else if(pct >= 0){
-      color = '#f59e0b'; callColor = '#f59e0b'; callText = '~ Media';
-    } else {
-      color = '#e53935'; callColor = '#e53935'; callText = '✗ Baja';
-    }
-
-    var tds = row.querySelectorAll('td');
-    if(tds[7]) tds[7].innerHTML = '<span style="color:' + color + '">' + sign + pct.toFixed(1) + '%</span>';
-    if(tds[8] && !row.getAttribute('data-noac')) tds[8].innerHTML = '<span style="color:' + callColor + ';font-weight:600">' + callText + '</span>';
-  });
-}
-
-function recalcTotals(){
-  // Suma directa de ACCT_DATA (cierres registrados). Una sola fuente de verdad;
-  // ya no parte de PERF_DATA (Masttro 04-jun) que dejaba el KPI en base vieja.
-  var newTotal = 0;
-  for(var k in ACCT_DATA){ var a = ACCT_DATA[k]; newTotal += a.eq + a.rf + a.cash + a.alt; }
-  var fmt = function(n){
-    if(n >= 1e6) return '$' + (n >= 10e6 ? (n/1e6).toFixed(1) : (n/1e6).toFixed(2)) + 'M';
-    return '$' + Math.round(n).toLocaleString('en-US');
-  };
-  var kpi = document.getElementById('kpi-total');
-  if(kpi) kpi.textContent = fmt(newTotal);
-}
-
-function updatePriceInDOM(name, inst, price, changePct){
-  var fmt = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
-  var pct = parseFloat(changePct || 0);
-  var color = pct >= 0 ? '#10B981' : '#e53935';
-  var changeStr = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
-
-  var isin = inst.isin;
-  if(!isin) return; // no ISIN, can't match
-
-  // Find all rows with matching data-isin
-  var matched = [];
-  ['pane-equity','pane-rf'].forEach(function(paneId){
-    var pane = document.getElementById(paneId);
-    if(!pane) return;
-    pane.querySelectorAll('[data-isin="' + isin + '"]').forEach(function(row){
-      matched.push(row);
-    });
-  });
-
-  matched.forEach(function(row){
-    // Update price pill
-    var pill = row.querySelector('.pi');
-    if(pill){
-      var dot = row.querySelector('.price-dot');
-      if(dot){ dot.style.background = '#10B981'; dot.title = 'EOD live'; }
-      pill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
-    }
-
-    // Recalculate market value — skip for GBP instruments (price in GBP not USD)
-    var numCells = row.querySelectorAll('td.num');
-    if(numCells.length > 0 && inst.units && !inst.sym.includes('.LSE')){
-      var total = Object.values(inst.units).reduce(function(a,b){return a+b;},0);
-      numCells[0].textContent = fmt(total * price);
-    } else if(numCells.length > 0 && inst.notional){
-      numCells[0].textContent = fmt(inst.notional * price / 100);
-    }
-
-    // If child row, update parent cons-row total by summing all children
-    if(row.classList.contains('child')){
-      var prev = row.previousElementSibling;
-      while(prev && !prev.classList.contains('cons-row')){ prev = prev.previousElementSibling; }
-      if(prev){
-        // Sum all visible child MV cells
-        var consTotal = 0;
-        var sib = prev.nextElementSibling;
-        while(sib && sib.classList.contains('child')){
-          var sibNum = sib.querySelector('td.num');
-          if(sibNum){
-            var val = parseFloat((sibNum.textContent||'').replace(/[$,]/g,''));
-            if(!isNaN(val)) consTotal += val;
-          }
-          sib = sib.nextElementSibling;
-        }
-        if(consTotal > 0){
-          var consNum = prev.querySelector('td.num strong');
-          if(consNum) consNum.textContent = fmt(consTotal);
-          else {
-            var consCell = prev.querySelector('td.num');
-            if(consCell) consCell.innerHTML = '<strong>' + fmt(consTotal) + '</strong>';
-          }
-        }
-        // Update price pill (only from primary instrument)
-        var consId = prev.id;
-        var isPrimary = (name === 'SPY' && consId === 'cr-sp500') ||
-                        (name === 'QQQ' && consId === 'cr-ndx');
-        if(isPrimary){
-          var cPill = prev.querySelector('.pi');
-          if(cPill) cPill.innerHTML = '$' + price.toFixed(2) + ' <span style="font-size:9px;color:' + color + '">' + changeStr + '</span>';
-          var cDot = prev.querySelector('.price-dot');
-          if(cDot){ cDot.style.background = '#10B981'; cDot.title = 'EOD live'; }
-        }
-      }
-    }
-  });
-}
-
-
 // ─── PRICE CACHE ─────────────────────────────────────────────────────────────
 function loadCachedPrices(){
-  var cached = JSON.parse(localStorage.getItem('eod_prices') || '{}');
   if(Object.keys(cached).length === 0) return false;
   var now = Date.now();
   var maxAge = 24 * 60 * 60 * 1000; // 24 hours
@@ -2062,12 +1730,7 @@ calcRfDuration();
   }
   function show(){
     document.getElementById('lock-screen').style.display='none';
-    // Load cached prices immediately, then refresh from EOD in background
-    setTimeout(function(){
-      var hadCache = loadCachedPrices();
-      // Auto-fetch fresh prices (silently)
-      updatePrices();
-    }, 300);
+    // Prices are static from cartola data
   }
   window.addEventListener('DOMContentLoaded', function(){
     if(sessionStorage.getItem('auth')==='1'){ show(); return; }
@@ -2207,9 +1870,6 @@ NOTAS ESTRUCTURADAS (8 activas):
 - JPM M+ SPX 11.15% vto mar-2028 · call mar-2027 · SPX +8.5% → ✓ LLAMABLE
 - JPM CBEN SPX 9.45% vto feb-2028 · call mar-2027 · SPX +8.5% → ✓ LLAMABLE
 - GS Basket AI EW 16.95% vto mar-2028 · call mar-2027 · avg EW +35.3% → ✓ LLAMABLE
-- JPM SX5E 11.95% vto feb-2028 · call mar-2027 · SX5E: ver EOD
-- BNP MELI 20.33% vto mar-2028 · call mar-2027 · MELI: ver EOD
-- GS Basket AI: EW avg vs strikes jun-26 (calculado con EOD)
 - BNP Ford CLN ~6.3% vto jun-2028 → movido a RF, sin call definido
 
 ALTERNATIVOS DIRECTOS (Bosques):
