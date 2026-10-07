@@ -189,11 +189,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
     <div class="metric" data-class="rf" style="cursor:pointer" onclick="toggleBreakdown('rf')"><div style="font-size:11px;color:#888;margin-bottom:3px">Renta fija ▾</div><div id="kpi-rf" style="font-size:22px;font-weight:600;color:#1D9E75">$7.1M</div><div id="kpi-rf-pct" style="font-size:11px;color:#888">21.2% del total</div></div>
     <div class="metric" data-class="cash" style="cursor:pointer" onclick="toggleBreakdown('cash')"><div style="font-size:11px;color:#888;margin-bottom:3px">Cash ▾</div><div id="kpi-cash" style="font-size:22px;font-weight:600;color:#64748B">$4.2M</div><div id="kpi-cash-pct" style="font-size:11px;color:#888">12.5% del total</div></div>
     <div class="metric" data-class="alt" style="cursor:pointer" onclick="toggleBreakdown('alt')"><div style="font-size:11px;color:#888;margin-bottom:3px">Alternativos ▾</div><div id="kpi-alt" style="font-size:22px;font-weight:600;color:#EF9F27">$2.9M</div><div id="kpi-alt-pct" style="font-size:11px;color:#888">8.6% del total</div><div id="kpi-alt-split" style="font-size:10px;color:#aaa;margin-top:2px">Directos — · vía ctas —</div></div>
-    <div class="metric" style="min-width:280px">
-      <div style="font-size:11px;color:#888;margin-bottom:3px">Geografía (equity)</div>
-      <div id="kpi-geo-bars" style="display:flex;height:18px;border-radius:4px;overflow:hidden;margin-bottom:4px"></div>
-      <div id="kpi-geo-legend" style="font-size:10px;color:#888;line-height:1.6"></div>
-    </div>
     <div class="metric" style="min-width:100px;cursor:pointer" onclick="showOutflows()">
       <div style="font-size:11px;color:#888;margin-bottom:3px">Salidas 2026</div>
       <div id="kpi-outflows" style="font-size:18px;font-weight:600;color:#e53935">—</div>
@@ -235,6 +230,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
         <div class="alloc-row"><div class="al">Nasdaq (QQQ+XGHGF)</div><div class="abw"><div id="ab-ndx" class="abf" style="width:8.2%;background:#B5D4F4"></div></div><div id="av-ndx" class="av">$1.6M</div><div id="ap-ndx" class="ap" style="color:#B5D4F4">8%</div></div>
         <div class="alloc-row"><div class="al">Notas estructuradas</div><div class="abw"><div id="ab-notas" class="abf" style="width:14.9%;background:#BFDBFE"></div></div><div id="av-notas" class="av">$2.9M</div><div id="ap-notas" class="ap" style="color:#BFDBFE">15%</div></div>
         <div class="alloc-row"><div class="al">Otros ETFs / fondos</div><div class="abw"><div id="ab-otros" class="abf" style="width:52.7%;background:#378ADD"></div></div><div id="av-otros" class="av">$10.2M</div><div id="ap-otros" class="ap" style="color:#378ADD">53%</div></div>
+      </div>
+      <!-- Geografía equity -->
+      <div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px">
+        <div style="font-size:11px;color:#aaa;margin-bottom:7px">Geografía equity</div>
+        <div id="kpi-geo-bars" style="display:flex;height:18px;border-radius:4px;overflow:hidden;margin-bottom:4px"></div>
+        <div id="kpi-geo-legend" style="font-size:10px;color:#888;line-height:1.6"></div>
       </div>
     </div>
 
