@@ -1786,10 +1786,10 @@ calcRfDuration();
       style="background:#3B82F6;color:#fff;border:none;border-radius:10px;padding:9px 14px;cursor:pointer;font-size:16px;transition:background 0.2s;flex-shrink:0"
       onmouseover="this.style.background='#2563EB'" onmouseout="this.style.background='#3B82F6'">➤</button>
   </div>
-
+</div>
 
 <!-- Retiro de Caja / Gastos -->
-<div class="card" id="outflows-card" style="margin-top:12px;display:none">
+<div class="card" id="outflows-card" style="position:fixed;bottom:88px;left:50%;transform:translateX(-50%);width:600px;max-width:calc(100vw - 32px);z-index:9997;display:none;box-shadow:0 8px 40px rgba(0,0,0,0.18);border:1px solid #e5e7eb">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
     <h3 style="margin:0;font-size:15px;color:#334155">Retiro de Caja / Gastos 2026</h3>
     <span onclick="document.getElementById('outflows-card').style.display='none'" style="cursor:pointer;color:#94a3b8;font-size:18px">&times;</span>
@@ -1813,8 +1813,6 @@ calcRfDuration();
       </tr>
     </tfoot>
   </table>
-</div>
-
 </div>
 
 <script>
