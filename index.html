@@ -1794,6 +1794,7 @@ calcRfDuration();
     <h3 style="margin:0;font-size:15px;color:#334155">Retiro de Caja / Gastos 2026</h3>
     <span onclick="document.getElementById('outflows-card').style.display='none'" style="cursor:pointer;color:#94a3b8;font-size:18px">&times;</span>
   </div>
+  <div id="outflows-filters" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px"></div>
   <div id="outflows-summary" style="display:flex;gap:20px;margin-bottom:10px;font-size:13px"></div>
   <table id="outflows-table" style="width:100%;border-collapse:collapse;font-size:12px">
     <thead>
@@ -1976,10 +1977,35 @@ var styleEl = document.createElement('style');
 styleEl.textContent = '@keyframes blink{0%,100%{opacity:0.2}50%{opacity:1}}';
 document.head.appendChild(styleEl);
 
+var _outflowFilter = 'all';
 function showOutflows(){
   var card = document.getElementById('outflows-card');
   card.style.display = card.style.display==='none' ? 'block' : 'none';
+  renderOutflowFilters();
   renderOutflows();
+}
+function renderOutflowFilters(){
+  var el = document.getElementById('outflows-filters');
+  if(!el) return;
+  // Build unique societies from data, map acct → sociedad
+  var socMap = {'nm-nidalbe':'Nidalbe','nm-acc':'ACC','nm-beaumont':'Beaumont',
+    'mish-jpm':'Mishpajot','bosq-ml':'Bosques','bosq-jpm':'Bosques','bosq-ubs':'Bosques','bosq-alt':'Bosques',
+    'cent-ml':'Centella','cent-jpm':'Centella'};
+  var seen = {}, societies = [];
+  OUTFLOWS_DATA.forEach(function(r){
+    var soc = socMap[r.acct] || (ACCT_LABELS[r.acct]||r.acct);
+    if(!seen[soc]){ seen[soc]=true; societies.push(soc); }
+  });
+  var chipStyle = function(active){
+    return 'display:inline-block;padding:4px 10px;border-radius:12px;font-size:11px;cursor:pointer;border:1px solid '
+      + (active ? '#3B82F6' : '#e2e8f0') + ';background:' + (active ? '#EFF6FF' : '#fff')
+      + ';color:' + (active ? '#1D4ED8' : '#64748B') + ';font-weight:' + (active ? '600' : '400');
+  };
+  var html = '<span style="'+chipStyle(_outflowFilter==='all')+'" onclick="_outflowFilter=\'all\';renderOutflowFilters();renderOutflows()">Todas</span>';
+  societies.forEach(function(s){
+    html += '<span style="'+chipStyle(_outflowFilter===s)+'" onclick="_outflowFilter=\''+s+'\';renderOutflowFilters();renderOutflows()">'+s+'</span>';
+  });
+  el.innerHTML = html;
 }
 function renderOutflows(){
   var fmt=function(n){return '$'+Math.round(n).toLocaleString('en-US');};
@@ -1988,7 +2014,16 @@ function renderOutflows(){
   var summaryEl=document.getElementById('outflows-summary');
   var kpiEl=document.getElementById('kpi-outflows');
   if(!tbody) return;
+  var socMap = {'nm-nidalbe':'Nidalbe','nm-acc':'ACC','nm-beaumont':'Beaumont',
+    'mish-jpm':'Mishpajot','bosq-ml':'Bosques','bosq-jpm':'Bosques','bosq-ubs':'Bosques','bosq-alt':'Bosques',
+    'cent-ml':'Centella','cent-jpm':'Centella'};
   var rows=OUTFLOWS_DATA.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+  if(_outflowFilter !== 'all'){
+    rows = rows.filter(function(r){
+      var soc = socMap[r.acct] || (ACCT_LABELS[r.acct]||r.acct);
+      return soc === _outflowFilter;
+    });
+  }
   var html='';
   var total=0, totalRetiro=0, totalGasto=0;
   var typeColors={retiro:'#f59e0b',gasto:'#e53935'};
@@ -2005,8 +2040,12 @@ function renderOutflows(){
     html+='<td style="text-align:right;padding:5px 8px;font-weight:500;color:#e53935">'+fmt(r.amt)+'</td>';
     html+='</tr>';
   });
+  if(rows.length===0) html='<tr><td colspan="5" style="text-align:center;color:#aaa;padding:12px;font-size:12px">Sin salidas para esta sociedad</td></tr>';
   tbody.innerHTML=html;
   totalEl.textContent=fmt(total);
+  // Update total label
+  var totalLabel = document.querySelector('#outflows-table tfoot td:first-child');
+  if(totalLabel) totalLabel.textContent = _outflowFilter==='all' ? 'Total salidas externas 2026' : 'Total '+_outflowFilter+' 2026';
   if(kpiEl) kpiEl.textContent=fmt(total);
   if(summaryEl) summaryEl.innerHTML='<span>Retiros: <strong style="color:#f59e0b">'+fmt(totalRetiro)+'</strong></span><span>Gastos/Taxes: <strong style="color:#e53935">'+fmt(totalGasto)+'</strong></span><span>Total: <strong style="color:#e53935">'+fmt(total)+'</strong></span>';
 }
