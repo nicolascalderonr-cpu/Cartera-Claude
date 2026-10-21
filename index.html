@@ -1487,7 +1487,72 @@ function clearAllAccts(){
   applyFilter();
 }
 
+// ─── SORT TABLES BY VALUE (desc) ────────────────────────────────────────────
+function parseVal(el){
+  // Find the first .num td with a $ value in the row
+  var cells = el.querySelectorAll('td.num');
+  for(var i=0;i<cells.length;i++){
+    var t = cells[i].textContent.replace(/[^0-9.\-]/g,'');
+    if(t){ return parseFloat(t)||0; }
+  }
+  return 0;
+}
+
+function sortTablesByValue(){
+  // Sort rows within each tbody, respecting grp-hdr sections
+  var tbodies = document.querySelectorAll('#pane-equity .tbl tbody, #pane-rf .tbl tbody, #pane-cash .tbl tbody, #pane-alt .tbl tbody');
+  tbodies.forEach(function(tbody){
+    var rows = Array.from(tbody.children);
+    // Split into sections by grp-hdr
+    var sections = [];
+    var current = {header:null, units:[]};
+    rows.forEach(function(row){
+      if(row.classList.contains('grp-hdr')){
+        if(current.header || current.units.length) sections.push(current);
+        current = {header:row, units:[]};
+      } else if(row.classList.contains('bkt-tot')){
+        // total rows stay at the end — mark them
+        if(current.header || current.units.length) sections.push(current);
+        sections.push({header:null, units:[], total:row});
+        current = {header:null, units:[]};
+      } else if(row.classList.contains('cons-row')){
+        // Start a new unit: cons-row + its children
+        current.units.push({lead:row, children:[], val:parseVal(row)});
+      } else if(row.classList.contains('child')){
+        // Attach to the last cons-row unit
+        var last = current.units[current.units.length-1];
+        if(last && last.lead.classList.contains('cons-row')){
+          last.children.push(row);
+        } else {
+          current.units.push({lead:row, children:[], val:parseVal(row)});
+        }
+      } else {
+        // Standalone row (or info/warning row with no value)
+        current.units.push({lead:row, children:[], val:parseVal(row)});
+      }
+    });
+    if(current.header || current.units.length) sections.push(current);
+
+    // Sort units within each section by value desc
+    sections.forEach(function(sec){
+      sec.units.sort(function(a,b){ return b.val - a.val; });
+    });
+
+    // Rebuild tbody
+    while(tbody.firstChild) tbody.removeChild(tbody.firstChild);
+    sections.forEach(function(sec){
+      if(sec.total){ tbody.appendChild(sec.total); return; }
+      if(sec.header) tbody.appendChild(sec.header);
+      sec.units.forEach(function(u){
+        tbody.appendChild(u.lead);
+        u.children.forEach(function(c){ tbody.appendChild(c); });
+      });
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function(){
+  sortTablesByValue();
   document.querySelectorAll('#acct-dropdown input[type=checkbox]').forEach(function(cb){
     cb.addEventListener('change', applyFilter);
   });
