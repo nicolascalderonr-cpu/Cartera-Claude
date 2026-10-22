@@ -713,20 +713,24 @@ var ACCT_DATA = {
   'nm-acc':     {eq:840185,  rf:295285,  cash:277760, alt:114204},// 30-sep JB 25% de $6,109,734 = $1,527,434
 };
 
-// Asignacion geografica del EQUITY por cuenta (aproximada, desde statements jul/ago-26).
-// Regiones: us, europe, asia, latam, global (ACWI, multi-region, tematicos globales).
+// Asignacion geografica del EQUITY por cuenta (look-through estimado oct-2026).
+// Fondos globales/ACWI redistribuidos a regiones usando composicion del indice subyacente:
+//   ISAC (MSCI ACWI): 63%US 17%EU 13%Asia 7%EM · JREG (MSCI World): 70%US 18%EU 8%Japan 4%other
+//   JPM Global Core: 55%US 25%EU 15%Asia 5%other · JPM Access Growth: 55%US 25%EU 15%Asia 5%other
+//   DFNS (Defence Tech): 55%US 35%EU 10%Asia · RBC EM: 55%Asia 20%LatAm 25%other
+//   Polar Capital Tech: 65%US 15%EU 15%Asia · Wellington Healthcare: 70%US 15%EU 10%Asia
+//   IEFA (EAFE): 50%EU 25%Japan 15%Asia 10%other · Amundi Pioneer: 90%US
 // Solo equity; RF/cash/alt no se asignan por geografia.
 var GEO_DATA = {
-  // Asignacion geografica EQUITY (aproximada, sep-oct 2026; cent-ml desde CRC look-through 25-sep)
-  'cent-jpm':   {us:1324569, europe:208780, asia:268014, latam:0, global:144637},
-  'cent-ml':    {us:1074000, europe:939000, asia:1208000, latam:202000, global:283000},
-  'bosq-jpm':   {us:2461000, europe:0, asia:0, latam:269000, global:1444000},
+  'cent-jpm':   {us:1405000, europe:260000, asia:282000, latam:0, global:0},    // DFNS look-through
+  'cent-ml':    {us:1145000, europe:1038000, asia:1293000, latam:230000, global:0}, // CRC look-through 25-sep
+  'bosq-jpm':   {us:3386000, europe:237000, asia:210000, latam:341000, global:0},  // ISAC+JREG+RBC EM
   'bosq-ml':    {us:2712900, europe:0, asia:0, latam:0, global:0},
-  'bosq-ubs':   {us:352000, europe:90000, asia:0, latam:0, global:254345},
-  'mish-jpm':   {us:500000, europe:400000, asia:0, latam:0, global:827808},
-  'nm-nidalbe': {us:500000, europe:370000, asia:170000, latam:0, global:789704},
-  'nm-acc':     {us:250000, europe:185000, asia:85000, latam:0, global:320185},
-  'nm-beaumont':{us:140000, europe:55000, asia:0, latam:0, global:70672},
+  'bosq-ubs':   {us:456000, europe:188000, asia:52000, latam:0, global:0},       // IEFA+Amundi
+  'mish-jpm':   {us:1020000, europe:430000, asia:265000, latam:20000, global:0}, // Glb Core+ISAC+Access
+  'nm-nidalbe': {us:974000, europe:528000, asia:281000, latam:47000, global:0},  // Polar+JB+Wellington
+  'nm-acc':     {us:442000, europe:249000, asia:130000, latam:19000, global:0},
+  'nm-beaumont':{us:182000, europe:73000, asia:11000, latam:0, global:0},
   'bosq-alt':   {us:0, europe:0, asia:0, latam:0, global:0},
 };
 
