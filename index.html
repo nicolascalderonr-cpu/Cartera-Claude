@@ -1102,7 +1102,7 @@ function showTop4(idx){
   var classes=['eq','rf','cash','alt'];
   var labels=['Equity','Renta fija','Cash','Alternativos'];
   var cls=classes[idx];
-  var sel=document.getElementById('acct-sel').value;
+  var sa=getSelectedAccts(); var sel=sa.length===1?sa[0]:(sa.length===0?'all':sa[0]);
   // Try exact account match first, then group, then all
   var key='all';
   if(TOP4[cls]){
@@ -1391,7 +1391,7 @@ function updateDraftea(){
 
   // Update ACCT_DATA and pie chart
   ACCT_DATA['bosq-alt'].alt = totalAlt;
-  var sel = document.getElementById('acct-sel').value;
+  var sa2 = getSelectedAccts(); var sel = sa2.length===1?sa2[0]:(sa2.length===0?'all':sa2[0]);
   updateAllocation(sel);
 }
 
