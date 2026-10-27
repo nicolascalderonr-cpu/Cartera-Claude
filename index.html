@@ -738,18 +738,28 @@ var GEO_DATA = {
 // Retiros y gastos externos 2026 (excluye traspasos internos y capital calls a cuentas del dashboard).
 // type: 'retiro' = cash out personal/entidad, 'gasto' = fee/tax/costo que se pierde
 var OUTFLOWS_DATA = [
+  // Nidalbe (JB)
   {date:'2026-01',acct:'nm-nidalbe',desc:'Retiro Nidalbe Q1',amt:20854,type:'retiro'},
   {date:'2026-04',acct:'nm-nidalbe',desc:'Retiro Nidalbe Q2',amt:1086,type:'retiro'},
   {date:'2026-07',acct:'nm-nidalbe',desc:'Retiro Nidalbe Q3 (jul-sep)',amt:302553,type:'retiro'},
+  // ACC
   {date:'2026-01',acct:'nm-acc',desc:'Retiro ACC YTD',amt:620,type:'retiro'},
-  {date:'2026-01',acct:'mish-jpm',desc:'Retiro Mishpajot YTD',amt:43097,type:'retiro'},
-  {date:'2026-01',acct:'bosq-ml',desc:'Retiros Bosques ML (neto de internos)',amt:218895,type:'retiro'},
-  {date:'2026-09',acct:'bosq-ml',desc:'Taxes Woodstock',amt:58340,type:'gasto'},
-  {date:'2026-09',acct:'bosq-ml',desc:'Transferencia a Cuenta Personal ACV',amt:30000,type:'retiro'},
+  // Mishpajot JPM
+  {date:'2026-05',acct:'mish-jpm',desc:'Pago Parcial Seguro de Vida (CRL)',amt:43097,type:'gasto'},
+  // Bosques ML — desglose real (excluye internos a JPM/UBS y capital calls Estelio→bosq-alt)
+  {date:'2026-01',acct:'bosq-ml',desc:'Pago tarjeta crédito (Cuenta ACV)',amt:135000,type:'gasto'},
+  {date:'2026-03',acct:'bosq-ml',desc:'Honorarios NCR Q1',amt:7546,type:'gasto'},
+  {date:'2026-06',acct:'bosq-ml',desc:'Honorarios NCR Q2',amt:7780,type:'gasto'},
+  {date:'2026-07',acct:'bosq-ml',desc:'Befinan — Inversión',amt:50000,type:'retiro'},
+  {date:'2026-08',acct:'bosq-ml',desc:'Selina Taxes (Joe Fashka)',amt:58340,type:'gasto'},
+  {date:'2026-09',acct:'bosq-ml',desc:'Honorarios NCR Q3',amt:7613,type:'gasto'},
+  {date:'2026-09',acct:'bosq-ml',desc:'Transferencia a Cuenta Personal ACV',amt:40000,type:'retiro'},
+  {date:'2026-09',acct:'bosq-ml',desc:'Southwind Capital Call',amt:10000,type:'retiro'},
 ];
 // NOTA: los montos de Nidalbe vienen de la cartola JB (depósitos/retiros QTD).
-// Bosques ML: total YTD $879,895 menos internos ($300K JPM + $351K UBS + $10K Southwind) = $218,895 externo.
-// Mishpajot: $43,097 asumido externo (confirmar).
+// Bosques ML total salidas $2,246,636: internos $1,850K (JPM $500K + UBS $1,350K) + Estelio $80,357 (→bosq-alt) = excluidos.
+// Externos: gastos $256,279 + inversiones externas $100K (Befinan $50K + Southwind $10K + ACV $40K) = $356,279.
+// Mishpajot: $43,097 pago parcial seguro de vida, mayo 2026.
 // Fechas aproximadas salvo donde se indique.
 
 var ACCT_LABELS = {
