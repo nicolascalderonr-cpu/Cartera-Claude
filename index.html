@@ -442,8 +442,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
           <tr class="grp-hdr" data-accts="cent-jpm bosq-jpm g-centella g-bosques g-propias all"><td colspan="12">Otros subyacentes</td></tr>
           <tr data-underlying="BASKET" data-strike="0" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px" title="GS Finance Corp. Autocallable Buffered Basket-Linked Notes due 2028. ISIN US40058XSA36. Trade date 27-feb-2026. NO paga interes.">GS Buffered Basket AI 3/2/28</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">Basket EW</span></td><td style="font-size:11px">2-mar-28</td><td style="font-size:11px" title="Unica fecha de observacion de call: 12-mar-2027. Pago 17-mar-2027.">12-mar-27</td><td style="font-size:11px" title="Nivel inicial del basket = 100 (trade date 27-feb-26). Autocall si el basket cierra &gt;= 100.">Basket 100</td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#9CA3AF">&mdash;</span></td><td style="font-size:11px"><span style="color:#1D9E75;font-weight:600" title="BUFFER (no barrera). Protegido hasta -20%. Bajo -20% se pierde 1.25x por cada punto adicional: 1000 + 1000 x 125% x (retorno + 20%).">Buffer 20%</span></td><td style="font-size:11px"><span style="color:#6B7280" title="La nota NO paga cupon. 16.95% es el premio unico si autocallea el 12-mar-27 (paga $1.169,5 por cada $1.000). Si no callea, al vencimiento participa 125% del alza.">premio 16.95%<br><span style="font-size:9px">(no cupon)</span></span></td><td class="num">$275,125</td></tr>
 
-          <tr data-underlying="SX5E" data-strike="6103" data-accts="cent-jpm g-centella g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SX5E 2/24/28 11.95%</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SX5E</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,103</td><td style="font-size:11px"><span style="color:#e53935">−0.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">25%</td><td style="font-size:11px;color:green">11.95%</td><td class="num">$195,600</td></tr>
-          <tr data-underlying="MELI" data-strike="1741" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">BNP AC M+ MELI UW 3/2/28 20.33%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">MELI</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">1,741</td><td style="font-size:11px"><span style="color:#e53935">−4.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">30%</td><td style="font-size:11px;color:green">20.33%</td><td class="num">$268,600</td></tr>
+          <tr data-underlying="SX5E" data-strike="6103" data-accts="cent-jpm g-centella g-propias all"><td></td><td style="padding-left:12px">JPM AC M+ SX5E 2/24/28 11.95%</td><td><span class="badge b-jpm">Cent</span></td><td><span class="pill">SX5E</span></td><td style="font-size:11px">feb-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">6,103</td><td style="font-size:11px"><span style="color:green">+0.2%</span></td><td style="font-size:11px"><span style="color:green;font-weight:600">✓ Alta</span></td><td style="font-size:11px">25%</td><td style="font-size:11px;color:green">11.95%</td><td class="num">$195,600</td></tr>
+          <tr data-underlying="MELI" data-strike="1741" data-accts="bosq-jpm g-bosques g-propias all"><td></td><td style="padding-left:12px">BNP AC M+ MELI UW 3/2/28 20.33%</td><td><span class="badge b-jpm">Bosq</span></td><td><span class="pill">MELI</span></td><td style="font-size:11px">mar-28</td><td style="font-size:11px">mar-27</td><td style="font-size:11px">1,741</td><td style="font-size:11px"><span style="color:#e53935">−5.6%</span></td><td style="font-size:11px"><span style="color:#e53935">✗ Baja</span></td><td style="font-size:11px">30%</td><td style="font-size:11px;color:green">20.33%</td><td class="num">$268,600</td></tr>
           <tr><td colspan="12" style="font-size:10px;color:#888;padding:8px 4px">
             <strong>Basket GS</strong> (9 acciones EW vs strike jun-26): <span id="basket-detail" style="color:#9CA3AF">rendimiento vs strikes al cierre de cartolas</span> &nbsp;|&nbsp; SX5E y MELI: ver columna "Hoy vs Strike".
           </td></tr>
@@ -1841,7 +1841,7 @@ calcRfDuration();
 </div>
 
 <!-- Retiro de Caja / Gastos -->
-<div class="card" id="outflows-card" style="position:fixed;bottom:88px;left:50%;transform:translateX(-50%);width:600px;max-width:calc(100vw - 32px);z-index:9997;display:none;box-shadow:0 8px 40px rgba(0,0,0,0.18);border:1px solid #e5e7eb">
+<div class="card" id="outflows-card" style="position:fixed;bottom:88px;left:50%;transform:translateX(-50%);width:720px;max-width:calc(100vw - 32px);z-index:9997;display:none;box-shadow:0 8px 40px rgba(0,0,0,0.18);border:1px solid #e5e7eb">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
     <h3 style="margin:0;font-size:15px;color:#334155">Retiro de Caja / Gastos 2026</h3>
     <span onclick="document.getElementById('outflows-card').style.display='none'" style="cursor:pointer;color:#94a3b8;font-size:18px">&times;</span>
@@ -1856,12 +1856,13 @@ calcRfDuration();
         <th style="text-align:left;padding:6px 8px;color:#64748B">Descripción</th>
         <th style="text-align:left;padding:6px 8px;color:#64748B">Tipo</th>
         <th style="text-align:right;padding:6px 8px;color:#64748B">Monto</th>
+        <th style="text-align:left;padding:6px 8px;color:#64748B">Glosa</th>
       </tr>
     </thead>
     <tbody></tbody>
     <tfoot>
       <tr style="border-top:2px solid #e2e8f0;font-weight:600">
-        <td colspan="4" style="padding:6px 8px">Total salidas externas 2026</td>
+        <td colspan="5" style="padding:6px 8px">Total salidas externas 2026</td>
         <td id="outflows-total" style="text-align:right;padding:6px 8px;color:#e53935"></td>
       </tr>
     </tfoot>
@@ -1947,7 +1948,7 @@ EQUITY DESTACADO:
 - JPM Global Core Eq: ~$2.14M (2 cuentas JPM, ya no en Bosq)
 - JPM Access Growth: $345K (solo Mish/JPM, ya no en Bosq)
 
-Fecha de referencia: 16-oct-2026 (Bosq/JPM actualizado). SPX ~7,558 · SX5E ~6,064 · MELI ~$1,661.`;
+Fecha de referencia: 16-oct-2026 (Bosq/JPM actualizado). SPX ~7,558 · SX5E ~6,116 · MELI ~$1,644.`;
 }
 
 function addMsg(text, role){
@@ -2077,19 +2078,28 @@ function renderOutflows(){
   var total=0, totalRetiro=0, totalGasto=0;
   var typeColors={retiro:'#f59e0b',gasto:'#e53935'};
   var typeLabels={retiro:'Retiro',gasto:'Gasto/Tax'};
-  rows.forEach(function(r){
+  rows.forEach(function(r,i){
     total+=r.amt;
     if(r.type==='retiro') totalRetiro+=r.amt; else totalGasto+=r.amt;
     var label=ACCT_LABELS[r.acct]||r.acct;
+    var gKey='outflow_glosa_'+r.date+'_'+r.acct+'_'+r.amt;
+    var gVal=''; try{gVal=localStorage.getItem(gKey)||'';}catch(e){}
     html+='<tr style="border-bottom:1px solid #f1f5f9">';
     html+='<td style="padding:5px 8px;color:#64748B">'+r.date+'</td>';
     html+='<td style="padding:5px 8px">'+label+'</td>';
     html+='<td style="padding:5px 8px">'+r.desc+'</td>';
     html+='<td style="padding:5px 8px"><span style="background:'+(typeColors[r.type]||'#888')+';color:#fff;padding:1px 6px;border-radius:3px;font-size:10px">'+typeLabels[r.type]+'</span></td>';
     html+='<td style="text-align:right;padding:5px 8px;font-weight:500;color:#e53935">'+fmt(r.amt)+'</td>';
+    html+='<td style="padding:5px 4px;min-width:120px">';
+    if(gVal){
+      html+='<span class="glosa-display" data-gkey="'+gKey+'" onclick="editGlosa(this)" style="cursor:pointer;font-size:11px;color:#475569;border-bottom:1px dashed #cbd5e1;padding:1px 2px" title="Click para editar">'+gVal.replace(/</g,'&lt;')+'</span>';
+    } else {
+      html+='<span class="glosa-display" data-gkey="'+gKey+'" onclick="editGlosa(this)" style="cursor:pointer;font-size:11px;color:#aaa;font-style:italic;padding:1px 2px" title="Click para agregar glosa">+ glosa</span>';
+    }
+    html+='</td>';
     html+='</tr>';
   });
-  if(rows.length===0) html='<tr><td colspan="5" style="text-align:center;color:#aaa;padding:12px;font-size:12px">Sin salidas para esta sociedad</td></tr>';
+  if(rows.length===0) html='<tr><td colspan="6" style="text-align:center;color:#aaa;padding:12px;font-size:12px">Sin salidas para esta sociedad</td></tr>';
   tbody.innerHTML=html;
   totalEl.textContent=fmt(total);
   // Update total label
@@ -2097,6 +2107,26 @@ function renderOutflows(){
   if(totalLabel) totalLabel.textContent = _outflowFilter==='all' ? 'Total salidas externas 2026' : 'Total '+_outflowFilter+' 2026';
   if(kpiEl) kpiEl.textContent=fmt(total);
   if(summaryEl) summaryEl.innerHTML='<span>Retiros: <strong style="color:#f59e0b">'+fmt(totalRetiro)+'</strong></span><span>Gastos/Taxes: <strong style="color:#e53935">'+fmt(totalGasto)+'</strong></span><span>Total: <strong style="color:#e53935">'+fmt(total)+'</strong></span>';
+}
+function editGlosa(el){
+  var key=el.getAttribute('data-gkey');
+  var cur=''; try{cur=localStorage.getItem(key)||'';}catch(e){}
+  var td=el.parentNode;
+  var inp=document.createElement('input');
+  inp.type='text'; inp.value=cur;
+  inp.style.cssText='width:100%;font-size:11px;padding:2px 4px;border:1px solid #3B82F6;border-radius:3px;outline:none;box-sizing:border-box';
+  inp.placeholder='Concepto…';
+  var save=function(){
+    var v=inp.value.trim();
+    try{if(v){localStorage.setItem(key,v);}else{localStorage.removeItem(key);}}catch(e){}
+    renderOutflows();
+  };
+  inp.onblur=save;
+  inp.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();save();}if(e.key==='Escape'){renderOutflows();}};
+  td.innerHTML='';
+  td.appendChild(inp);
+  inp.focus();
+  inp.select();
 }
 // render on load
 document.addEventListener('DOMContentLoaded', function(){ renderOutflows(); });
