@@ -746,19 +746,16 @@ var OUTFLOWS_DATA = [
   {date:'2026-01',acct:'nm-acc',desc:'Retiro ACC YTD',amt:620,type:'retiro'},
   // Mishpajot JPM
   {date:'2026-05',acct:'mish-jpm',desc:'Pago Parcial Seguro de Vida (CRL)',amt:43097,type:'gasto'},
-  // Bosques ML — desglose real (excluye internos a JPM/UBS y capital calls Estelio→bosq-alt)
+  // Bosques ML — desglose real (excluye internos a JPM/UBS y cap calls a bosq-alt: Estelio, Befinan, Southwind, Selina Taxes)
   {date:'2026-01',acct:'bosq-ml',desc:'Pago tarjeta crédito (Cuenta ACV)',amt:135000,type:'gasto'},
   {date:'2026-03',acct:'bosq-ml',desc:'Honorarios NCR Q1',amt:7546,type:'gasto'},
   {date:'2026-06',acct:'bosq-ml',desc:'Honorarios NCR Q2',amt:7780,type:'gasto'},
-  {date:'2026-07',acct:'bosq-ml',desc:'Befinan — Inversión',amt:50000,type:'retiro'},
-  {date:'2026-08',acct:'bosq-ml',desc:'Selina Taxes (Joe Fashka)',amt:58340,type:'gasto'},
   {date:'2026-09',acct:'bosq-ml',desc:'Honorarios NCR Q3',amt:7613,type:'gasto'},
   {date:'2026-09',acct:'bosq-ml',desc:'Transferencia a Cuenta Personal ACV',amt:40000,type:'retiro'},
-  {date:'2026-09',acct:'bosq-ml',desc:'Southwind Capital Call',amt:10000,type:'retiro'},
 ];
 // NOTA: los montos de Nidalbe vienen de la cartola JB (depósitos/retiros QTD).
-// Bosques ML total salidas $2,246,636: internos $1,850K (JPM $500K + UBS $1,350K) + Estelio $80,357 (→bosq-alt) = excluidos.
-// Externos: gastos $256,279 + inversiones externas $100K (Befinan $50K + Southwind $10K + ACV $40K) = $356,279.
+// Bosques ML total salidas $2,246,636: internos $1,850K (JPM/UBS) + bosq-alt $198,697 (Estelio $80K + Befinan $50K + Southwind $10K + Selina Taxes $58K) = excluidos.
+// Externos: gastos $197,939 (ACV $135K + honorarios $22,939 + ACV sep $40K).
 // Mishpajot: $43,097 pago parcial seguro de vida, mayo 2026.
 // Fechas aproximadas salvo donde se indique.
 
